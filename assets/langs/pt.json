@@ -1,0 +1,8 @@
+{
+    "version": "Versão",
+    "dialogs": {
+        "changeLanguage": {
+            "title": "Escolha o idioma"
+        }
+    }
+}

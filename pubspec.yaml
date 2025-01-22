@@ -1,0 +1,32 @@
+name: appli_drive_mobile
+description: "A version mobile of Appli Drive"
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  shared_preferences: ^2.3.3
+  wakelock_plus: ^1.2.10
+  sqflite: ^2.3.2
+  path: ^1.9.0
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/flags/
+    - assets/sounds/
+    - assets/langs/

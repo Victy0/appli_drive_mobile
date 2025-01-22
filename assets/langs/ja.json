@@ -1,0 +1,8 @@
+{
+    "version": "バージョン",
+    "dialogs": {
+        "changeLanguage": {
+            "title": "言語を選択"
+        }
+    }
+}
