@@ -6,6 +6,12 @@ class VersionApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("${AppLocalization.of(context).translate("version")} 0.0.1");
+    return Text(
+      "${AppLocalization.of(context).translate("components.versionApp.version")} 0.0.1",
+      style: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

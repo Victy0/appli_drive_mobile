@@ -1,8 +1,17 @@
 {
-    "version": "Versão",
-    "dialogs": {
+    "components": {
+        "versionApp": {
+            "version": "Versão"
+        }
+    },
+    "componentsDialogs": {
         "changeLanguage": {
-            "title": "Escolha o idioma"
+            "chooseLanguage": "Escolha o idioma"
+        }
+    },
+    "pages": {
+        "initialPage": {
+            "tapToStart": "Toque para iniciar"
         }
     }
 }

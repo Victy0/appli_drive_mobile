@@ -1,8 +1,17 @@
 {
-    "version": "バージョン",
-    "dialogs": {
+    "components": {
+        "versionApp": {
+            "version": "バージョン"
+        }
+    },
+    "componentsDialogs": {
         "changeLanguage": {
-            "title": "言語を選択"
+            "chooseLanguage": "言語を選択"
+        }
+    },
+    "pages": {
+        "initialPage": {
+            "tapToStart": "タップしてスタート"
         }
     }
 }
