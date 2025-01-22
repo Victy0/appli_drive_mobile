@@ -23,7 +23,7 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
     return AlertDialog(
       title: Center(
         child: Text(
-          AppLocalization.of(context).translate("dialogs.changeLanguage.title"),
+          AppLocalization.of(context).translate("componentsDialogs.changeLanguage.chooseLanguage"),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
