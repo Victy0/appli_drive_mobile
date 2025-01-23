@@ -1,5 +1,6 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DialogChangeLanguage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -10,17 +11,41 @@ class DialogChangeLanguage extends StatefulWidget {
 }
 
 class DialogChangeLanguageState extends State<DialogChangeLanguage> {
-  Locale _selectedLocale = const Locale('pt', 'BR');
-
+  late Locale _selectedLocale;
   final List<Map<String, dynamic>> _languages = [
     {'label': 'Português', 'locale': const Locale('pt', 'BR'), 'flag': 'assets/images/flags/br.png'},
     {'label': 'English', 'locale': const Locale('en', 'US'), 'flag': 'assets/images/flags/us.png'},
     {'label': '日本語', 'locale': const Locale('ja', 'JP'), 'flag': 'assets/images/flags/jp.png'},
   ];
 
+  Future<Locale> getSavedLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('selected_language');
+    String? countryCode = prefs.getString('selected_country');
+
+    if (languageCode != null && countryCode != null) {
+      return Locale(languageCode, countryCode);
+    }
+
+    return WidgetsBinding.instance.platformDispatcher.locale;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSavedLocale().then((locale) {
+      setState(() {
+        _selectedLocale = locale;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       title: Center(
         child: Text(
           AppLocalization.of(context).translate("componentsDialogs.changeLanguage.chooseLanguage"),
@@ -31,45 +56,54 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
           ),
         ),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DropdownButton<Locale>(
-            value: _selectedLocale,
-            onChanged: (Locale? newLocale) {
-              setState(() {
-                _selectedLocale = newLocale!;
-              });
-              widget.onLanguageChange(_selectedLocale);
-            },
-            items: _languages.map<DropdownMenuItem<Locale>>((language) {
-              return DropdownMenuItem<Locale>(
-                value: language['locale'],
-                child: Row(
-                  children: [
-                    Image.asset(
-                      language['flag'],
-                      width: 35,
-                      height: 25,
-                    ),
-                    const SizedBox(width: 15),
-                    Text(
-                      language['label'],
-                      style: const TextStyle(fontSize: 25),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+      content: SizedBox(
+        width: 300,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DropdownButton<Locale>(
+              value: _selectedLocale,
+              onChanged: (Locale? newLocale) {
+                setState(() {
+                  _selectedLocale = newLocale!;
+                });
+                widget.onLanguageChange(_selectedLocale);
+              },
+              items: _languages.map<DropdownMenuItem<Locale>>((language) {
+                return DropdownMenuItem<Locale>(
+                  value: language['locale'],
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        language['flag'],
+                        width: 35,
+                        height: 25,
+                      ),
+                      const SizedBox(width: 15),
+                      Text(
+                        language['label'],
+                        style: const TextStyle(fontSize: 25),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setString('selected_language', _selectedLocale.languageCode);
+            await prefs.setString('selected_country', _selectedLocale.countryCode ?? '');
+
+            Navigator.pop(context);
+          },
           child: const Icon(
-            Icons.check_circle_rounded,
-            size: 30.0,
+            Icons.check_box_sharp,
+            size: 40.0,
             color: Colors.green,
           )
         ),
