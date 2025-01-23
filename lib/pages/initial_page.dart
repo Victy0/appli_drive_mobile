@@ -6,6 +6,7 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/pages/home_page.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:screen_state/screen_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPage extends StatefulWidget {
@@ -24,11 +25,44 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   late Animation<double> _opacityAnimationText;
 
   late AudioPlayer _audioPlayer;
+  final Screen _screen = Screen();
+  Stream<ScreenStateEvent>? _screenStream;
+
+  void startMonitoring() {
+    _screenStream = _screen.screenStateStream;
+    _screenStream?.listen((event) {
+      if (event == ScreenStateEvent.SCREEN_OFF) {
+        _audioPlayer.pause();
+      } else if (event == ScreenStateEvent.SCREEN_ON) {
+        _audioPlayer.resume();
+      }
+    });
+  }
+
+  Future<void> checkIfLanguageHasBeenChosen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('selected_language');
+
+    if (languageCode == null) {
+      showLanguageDialog();
+    }
+  }
+
+  Future<void> showLanguageDialog() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: widget.onLanguageChange),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
+    _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    _audioPlayer.play(AssetSource('sounds/initial_page.mp3'));
+    startMonitoring();
 
     _controllers = List.generate(12, (index) {
       return AnimationController(
@@ -46,28 +80,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
     )..repeat(reverse: true);
     _opacityAnimationText = Tween<double>(begin: 0.0, end: 1.0).animate(_controllerText);
 
-    _audioPlayer.setReleaseMode(ReleaseMode.loop);
-    _audioPlayer.play(AssetSource('sounds/initial_page.mp3'));
-
-    checkFirstAccess();
-  }
-
-  Future<void> checkFirstAccess() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isFirstTime = prefs.getBool('isFirstAccess') ?? true;
-
-    if (isFirstTime) {
-      showLanguageDialog();
-      // prefs.setBool('isFirstAccess', false);
-    }
-  }
-
-  Future<void> showLanguageDialog() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: widget.onLanguageChange),
-    );
+    checkIfLanguageHasBeenChosen();
   }
 
   void _navigateToNextPage(BuildContext context) async {

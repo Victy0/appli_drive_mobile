@@ -3,6 +3,7 @@ import 'package:appli_drive_mobile/pages/initial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,11 +36,33 @@ class MyApp extends StatefulWidget  {
 }
 
 class MyAppState extends State<MyApp> {
-  Locale deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+  Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+
+  Future<Locale> getSavedLocale() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? languageCode = prefs.getString('selected_language');
+    String? countryCode = prefs.getString('selected_country');
+
+    if (languageCode != null && countryCode != null) {
+      return Locale(languageCode, countryCode);
+    }
+
+    return WidgetsBinding.instance.platformDispatcher.locale;
+  }
 
   void changeLanguage(Locale newLocale) {
     setState(() {
-      deviceLocale = newLocale;
+      _deviceLocale = newLocale;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSavedLocale().then((locale) {
+      setState(() {
+        _deviceLocale = locale;
+      });
     });
   }
 
@@ -66,7 +89,7 @@ class MyAppState extends State<MyApp> {
         }
         return supportedLocales.first;
       },
-      locale: deviceLocale,
+      locale: _deviceLocale,
       home: InitialPage(onLanguageChange: changeLanguage),
     );
   }
