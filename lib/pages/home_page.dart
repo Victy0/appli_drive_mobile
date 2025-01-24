@@ -1,7 +1,9 @@
-import 'package:appli_drive_mobile/components/detail_rectangle_left_component.dart';
-import 'package:appli_drive_mobile/components/detail_rectangle_right_component.dart';
-import 'package:appli_drive_mobile/components/dialogs/dialog_change_language.dart';
-import 'package:appli_drive_mobile/components/icon_information.dart';
+import 'dart:async';
+
+import 'package:appli_drive_mobile/components/animated_white_button.dart';
+import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_left.dart';
+import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_right.dart';
+import 'package:appli_drive_mobile/components/unique_pages_widgets/home_page/header_icons.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,26 @@ class HomePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  Timer? _timer;
+
+  void _startAnimationTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+      _controller.forward(from: 0);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _startAnimationTimer();
+  }
 
   @override
   Widget build(BuildContext context) {    
@@ -28,62 +49,76 @@ class HomePageState extends State<HomePage> {
             right: 0,
             child: Column(
               children: [
-                // system icons
-                Padding(
-                  padding: const EdgeInsets.only(top: 36.0, right: 16.0, bottom: 16.0, left: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const IconInformation(),
-                      IconButton(
-                        onPressed: () => showDialog<String>(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: widget.onLanguageChange),
-                        ),
-                        icon: Image.asset(
-                          'assets/images/icons/language_box.png',
-                          height: 40,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const DetailRectangleLeftComponent(),
+                HeaderIcons(onLanguageChange: widget.onLanguageChange),
+                const DetailRectangleLeft(),
               ]
             ),
           ),
           // content
           Center(
-            child: Text(AppLocalization.of(context).translate("components.versionApp.version"))
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    Text(
+                      AppLocalization.of(context).translate("pages.homePage.pairing"),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "- ${AppLocalization.of(context).translate("appmons.names")} -",
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        print('criar dialog para confirmar Appliarise');
+                      },
+                      child: Image.asset(
+                        'assets/images/chips/gatchmon.png',
+                        width: 200,
+                        height: 200,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 80),
+
+                GestureDetector(
+                  onTap: () {
+                    print('Abrir camera para ler qr code');
+                  },
+                  child: AnimatedWhiteButton(controller: _controller, text: 'APPLIARISE'),
+                ),
+
+                const SizedBox(height: 40),
+
+              ],
+            ),
           ),
           // detail bottom
           const Positioned(
             bottom: 30,
             left: 0,
             right: 0,
-            child: DetailRectangleRightComponent(),
+            child: DetailRectangleRight(),
           ),
         ],
       ),
     );
   }
-}
-
-class InvertedDiagonalClipper extends CustomClipper<Path> {
-  final double breakSize;
-  const InvertedDiagonalClipper({required this.breakSize});
 
   @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(breakSize, size.height);
-    path.close();
-    return path;
+  void dispose() {
+    _controller.dispose();
+    _timer?.cancel();
+    super.dispose();
   }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

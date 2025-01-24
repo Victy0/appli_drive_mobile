@@ -1,10 +1,30 @@
+import 'package:appli_drive_mobile/components/dialogs/dialog_change_language.dart';
 import 'package:flutter/material.dart';
 
-class IconInformation extends StatelessWidget {
-  const IconInformation({super.key});
+class HeaderIcons extends StatefulWidget {
+  final Function(Locale) onLanguageChange;
+  const HeaderIcons({super.key, required this.onLanguageChange});
 
   @override
+  HeaderIconsState createState() => HeaderIconsState();
+}
+
+class HeaderIconsState extends State<HeaderIcons> {
+  @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 36, right: 16, bottom: 16, left: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          iconInformation(context),
+          iconLanguage(context, widget.onLanguageChange)
+        ],
+      ),
+    );
+  }
+
+  Widget iconInformation(context) {
     return IconButton(
       onPressed: () => showDialog<String>(
         barrierDismissible: false,
@@ -55,6 +75,20 @@ class IconInformation extends StatelessWidget {
       ),
       icon: Image.asset(
         'assets/images/icons/question_mark.png',
+        height: 40,
+      ),
+    );
+  }
+
+  Widget iconLanguage(context, onLanguageChange) {
+    return IconButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: onLanguageChange),
+      ),
+      icon: Image.asset(
+        'assets/images/icons/language_box.png',
         height: 40,
       ),
     );

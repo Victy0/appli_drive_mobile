@@ -10,6 +10,9 @@
         }
     },
     "pages": {
+        "homePage": {
+            "pairing": "PAIRING"
+        },
         "initialPage": {
             "tapToStart": "Tap to start"
         }
