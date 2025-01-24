@@ -22,7 +22,7 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((_) {
-    runApp(MyApp());
+    runApp(const MyApp());
   });
 
   WidgetsBinding.instance.addObserver(
@@ -31,6 +31,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget  {
+  const MyApp({super.key});
+
   @override
   MyAppState createState() => MyAppState();
 }
