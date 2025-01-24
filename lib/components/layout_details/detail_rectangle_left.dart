@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class DetailRectangleLeftComponent extends StatelessWidget {
-  const DetailRectangleLeftComponent({super.key});
+class DetailRectangleLeft extends StatelessWidget {
+  const DetailRectangleLeft({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         Container(
           margin: const EdgeInsets.only(left: 0, top: 0, right: 50),
           height: 60,
           child: ClipPath(
-            clipper: const DiagonalClipper(breakSizeTop: 20, breakSizeBottom: 0),
+            clipper: const DiagonalClipper(breakSizeTop: 30, breakSizeBottom: 0),
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -34,16 +34,16 @@ class DetailRectangleLeftComponent extends StatelessWidget {
           margin: const EdgeInsets.only(left: 0, top: 0, right: 100),
           height: 20,
           child: ClipPath(
-            clipper: const DiagonalClipper(breakSizeTop: 5, breakSizeBottom: 0),
+            clipper: const DiagonalClipper(breakSizeTop: 8, breakSizeBottom: 0),
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.green.shade900,
-                    Colors.green.shade700,
-                    Colors.green.shade400,
-                    Colors.green.shade700,
-                    Colors.green.shade900,
+                    Colors.blue.shade900,
+                    Colors.blue.shade700,
+                    Colors.blue.shade400,
+                    Colors.blue.shade700,
+                    Colors.blue.shade900,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
