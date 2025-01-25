@@ -1,9 +1,10 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/initial_page.dart';
+import 'package:appli_drive_mobile/pages/initial_page/initial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +67,7 @@ class MyAppState extends State<MyApp> {
         _deviceLocale = locale;
       });
     });
+    WakelockPlus.enable();
   }
 
   @override

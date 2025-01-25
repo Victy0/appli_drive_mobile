@@ -31,7 +31,7 @@ class DetailRectangleRight extends StatelessWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.only(left: 100, bottom: 0, right: 0),
+          margin: const EdgeInsets.only(left: 100, top: 40, right: 0),
           height: 20,
           child: ClipPath(
             clipper: const InvertedDiagonalClipper(breakSizeTop: 0, breakSizeBottom: 8),

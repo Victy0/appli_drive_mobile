@@ -13,12 +13,14 @@ class HeaderIconsState extends State<HeaderIcons> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 36, right: 16, bottom: 16, left: 16),
+      padding: const EdgeInsets.only(top: 20, right: 16, bottom: 16, left: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           iconInformation(context),
-          iconLanguage(context, widget.onLanguageChange)
+          iconLanguage(context, widget.onLanguageChange),
+          const Spacer(),
+          iconAppmonListCode(context)
         ],
       ),
     );
@@ -74,7 +76,7 @@ class HeaderIconsState extends State<HeaderIcons> {
         ),
       ),
       icon: Image.asset(
-        'assets/images/icons/question_mark.png',
+        'assets/images/icons/question_mark_box.png',
         height: 40,
       ),
     );
@@ -89,6 +91,62 @@ class HeaderIconsState extends State<HeaderIcons> {
       ),
       icon: Image.asset(
         'assets/images/icons/language_box.png',
+        height: 40,
+      ),
+    );
+  }
+
+  Widget iconAppmonListCode(context) {
+    return IconButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          title: const Center( 
+            child: Text(
+              'Título',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+            ),
+          ),
+          content: const SizedBox(
+            width: 300,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Contexto',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Icon(
+                Icons.check_box_sharp,
+                size: 40.0,
+                color: Colors.green,
+              )
+            ),
+          ],
+        ),
+      ),
+      icon: Image.asset(
+        'assets/images/icons/list_box.png',
         height: 40,
       ),
     );

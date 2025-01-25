@@ -1,0 +1,90 @@
+import 'package:appli_drive_mobile/pages/data_center_page/data_center_page.dart';
+import 'package:flutter/material.dart';
+
+class MenuIcons extends StatefulWidget {
+  const MenuIcons({super.key});
+
+  @override
+  MenuIconsState createState() => MenuIconsState();
+}
+
+class MenuIconsState extends State<MenuIcons> {
+  void _navigateToDataCenterPage(BuildContext context) async {
+    Navigator.of(context).push(_createRouteDataCenterPage());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, right: 16, bottom: 16, left: 16),
+      child: Row(
+        children: [
+          const Spacer(),
+          iconDataCenter(context),
+          iconSevenCode(context),
+          iconHints(context),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+
+  Widget iconDataCenter(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: IconButton(
+        onPressed: () => _navigateToDataCenterPage(context),
+        icon: Image.asset(
+          'assets/images/icons/book_box.png',
+          height: 55,
+        ),
+      ),
+    );
+  }
+
+  Widget iconSevenCode(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: IconButton(
+        onPressed: () => {},
+        icon: Image.asset(
+          'assets/images/icons/orb_box.png',
+          height: 55,
+        ),
+      ),
+    );
+  }
+
+  Widget iconHints(context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: IconButton(
+        onPressed: () => {},
+        icon: Image.asset(
+          'assets/images/icons/light_bulb_box.png',
+          height: 55,
+        ),
+      ),
+    );
+  }
+}
+
+Route _createRouteDataCenterPage() {
+  return PageRouteBuilder(
+    transitionDuration: const Duration(milliseconds: 800),
+    pageBuilder: (context, animation, secondaryAnimation) => const DataCenterPage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(-1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
+  );
+}

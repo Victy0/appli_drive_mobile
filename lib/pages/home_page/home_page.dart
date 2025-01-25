@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:appli_drive_mobile/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_left.dart';
 import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_right.dart';
-import 'package:appli_drive_mobile/components/unique_pages_widgets/home_page/header_icons.dart';
+import 'package:appli_drive_mobile/pages/home_page/components/header_icons.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/pages/home_page/components/menu_icons.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  late AudioPlayer _audioPlayer;
   late AnimationController _controller;
   Timer? _timer;
 
@@ -28,6 +31,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.play(AssetSource('sounds/start.mp3'));
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -89,7 +94,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
                   ],
                 ),
 
-                const SizedBox(height: 80),
+                const SizedBox(height: 70),
 
                 GestureDetector(
                   onTap: () {
@@ -98,17 +103,35 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
                   child: AnimatedWhiteButton(controller: _controller, text: 'APPLIARISE'),
                 ),
 
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
 
+                const MenuIcons(),
               ],
             ),
           ),
           // detail bottom
-          const Positioned(
+          Positioned(
             bottom: 30,
             left: 0,
             right: 0,
-            child: DetailRectangleRight(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - STANDART",
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const DetailRectangleRight(),
+              ]
+            ),
           ),
         ],
       ),
