@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:appli_drive_mobile/components/dialogs/dialog_change_language.dart';
-import 'package:appli_drive_mobile/components/version_app.dart';
+import 'package:appli_drive_mobile/pages/initial_page/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/home_page.dart';
+import 'package:appli_drive_mobile/pages/home_page/home_page.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_state/screen_state.dart';
@@ -28,27 +28,27 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   final Screen _screen = Screen();
   Stream<ScreenStateEvent>? _screenStream;
 
-  void startMonitoring() {
+  void _startMonitoring() {
     _screenStream = _screen.screenStateStream;
     _screenStream?.listen((event) {
       if (event == ScreenStateEvent.SCREEN_OFF) {
         _audioPlayer.pause();
-      } else if (event == ScreenStateEvent.SCREEN_ON) {
+      } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
         _audioPlayer.resume();
       }
     });
   }
 
-  Future<void> checkIfLanguageHasBeenChosen() async {
+  Future<void> _checkIfLanguageHasBeenChosen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? languageCode = prefs.getString('selected_language');
 
     if (languageCode == null) {
-      showLanguageDialog();
+      _showLanguageDialog();
     }
   }
 
-  Future<void> showLanguageDialog() async {
+  Future<void> _showLanguageDialog() async {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -62,7 +62,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
     _audioPlayer = AudioPlayer();
     _audioPlayer.setReleaseMode(ReleaseMode.loop);
     _audioPlayer.play(AssetSource('sounds/initial_page.mp3'));
-    startMonitoring();
+    _startMonitoring();
 
     _controllers = List.generate(12, (index) {
       return AnimationController(
@@ -80,14 +80,13 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
     )..repeat(reverse: true);
     _opacityAnimationText = Tween<double>(begin: 0.0, end: 1.0).animate(_controllerText);
 
-    checkIfLanguageHasBeenChosen();
+    _checkIfLanguageHasBeenChosen();
   }
 
   void _navigateToNextPage(BuildContext context) async {
     await _audioPlayer.stop();
     _audioPlayer.setReleaseMode(ReleaseMode.stop);
-    _audioPlayer.play(AssetSource('sounds/start.mp3'));
-    Navigator.of(context).push(_createRouteHomePage(widget.onLanguageChange));
+    Navigator.of(context).pushReplacement(_createRouteHomePage(widget.onLanguageChange));
   }
 
   @override
@@ -211,7 +210,7 @@ class NeonLinesPainter extends CustomPainter {
 Route _createRouteHomePage(onLanguageChangeFuction) {
   return PageRouteBuilder(
     transitionDuration: const Duration(milliseconds: 800),
-    pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: onLanguageChangeFuction,),
+    pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: onLanguageChangeFuction),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return Align(
         alignment: Alignment.center,

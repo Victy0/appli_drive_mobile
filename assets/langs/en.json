@@ -1,9 +1,4 @@
 {
-    "components": {
-        "versionApp": {
-            "version": "Version"
-        }
-    },
     "componentsDialogs": {
         "changeLanguage": {
             "chooseLanguage": "Choose language"
@@ -11,10 +6,12 @@
     },
     "pages": {
         "homePage": {
+            "appliDriveVersion": "APPLI DRIVE VERSION",
             "pairing": "PAIRING"
         },
         "initialPage": {
-            "tapToStart": "Tap to start"
+            "tapToStart": "Tap to start",
+            "version": "Version"
         }
     }
 }
