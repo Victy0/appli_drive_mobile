@@ -210,7 +210,7 @@ class NeonLinesPainter extends CustomPainter {
 Route _createRouteHomePage(onLanguageChangeFuction) {
   return PageRouteBuilder(
     transitionDuration: const Duration(milliseconds: 800),
-    pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: onLanguageChangeFuction),
+    pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: onLanguageChangeFuction, initSound: true),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return Align(
         alignment: Alignment.center,
