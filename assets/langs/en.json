@@ -5,6 +5,12 @@
         }
     },
     "pages": {
+        "dataCenter": {
+            "dataCenter": "Data Center"
+        },
+        "hintsPage": {
+            "hints": "Hints"
+        },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE VERSION",
             "pairing": "PAIRING"

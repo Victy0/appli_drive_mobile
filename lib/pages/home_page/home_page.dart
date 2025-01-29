@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const HomePage({super.key, required this.onLanguageChange});
+  final bool initSound;
+  const HomePage({super.key, required this.onLanguageChange, required this.initSound});
 
   @override
   HomePageState createState() => HomePageState();
@@ -19,13 +20,14 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AudioPlayer _audioPlayer;
-  
 
   @override
   void initState() {
     super.initState();
     _audioPlayer = AudioPlayer();
-    _audioPlayer.play(AssetSource('sounds/start.mp3'));
+    if(widget.initSound) {
+      _audioPlayer.play(AssetSource('sounds/start.mp3'));
+    }    
   }
 
   @override

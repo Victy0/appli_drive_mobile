@@ -5,6 +5,12 @@
         }
     },
     "pages": {
+        "dataCenter": {
+            "dataCenter": "データセンター"
+        },
+        "hintsPage": {
+            "hints": "ヒンツ"
+        },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE バージョン",
             "pairing": "ペアリングス"

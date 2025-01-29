@@ -3,15 +3,15 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
-class DataCenterPage extends StatefulWidget {
+class HintsPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const DataCenterPage({super.key, required this.onLanguageChange});
+  const HintsPage({super.key, required this.onLanguageChange});
 
   @override
-  DataCenterPageState createState() => DataCenterPageState();
+  HintsPagePageState createState() => HintsPagePageState();
 }
 
-class DataCenterPageState extends State<DataCenterPage>{
+class HintsPagePageState extends State<HintsPage>{
   void _returnToHomePage(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -20,7 +20,7 @@ class DataCenterPageState extends State<DataCenterPage>{
         pageBuilder: (context, animation, secondaryAnimation) =>
           HomePage(onLanguageChange: widget.onLanguageChange, initSound: false),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(1.0, 0.0);
+          const begin = Offset(-10.0, 0.0);
           const end = Offset(0.0, 0.0);
           const curve = Curves.easeInOut;
 
@@ -42,9 +42,9 @@ class DataCenterPageState extends State<DataCenterPage>{
       appBar: _appBarComponent(context),
       body: const Stack(
         children: [
-          BackgroundImage(color: "blue"),
+          BackgroundImage(color: "yellow"),
           Center(
-            child: Text("Data center page")
+            child: Text("Hints page")
           ),
         ],
       ),
@@ -57,8 +57,8 @@ class DataCenterPageState extends State<DataCenterPage>{
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 50, 172, 253),
-              Color.fromARGB(255, 0, 38, 255),
+              Color.fromARGB(255, 255, 246, 124),
+              Color.fromARGB(255, 253, 216, 8),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -68,7 +68,7 @@ class DataCenterPageState extends State<DataCenterPage>{
       leading: IconButton(
         icon: const Icon(
           Icons.arrow_back,
-          color: Colors.white,
+          color: Colors.black,
         ),
         onPressed: () {
           _returnToHomePage(context);
@@ -76,23 +76,23 @@ class DataCenterPageState extends State<DataCenterPage>{
       ),
       centerTitle: true,
       title: Text(
-        AppLocalization.of(context).translate("pages.dataCenter.dataCenter"),
-        style: const TextStyle(color: Colors.white),
+        AppLocalization.of(context).translate("pages.hintsPage.hints"),
+        style: const TextStyle(color: Colors.black),
       ),
       actions: [
         IconButton(
           onPressed: () => (),
           icon: Image.asset(
-            'assets/images/icons/book_box.png',
+            'assets/images/icons/light_bulb_box.png',
             height: 50,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
       ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(2.0),
         child: Container(
-          color: Colors.white,
+          color: Colors.black,
           height: 2.0,
         ),
       ),
