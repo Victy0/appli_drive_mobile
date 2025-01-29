@@ -1,24 +1,39 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class AnimatedWhiteButton extends StatefulWidget {
-  final AnimationController controller;
   final String text;
-  const AnimatedWhiteButton({super.key, required this.controller, required this.text});
+  const AnimatedWhiteButton({super.key, required this.text});
 
   @override
   AnimatedWhiteButtonState createState() => AnimatedWhiteButtonState();
 }
 
-class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> {
+class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
   late Animation<double> _animation;
+  Timer? _timer;
+
+  void _startAnimationTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 8), (timer) {
+      _controller.forward(from: 0);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
 
-    _animation = Tween<double>(begin: -1, end: 2).animate(
-      CurvedAnimation(parent: widget.controller, curve: Curves.easeInOut),
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
     );
+    _animation = Tween<double>(begin: -1, end: 2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    _startAnimationTimer();
   }
 
   @override
@@ -66,5 +81,12 @@ class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _timer?.cancel();
+    super.dispose();
   }
 }
