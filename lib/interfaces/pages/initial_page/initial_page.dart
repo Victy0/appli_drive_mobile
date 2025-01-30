@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:appli_drive_mobile/components/dialogs/dialog_change_language.dart';
-import 'package:appli_drive_mobile/pages/initial_page/components/version_app.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
+import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_state/screen_state.dart';

@@ -1,6 +1,6 @@
-import 'package:appli_drive_mobile/pages/data_center_page/data_center_page.dart';
-import 'package:appli_drive_mobile/pages/hints_page/hints_page.dart';
-import 'package:appli_drive_mobile/pages/seven_code_page/seven_code_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/data_center_page/data_center_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/hints_page/hints_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/seven_code_page.dart';
 import 'package:flutter/material.dart';
 
 class MenuIcons extends StatefulWidget {

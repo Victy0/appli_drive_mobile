@@ -2,6 +2,9 @@
     "componentsDialogs": {
         "changeLanguage": {
             "chooseLanguage": "言語を選択"
+        },
+        "insertCode": {
+            "enterAppmonCode": "アプモンコードを入力"
         }
     },
     "pages": {

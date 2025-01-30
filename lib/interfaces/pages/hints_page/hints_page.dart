@@ -1,6 +1,6 @@
-import 'package:appli_drive_mobile/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
 class HintsPage extends StatefulWidget {

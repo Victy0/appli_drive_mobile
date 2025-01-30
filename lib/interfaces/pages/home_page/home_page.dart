@@ -1,11 +1,13 @@
-import 'package:appli_drive_mobile/components/animated_white_button.dart';
-import 'package:appli_drive_mobile/components/background_image.dart';
-import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_left.dart';
-import 'package:appli_drive_mobile/components/layout_details/detail_rectangle_right.dart';
-import 'package:appli_drive_mobile/pages/home_page/components/header_icons.dart';
+import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_left.dart';
+import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_right.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/components/header_icons.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/home_page/components/menu_icons.dart';
-import 'package:appli_drive_mobile/pages/home_page/components/pairing_menu.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
+import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +35,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           const BackgroundImage(color: "grey"),
@@ -56,8 +59,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 const PairingMenu(),
                 const SizedBox(height: 70),
                 GestureDetector(
-                  onTap: () {
-                    print('Abrir camera para ler qr code');
+                  onTap: () async {
+                    Appmon? appmon = await showDialog<Appmon>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) => const DialogInsertCode(),
+                    );
+                    print(appmon);
+                    //call apliarise
                   },
                   child: const AnimatedWhiteButton(text: 'APPLIARISE'),
                 ),
