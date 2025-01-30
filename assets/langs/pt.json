@@ -2,6 +2,9 @@
     "componentsDialogs": {
         "changeLanguage": {
             "chooseLanguage": "Escolha o idioma"
+        },
+        "insertCode": {
+            "enterAppmonCode": "Informe o código do Appmon"
         }
     },
     "pages": {

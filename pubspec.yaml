@@ -28,6 +28,7 @@ flutter:
 
   uses-material-design: true
   assets:
+    - assets/appli_drive_database.db
     - assets/images/
     - assets/images/chips/
     - assets/images/flags/

@@ -1,17 +1,16 @@
-import 'package:appli_drive_mobile/components/background_image.dart';
-import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
-class DataCenterPage extends StatefulWidget {
+class SevenCodePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const DataCenterPage({super.key, required this.onLanguageChange});
+  const SevenCodePage({super.key, required this.onLanguageChange});
 
   @override
-  DataCenterPageState createState() => DataCenterPageState();
+  SevenCodePageState createState() => SevenCodePageState();
 }
 
-class DataCenterPageState extends State<DataCenterPage>{
+class SevenCodePageState extends State<SevenCodePage>{
   void _returnToHomePage(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -20,7 +19,7 @@ class DataCenterPageState extends State<DataCenterPage>{
         pageBuilder: (context, animation, secondaryAnimation) =>
           HomePage(onLanguageChange: widget.onLanguageChange, initSound: false),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(1.0, 0.0);
+          const begin = Offset(0.0, -1.0);
           const end = Offset(0.0, 0.0);
           const curve = Curves.easeInOut;
 
@@ -42,9 +41,9 @@ class DataCenterPageState extends State<DataCenterPage>{
       appBar: _appBarComponent(context),
       body: const Stack(
         children: [
-          BackgroundImage(color: "blue"),
+          BackgroundImage(color: "purple"),
           Center(
-            child: Text("Data center page")
+            child: Text("7code page")
           ),
         ],
       ),
@@ -57,8 +56,8 @@ class DataCenterPageState extends State<DataCenterPage>{
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 50, 172, 253),
-              Color.fromARGB(255, 0, 38, 255),
+              Color.fromARGB(255, 212, 0, 255),
+              Color.fromARGB(255, 162, 50, 253),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -75,15 +74,15 @@ class DataCenterPageState extends State<DataCenterPage>{
         },
       ),
       centerTitle: true,
-      title: Text(
-        AppLocalization.of(context).translate("pages.dataCenter.dataCenter"),
-        style: const TextStyle(color: Colors.white),
+      title: const Text(
+        "7code",
+        style: TextStyle(color: Colors.white),
       ),
       actions: [
         IconButton(
           onPressed: () => (),
           icon: Image.asset(
-            'assets/images/icons/book_box.png',
+            'assets/images/icons/orb_box.png',
             height: 50,
             color: Colors.white,
           ),

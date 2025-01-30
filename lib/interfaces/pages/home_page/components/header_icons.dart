@@ -1,4 +1,4 @@
-import 'package:appli_drive_mobile/components/dialogs/dialog_change_language.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIcons extends StatefulWidget {
