@@ -1,9 +1,9 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_actions.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_image.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_summary_info.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/header_icons.dart';
-import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/header_icons_appliarise.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +52,7 @@ class AppliarisePageState extends State<AppliarisePage> {
             right: 0,
             child: Column(
               children: [
-                HeaderIcons(grade: widget.appmon.grade.name),
+                HeaderIconsAppliarise(grade: widget.appmon.grade.name),
               ]
             ),
           ),
@@ -68,28 +68,7 @@ class AppliarisePageState extends State<AppliarisePage> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 25,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => HomePage(onLanguageChange: widget.onLanguageChange, initSound: false),
-                    ));
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 35,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          ClosePageButton(onLanguageChange: widget.onLanguageChange),
         ],
       )
     );

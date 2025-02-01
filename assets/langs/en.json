@@ -1,7 +1,9 @@
 {
     "appmons": {
         "apps": {
-            "search": "SEARCH"
+            "navi": "NAVI",
+            "search": "SEARCH",
+            "superSearch": "SUPER SEARCH"
         },
         "grades": {
             "standard": "STANDART",
@@ -10,7 +12,9 @@
             "god": "GOD"
         },
         "names": {
-            "gatchmon": "GATCHMON"
+            "dogatchmon": "DOGATCHMON",
+            "gatchmon": "GATCHMON",
+            "navimon": "NAVIMON"
         },
         "types": {
             "entertainment": "ENTERTAINMENT",
@@ -24,6 +28,9 @@
         }
     },
     "componentsDialogs": {
+        "appmonCodeList": {
+            "codeList": "Code list"
+        },
         "changeLanguage": {
             "chooseLanguage": "Choose language"
         },

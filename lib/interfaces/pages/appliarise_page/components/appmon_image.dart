@@ -17,8 +17,8 @@ class AppmonImageState extends State<AppmonImage> {
       children: [
         Image.asset(
           "assets/images/appmons/${widget.appmon.id}.png",
-          width: 300,
-          height: 300,
+          width: 310,
+          height: 310,
         ),
         const SizedBox(height: 5),
         Text(
@@ -26,6 +26,33 @@ class AppmonImageState extends State<AppmonImage> {
           style: const TextStyle(
             fontSize: 40,
             fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                color: Colors.white,
+                offset: Offset(0, 0),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.white,
+                offset: Offset(2, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.white,
+                offset: Offset(-2, -2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.white,
+                offset: Offset(2, -2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.white,
+                offset: Offset(-2, 2),
+                blurRadius: 10,
+              ),
+            ],
           ),
         ),
       ],

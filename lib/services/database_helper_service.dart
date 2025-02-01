@@ -59,4 +59,17 @@ class DatabaseHelper {
 
     return results.map((map) => Appmon.fromMap(map)).toList();
   }
+
+  Future<List<Map<String, dynamic>>> getAppmonCodeList() async {
+    final db = await database;
+    String sql = '''
+      SELECT 
+        appmon.id, appmon.code_text AS code, 
+        grade.name AS gradeName 
+      FROM appmon
+      INNER JOIN grade ON appmon.grade_id = grade.id
+      ORDER BY grade.id, appmon.id;
+    ''';
+    return await db.rawQuery(sql);
+  }
 }

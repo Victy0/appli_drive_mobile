@@ -1,7 +1,9 @@
 {
     "appmons": {
         "apps": {
-            "search": "検索"
+            "navi": "ナビ",
+            "search": "検索",
+            "superSearch": "超検索"
         },
         "grades": {
             "standard": "並",
@@ -10,7 +12,9 @@
             "god": "神"
         },
         "names": {
-            "gatchmon": "ガッチモン"
+            "dogatchmon": "ドガッチモン",
+            "gatchmon": "ガッチモン",
+            "navimon": "ナビモン"
         },
         "types": {
             "entertainment": "エンタメ",
@@ -24,6 +28,9 @@
         }
     },
     "componentsDialogs": {
+        "appmonCodeList": {
+            "codeList": "コード一覧"
+        },
         "changeLanguage": {
             "chooseLanguage": "言語を選択"
         },
