@@ -15,26 +15,68 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "APP ${AppLocalization.of(context).translate("appmons.grades.${widget.appmon.grade.name}")}",
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+
+        Container(
+          margin: const EdgeInsets.only(left: 0, right: 30),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Image.asset(
+                  "assets/images/apps/${widget.appmon.id}.png",
+                  width: 60,
+                  height: 60,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
           ),
         ),
-        Text(
-          AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        
         const SizedBox(height: 5),
-        Text(
-          AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
-          style: const TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+
+        Container(
+          margin: const EdgeInsets.only(left: 30, right: 0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Spacer(),
+              Text(
+                AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Image.asset(
+                  "assets/images/types/${widget.appmon.type.name}.png",
+                  width: 60,
+                  height: 60,
+                ),
+              ),
+              
+            ],
           ),
         ),
       ],

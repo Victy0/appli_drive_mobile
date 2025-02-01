@@ -4,7 +4,7 @@ import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_c
 import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_left.dart';
 import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_right.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
-import 'package:appli_drive_mobile/interfaces/pages/home_page/components/header_icons.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/components/header_icons_home.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
@@ -47,7 +47,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             right: 0,
             child: Column(
               children: [
-                HeaderIcons(onLanguageChange: widget.onLanguageChange),
+                HeaderIconsHome(onLanguageChange: widget.onLanguageChange),
                 const DetailRectangleLeft(),
               ]
             ),

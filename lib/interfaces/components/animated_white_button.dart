@@ -68,6 +68,7 @@ class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> with SingleTic
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: Colors.black, width: 2),
             ),
             child: Text(
               widget.text,

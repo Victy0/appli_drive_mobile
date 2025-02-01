@@ -1,7 +1,9 @@
 {
     "appmons": {
         "apps": {
-            "search": "PESQUISA"
+            "navi": "NAVEGAÇÃO",
+            "search": "PESQUISA",
+            "superSearch": "SUPER PESQUISA"
         },
         "grades": {
             "standard": "PADRÃO",
@@ -10,7 +12,9 @@
             "god": "DEUS"
         },
         "names": {
-            "gatchmon": "GATCHMON"
+            "dogatchmon": "DOGATCHMON",
+            "gatchmon": "GATCHMON",
+            "navimon": "NAVIMON"
         },
         "types": {
             "entertainment": "ENTRETERIMENTO",
@@ -24,6 +28,9 @@
         }
     },
     "componentsDialogs": {
+        "appmonCodeList": {
+            "codeList": "Lista de códigos"
+        },
         "changeLanguage": {
             "chooseLanguage": "Escolha o idioma"
         },

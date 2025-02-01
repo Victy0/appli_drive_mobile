@@ -107,6 +107,7 @@ class MenuIconsState extends State<MenuIcons> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
           onPressed: () => _navigateToDataCenterPage(context),
@@ -126,6 +127,7 @@ class MenuIconsState extends State<MenuIcons> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
           onPressed: () => _navigateToSevenCodePage(context),
@@ -145,6 +147,7 @@ class MenuIconsState extends State<MenuIcons> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
           onPressed: () => _navigateToHintsPage(context),
