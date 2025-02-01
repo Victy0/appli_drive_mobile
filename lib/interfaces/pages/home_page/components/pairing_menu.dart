@@ -54,7 +54,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
           ),
         ),
         Text(
-          "- ${AppLocalization.of(context).translate("appmons.names")} -",
+          "- ${AppLocalization.of(context).translate("appmons.names.gatchmon")} -",
           style: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
           child: RotationTransition(
             turns: _rotationAnimation,
             child: Image.asset(
-              'assets/images/chips/gatchmon.png',
+              'assets/images/apps/D1Y8.png',
               width: 200,
               height: 200,
             ),

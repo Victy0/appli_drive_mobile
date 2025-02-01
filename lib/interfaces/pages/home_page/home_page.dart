@@ -3,6 +3,7 @@ import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
 import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_left.dart';
 import 'package:appli_drive_mobile/interfaces/components/layout_details/detail_rectangle_right.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/header_icons.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
@@ -65,8 +66,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       barrierDismissible: false,
                       builder: (BuildContext context) => const DialogInsertCode(),
                     );
-                    print(appmon);
-                    //call apliarise
+                    if(appmon != null) {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: appmon, appmonLinked: null),
+                      ));
+                    }
                   },
                   child: const AnimatedWhiteButton(text: 'APPLIARISE'),
                 ),

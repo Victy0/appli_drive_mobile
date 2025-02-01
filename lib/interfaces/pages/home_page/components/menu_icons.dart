@@ -103,11 +103,17 @@ class MenuIconsState extends State<MenuIcons> {
   Widget iconDataCenter(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: IconButton(
-        onPressed: () => _navigateToDataCenterPage(context),
-        icon: Image.asset(
-          'assets/images/icons/book_box.png',
-          height: 55,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: IconButton(
+          onPressed: () => _navigateToDataCenterPage(context),
+          icon: Image.asset(
+            'assets/images/icons/book_box.png',
+            height: 55,
+          ),
         ),
       ),
     );
@@ -116,11 +122,17 @@ class MenuIconsState extends State<MenuIcons> {
   Widget iconSevenCode(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: IconButton(
-        onPressed: () => _navigateToSevenCodePage(context),
-        icon: Image.asset(
-          'assets/images/icons/orb_box.png',
-          height: 55,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: IconButton(
+          onPressed: () => _navigateToSevenCodePage(context),
+          icon: Image.asset(
+            'assets/images/icons/orb_box.png',
+            height: 55,
+          ),
         ),
       ),
     );
@@ -129,11 +141,17 @@ class MenuIconsState extends State<MenuIcons> {
   Widget iconHints(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: IconButton(
-        onPressed: () => _navigateToHintsPage(context),
-        icon: Image.asset(
-          'assets/images/icons/light_bulb_box.png',
-          height: 55,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: IconButton(
+          onPressed: () => _navigateToHintsPage(context),
+          icon: Image.asset(
+            'assets/images/icons/light_bulb_box.png',
+            height: 55,
+          ),
         ),
       ),
     );

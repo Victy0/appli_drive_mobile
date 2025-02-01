@@ -104,7 +104,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                 Icons.check,
                 size: 40.0,
                 color: Colors.green,
-              )
+              ),
             ),
           ],
         ),
