@@ -1,10 +1,36 @@
 {
+    "appmons": {
+        "apps": {
+            "search": "SEARCH"
+        },
+        "grades": {
+            "standard": "STANDART",
+            "super": "SUPER",
+            "ultimate": "ULTIMATE",
+            "god": "GOD"
+        },
+        "names": {
+            "gatchmon": "GATCHMON"
+        },
+        "types": {
+            "entertainment": "ENTERTAINMENT",
+            "game": "GAME",
+            "god": "GOD",
+            "life": "LIFE",
+            "navi": "NAVI",
+            "social": "SOCIAL",
+            "system": "SYSTEM",
+            "tools": "TOOLS"
+        }
+    },
     "componentsDialogs": {
         "changeLanguage": {
             "chooseLanguage": "Choose language"
         },
         "insertCode": {
-            "enterAppmonCode": "Enter the Appmon code"
+            "codeIsRequired": "Code is required",
+            "enterAppmonCode": "Enter the Appmon code",
+            "invalidCode": "Invalid code"
         }
     },
     "pages": {

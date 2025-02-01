@@ -30,8 +30,10 @@ flutter:
   assets:
     - assets/appli_drive_database.db
     - assets/images/
-    - assets/images/chips/
+    - assets/images/appmons/
+    - assets/images/apps/
     - assets/images/flags/
     - assets/images/icons/
+    - assets/images/types/
     - assets/sounds/
     - assets/langs/

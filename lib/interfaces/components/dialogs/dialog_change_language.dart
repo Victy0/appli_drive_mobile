@@ -102,10 +102,10 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.check_box_sharp,
+            Icons.check,
             size: 40.0,
             color: Colors.green,
-          )
+          ),
         ),
       ],
     );

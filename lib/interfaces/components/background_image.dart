@@ -36,6 +36,14 @@ class BackgroundImageState extends State<BackgroundImage> {
         return const Color.fromARGB(255, 174, 0, 255).withOpacity(0.3);
       case "yellow":
         return const Color.fromARGB(255, 255, 217, 0).withOpacity(0.3);
+      case "red":
+        return const Color.fromARGB(255, 255, 11, 11).withOpacity(0.3);
+      case "pink":
+        return const Color.fromARGB(255, 255, 43, 244).withOpacity(0.3);
+      case "orange":
+        return const Color.fromARGB(255, 255, 123, 0).withOpacity(0.3);
+      case "green":
+        return const Color.fromARGB(255, 51, 255, 0).withOpacity(0.3);
       case "grey":
       default:
         return const Color.fromARGB(255, 155, 155, 155).withOpacity(0.3);

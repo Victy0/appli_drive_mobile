@@ -1,9 +1,8 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIcons extends StatefulWidget {
-  final Function(Locale) onLanguageChange;
-  const HeaderIcons({super.key, required this.onLanguageChange});
+  final String grade;
+  const HeaderIcons({super.key, required this.grade});
 
   @override
   HeaderIconsState createState() => HeaderIconsState();
@@ -17,9 +16,8 @@ class HeaderIconsState extends State<HeaderIcons> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          iconInformation(context),
-          const SizedBox(width: 15),
-          iconLanguage(context, widget.onLanguageChange),
+          if(widget.grade == "standard")
+            iconPairing(context),
           const Spacer(),
           iconAppmonListCode(context)
         ],
@@ -27,7 +25,7 @@ class HeaderIconsState extends State<HeaderIcons> {
     );
   }
 
-  Widget iconInformation(context) {
+  Widget iconPairing(context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -73,39 +71,19 @@ class HeaderIconsState extends State<HeaderIcons> {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Icon(
-                  Icons.check,
+                  Icons.check_box_sharp,
                   size: 40.0,
                   color: Colors.green,
-                ),
+                )
               ),
             ],
           ),
         ),
         icon: Image.asset(
-          'assets/images/icons/question_mark_box.png',
+          'assets/images/icons/link_box.png',
           height: 40,
         ),
-      ),
-    );
-  }
-
-  Widget iconLanguage(context, onLanguageChange) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: IconButton(
-        onPressed: () => showDialog<String>(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: onLanguageChange),
-        ),
-        icon: Image.asset(
-          'assets/images/icons/language_box.png',
-          height: 40,
-        ),
-      ),
+      )
     );
   }
 
@@ -155,10 +133,10 @@ class HeaderIconsState extends State<HeaderIcons> {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Icon(
-                  Icons.check,
+                  Icons.check_box_sharp,
                   size: 40.0,
                   color: Colors.green,
-                ),
+                )
               ),
             ],
           ),
