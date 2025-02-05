@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
@@ -128,9 +130,9 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
+                  child: 
+                  Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.white.withOpacity(0.8),
@@ -141,10 +143,10 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
                     ],
                   ),
                   child: Image.asset(
-                  "assets/images/types/${widget.appmon.type.name}.png",
-                  width: 60,
-                  height: 60,
-                ),
+                    "assets/images/types/${widget.appmon.type.name}.png",
+                    width: 60,
+                    height: 60,
+                  ),
                 ),
               ),
             ],
