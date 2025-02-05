@@ -34,6 +34,14 @@
         "changeLanguage": {
             "chooseLanguage": "Choose language"
         },
+        "infoAppmon": {
+            "name": "NAME",
+            "app": "APP",
+            "grade": "GRADE",
+            "type": "TYPE",
+            "power": "POWER",
+            "profile": "PROFILE"
+        },
         "insertCode": {
             "codeIsRequired": "Code is required",
             "enterAppmonCode": "Enter the Appmon code",

@@ -1,6 +1,6 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -33,6 +33,11 @@ class AppmonActionsState extends State<AppmonActions> {
             child: IconButton(
               onPressed: () => {
                 _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+                showDialog<String>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => DialogInfoAppmon(appmon: widget.appmon, interface: "appliArise"),
+                ),
               },
               icon: Image.asset(
                 'assets/images/icons/magnifying_glass_box.png',
@@ -49,9 +54,10 @@ class AppmonActionsState extends State<AppmonActions> {
                 builder: (BuildContext context) => const DialogInsertCode(),
               );
               if(appmonLink != null) {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                print(appmonLink);
+                /*Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: widget.appmon, appmonLinked: appmonLink),
-                ));
+                ));*/
               }
             },
             child: const AnimatedWhiteButton(text: 'APPLINK'),

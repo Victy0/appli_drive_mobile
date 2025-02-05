@@ -34,6 +34,14 @@
         "changeLanguage": {
             "chooseLanguage": "Escolha o idioma"
         },
+        "infoAppmon": {
+            "name": "NOME",
+            "app": "APP",
+            "grade": "NÍVEL",
+            "type": "ATRIBUTO",
+            "power": "PODER",
+            "profile": "PERFIL"
+        },
         "insertCode": {
             "codeIsRequired": "Código é obrigatório",
             "enterAppmonCode": "Informe o código do Appmon",

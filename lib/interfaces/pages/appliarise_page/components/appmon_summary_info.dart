@@ -79,7 +79,6 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
                   ),
                   softWrap: true,
                   overflow: TextOverflow.visible,
-                  
                 ),
               ),
             ],

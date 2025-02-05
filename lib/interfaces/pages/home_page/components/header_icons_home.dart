@@ -60,6 +60,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
             barrierDismissible: false,
             context: context,
             builder: (BuildContext context) => AlertDialog(
+              backgroundColor: const Color.fromARGB(255, 241, 241, 241),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
