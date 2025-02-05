@@ -1,6 +1,8 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,10 +14,12 @@ class DialogInsertCode extends StatefulWidget {
 }
 
 class DialogInsertCodeState extends State<DialogInsertCode> {
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   final TextEditingController _controller = TextEditingController();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+
   String _errorCode = "";
-  
+
   @override
   void initState() {
     super.initState();
@@ -78,6 +82,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           children: [
             TextButton(
               onPressed: () {
+                _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
                 Navigator.of(context).pop();
               },
               child: const Icon(
@@ -90,11 +95,13 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
               onPressed: () async {
                 String code = _controller.text;
                 if( code == "") {
+                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
                   setState(() { _errorCode = "componentsDialogs.insertCode.codeIsRequired"; });
                   return;
                 }
                 List<Appmon> appmonList = await _databaseHelper.getAppmonByCode(code.toUpperCase());
                 if(appmonList.isEmpty) {
+                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
                   setState(() { _errorCode = "componentsDialogs.insertCode.invalidCode"; });
                   return;
                 }

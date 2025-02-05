@@ -1,4 +1,6 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,12 +13,14 @@ class DialogChangeLanguage extends StatefulWidget {
 }
 
 class DialogChangeLanguageState extends State<DialogChangeLanguage> {
-  late Locale _selectedLocale;
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   final List<Map<String, dynamic>> _languages = [
     {'label': 'Português', 'locale': const Locale('pt', 'BR'), 'flag': 'assets/images/flags/br.png'},
     {'label': 'English', 'locale': const Locale('en', 'US'), 'flag': 'assets/images/flags/us.png'},
     {'label': '日本語', 'locale': const Locale('ja', 'JP'), 'flag': 'assets/images/flags/jp.png'},
   ];
+
+  late Locale _selectedLocale;
 
   Future<Locale> getSavedLocale() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -95,6 +99,8 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
+            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+
             SharedPreferences prefs = await SharedPreferences.getInstance();
             await prefs.setString('selected_language', _selectedLocale.languageCode);
             await prefs.setString('selected_country', _selectedLocale.countryCode ?? '');

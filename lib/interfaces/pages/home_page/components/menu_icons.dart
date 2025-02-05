@@ -1,6 +1,8 @@
 import 'package:appli_drive_mobile/interfaces/pages/data_center_page/data_center_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/hints_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/seven_code_page.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class MenuIcons extends StatefulWidget {
@@ -12,6 +14,8 @@ class MenuIcons extends StatefulWidget {
 }
 
 class MenuIconsState extends State<MenuIcons> {  
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+
   void _navigateToDataCenterPage(BuildContext context) async {
     Navigator.pushReplacement(
       context,
@@ -110,7 +114,10 @@ class MenuIconsState extends State<MenuIcons> {
           border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
-          onPressed: () => _navigateToDataCenterPage(context),
+          onPressed: () => {
+            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _navigateToDataCenterPage(context),
+          },
           icon: Image.asset(
             'assets/images/icons/book_box.png',
             height: 55,
@@ -130,7 +137,10 @@ class MenuIconsState extends State<MenuIcons> {
           border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
-          onPressed: () => _navigateToSevenCodePage(context),
+          onPressed: () => {
+            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _navigateToSevenCodePage(context),
+          },
           icon: Image.asset(
             'assets/images/icons/orb_box.png',
             height: 55,
@@ -150,7 +160,10 @@ class MenuIconsState extends State<MenuIcons> {
           border: Border.all(color: Colors.black, width: 2),
         ),
         child: IconButton(
-          onPressed: () => _navigateToHintsPage(context),
+          onPressed: () => {
+            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _navigateToHintsPage(context),
+          },
           icon: Image.asset(
             'assets/images/icons/light_bulb_box.png',
             height: 55,

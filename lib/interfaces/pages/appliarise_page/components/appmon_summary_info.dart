@@ -18,19 +18,27 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
 
         Container(
           margin: const EdgeInsets.only(left: 0, right: 30),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Image.asset(
-                  "assets/images/apps/${widget.appmon.id}.png",
-                  width: 60,
-                  height: 60,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.8),
+                        blurRadius: 8,
+                        spreadRadius: 2,
+                        offset: const Offset(1, 1),
+                      ),
+                    ],
+                  ),
+                  child: Image.asset(
+                    "assets/images/apps/${widget.appmon.id}.png",
+                    width: 60,
+                    height: 60,
+                  ),
                 ),
               ),
               Expanded(
@@ -39,9 +47,37 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(2, 2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(-2, -2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(2, -2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.white,
+                        offset: Offset(-2, 2),
+                        blurRadius: 10,
+                      ),
+                    ],
                   ),
                   softWrap: true,
                   overflow: TextOverflow.visible,
+                  
                 ),
               ),
             ],
@@ -52,10 +88,6 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
 
         Container(
           margin: const EdgeInsets.only(left: 30, right: 0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(5),
-          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -65,17 +97,56 @@ class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      color: Colors.white,
+                      offset: Offset(0, 0),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.white,
+                      offset: Offset(2, 2),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.white,
+                      offset: Offset(-2, -2),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.white,
+                      offset: Offset(2, -2),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.white,
+                      offset: Offset(-2, 2),
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Image.asset(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.8),
+                        blurRadius: 8,
+                        spreadRadius: 2,
+                        offset: const Offset(1, 1),
+                      ),
+                    ],
+                  ),
+                  child: Image.asset(
                   "assets/images/types/${widget.appmon.type.name}.png",
                   width: 60,
                   height: 60,
                 ),
+                ),
               ),
-              
             ],
           ),
         ),

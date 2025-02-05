@@ -1,4 +1,6 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class DialogAppmonCodeList extends StatefulWidget {
@@ -10,6 +12,8 @@ class DialogAppmonCodeList extends StatefulWidget {
 }
 
 class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -38,6 +42,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       actions: <Widget>[
         TextButton(
           onPressed: () {
+            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
             Navigator.pop(context);
           },
           child: const Icon(
