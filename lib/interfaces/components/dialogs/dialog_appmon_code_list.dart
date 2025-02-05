@@ -17,6 +17,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

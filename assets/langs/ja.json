@@ -34,6 +34,14 @@
         "changeLanguage": {
             "chooseLanguage": "言語を選択"
         },
+        "infoAppmon": {
+            "name": "名称",
+            "app": "アプリ",
+            "grade": "グレード",
+            "type": "属性",
+            "power": "パワー値",
+            "profile": "プロフィール"
+        },
         "insertCode": {
             "codeIsRequired": "コードが必要です",
             "enterAppmonCode": "アプモンコードを入力",
