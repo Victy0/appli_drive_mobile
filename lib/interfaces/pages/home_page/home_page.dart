@@ -9,6 +9,7 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -22,14 +23,13 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late AudioPlayer _audioPlayer;
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
     if(widget.initSound) {
-      _audioPlayer.play(AssetSource('sounds/start.mp3'));
+      _audioPlayerMomentary.play(AssetSource('sounds/start.mp3'));
     }    
   }
 

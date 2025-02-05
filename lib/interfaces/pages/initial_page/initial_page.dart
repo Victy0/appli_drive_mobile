@@ -4,6 +4,7 @@ import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_l
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_state/screen_state.dart';
@@ -18,23 +19,24 @@ class InitialPage extends StatefulWidget {
 }
 
 class InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
+  final AudioPlayer _audioPlayerContinuous = AudioServiceContinuous.instance.player;
+
+  final Screen _screen = Screen();
+  Stream<ScreenStateEvent>? _screenStream;
+
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
 
   late AnimationController _controllerText;
   late Animation<double> _opacityAnimationText;
 
-  late AudioPlayer _audioPlayer;
-  final Screen _screen = Screen();
-  Stream<ScreenStateEvent>? _screenStream;
-
   void _startMonitoring() {
     _screenStream = _screen.screenStateStream;
     _screenStream?.listen((event) {
       if (event == ScreenStateEvent.SCREEN_OFF) {
-        _audioPlayer.pause();
+        _audioPlayerContinuous.pause();
       } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
-        _audioPlayer.resume();
+        _audioPlayerContinuous.resume();
       }
     });
   }
@@ -59,9 +61,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
-    _audioPlayer.setReleaseMode(ReleaseMode.loop);
-    _audioPlayer.play(AssetSource('sounds/initial_page.mp3'));
+    _audioPlayerContinuous.play(AssetSource('sounds/initial_page.mp3'));
     _startMonitoring();
 
     _controllers = List.generate(12, (index) {
@@ -84,8 +84,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   }
 
   void _navigateToNextPage(BuildContext context) async {
-    await _audioPlayer.stop();
-    _audioPlayer.setReleaseMode(ReleaseMode.stop);
+    await _audioPlayerContinuous.stop();
     Navigator.of(context).pushReplacement(_createRouteHomePage(widget.onLanguageChange));
   }
 
@@ -165,7 +164,6 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
       controller.dispose();
     }
     _controllerText.dispose();
-    _audioPlayer.dispose();
     super.dispose();
   }
 }

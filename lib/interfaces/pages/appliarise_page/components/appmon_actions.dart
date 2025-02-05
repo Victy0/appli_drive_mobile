@@ -2,6 +2,8 @@ import 'package:appli_drive_mobile/interfaces/components/animated_white_button.d
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AppmonActions extends StatefulWidget {
@@ -14,6 +16,8 @@ class AppmonActions extends StatefulWidget {
 }
 
 class AppmonActionsState extends State<AppmonActions> {
+  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,7 +31,9 @@ class AppmonActionsState extends State<AppmonActions> {
               border: Border.all(color: Colors.black, width: 2),
             ),
             child: IconButton(
-              onPressed: () => (),
+              onPressed: () => {
+                _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+              },
               icon: Image.asset(
                 'assets/images/icons/magnifying_glass_box.png',
                 height: 50,
