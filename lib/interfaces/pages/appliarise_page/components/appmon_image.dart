@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class AppmonImage extends StatefulWidget {
   final Appmon appmon;
@@ -11,15 +14,59 @@ class AppmonImage extends StatefulWidget {
 }
 
 class AppmonImageState extends State<AppmonImage> {
+  double _tiltAngle = 0.0;
+  
+  @override
+  void initState() {
+    super.initState();
+
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      setState(() {
+        _tiltAngle = event.x * 0.02;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Image.asset(
-          "assets/images/appmons/${widget.appmon.id}.png",
-          width: 310,
-          height: 310,
+
+        Stack(
+          children: [
+            Container(
+              width: 320,
+              height: 320,
+              alignment: Alignment.center,
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    Colors.white.withOpacity(0.8),
+                    BlendMode.srcATop,
+                  ),
+                  child: Image.asset(
+                  "assets/images/appmons/${widget.appmon.id}.png",
+                  width: 315,
+                  height: 315,
+                ),
+                ),
+              ),
+            ),
+            Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.identity()
+                ..setEntry(3, 2, 0.007)
+                ..rotateY(_tiltAngle),
+              child: Image.asset(
+                "assets/images/appmons/${widget.appmon.id}.png",
+                width: 310,
+                height: 310,
+              ),
+            ),
+          ],
         ),
+        
         const SizedBox(height: 5),
         Text(
           AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),

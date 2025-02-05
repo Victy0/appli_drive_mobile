@@ -18,6 +18,8 @@ dependencies:
     sdk: flutter
   audioplayers: ^6.1.0
   screen_state: ^3.0.0
+  sensors_plus: ^3.0.4
+
 
 dev_dependencies:
   flutter_test:
