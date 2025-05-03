@@ -64,7 +64,11 @@ class AppliarisePageState extends State<AppliarisePage> {
                 const SizedBox(height: 20),
                 AppmonImage(appmon: widget.appmon),
                 const SizedBox(height: 40),
-                AppmonActions(appmon: widget.appmon, onLanguageChange: widget.onLanguageChange),
+                AppmonActions(
+                  appmon: widget.appmon,
+                  hasAppmonLinked: widget.appmonLinked != null,
+                  onLanguageChange: widget.onLanguageChange
+                ),
               ],
             ),
           ),

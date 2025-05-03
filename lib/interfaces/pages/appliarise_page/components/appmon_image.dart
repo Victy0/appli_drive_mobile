@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
@@ -15,12 +16,14 @@ class AppmonImage extends StatefulWidget {
 
 class AppmonImageState extends State<AppmonImage> {
   double _tiltAngle = 0.0;
+  StreamSubscription<AccelerometerEvent>? _accelSub;
   
   @override
   void initState() {
     super.initState();
 
-    accelerometerEvents.listen((AccelerometerEvent event) {
+    _accelSub = accelerometerEvents.listen((AccelerometerEvent event) {
+      if (!mounted) return;
       setState(() {
         _tiltAngle = event.x * 0.02;
       });
@@ -104,5 +107,11 @@ class AppmonImageState extends State<AppmonImage> {
         ),
       ],
     );
+  }
+
+@override
+  void dispose() {
+    _accelSub?.cancel();
+    super.dispose();
   }
 }
