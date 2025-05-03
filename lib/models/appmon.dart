@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/models/fusion_info.dart';
 import 'package:appli_drive_mobile/models/grade_appmon.dart';
 import 'package:appli_drive_mobile/models/type_appmon.dart';
 
@@ -9,6 +10,8 @@ class Appmon {
   final int power;
   final TypeAppmon type;
   final GradeAppmon grade;
+  final FusionInfo? fusionInfo;
+  bool? fusioned;
 
   Appmon({
     required this.id,
@@ -18,6 +21,8 @@ class Appmon {
     required this.power,
     required this.type,
     required this.grade,
+    required this.fusionInfo,
+    this.fusioned,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -29,6 +34,8 @@ class Appmon {
       power: map['power'],
       type: TypeAppmon.fromMap(map),
       grade: GradeAppmon.fromMap(map),
+      fusionInfo: map['fusion_id'] != null ? FusionInfo.fromMap(map) : null,
+      fusioned: null,
     );
   }
 }

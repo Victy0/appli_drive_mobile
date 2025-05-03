@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -9,7 +10,13 @@ import 'package:flutter/material.dart';
 class AppmonActions extends StatefulWidget {
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
-  const AppmonActions({super.key, required this.appmon, required this.onLanguageChange});
+  final bool hasAppmonLinked;
+  const AppmonActions({
+    super.key,
+    required this.appmon,
+    required this.hasAppmonLinked,
+    required this.onLanguageChange
+  });
 
   @override
   AppmonActionsState createState() => AppmonActionsState();
@@ -46,21 +53,27 @@ class AppmonActionsState extends State<AppmonActions> {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () async {
-              Appmon? appmonLink = await showDialog<Appmon>(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) => const DialogInsertCode(),
-              );
-              if(appmonLink != null) {
-                print(appmonLink);
-                /*Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: widget.appmon, appmonLinked: appmonLink),
-                ));*/
-              }
-            },
-            child: const AnimatedWhiteButton(text: 'APPLINK'),
+          Visibility(
+            visible: !widget.hasAppmonLinked,
+            child: GestureDetector(
+              onTap: () async {
+                Appmon? appmonLinked = await showDialog<Appmon>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => DialogInsertCode(fusionInfo: widget.appmon.fusionInfo),
+                );
+                if(appmonLinked != null) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => AppliarisePage(
+                      onLanguageChange: widget.onLanguageChange,
+                      appmon: appmonLinked.fusioned != null ? appmonLinked : widget.appmon,
+                      appmonLinked: appmonLinked.fusioned != null ? null : appmonLinked
+                    ),
+                  ));
+                }
+              },
+              child: const AnimatedWhiteButton(text: 'APPLINK'),
+            ),
           ),
         ],
       ),
