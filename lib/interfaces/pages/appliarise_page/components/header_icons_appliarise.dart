@@ -1,11 +1,12 @@
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
+import 'package:appli_drive_mobile/models/grade_appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIconsAppliarise extends StatefulWidget {
-  final String grade;
+  final GradeAppmon grade;
   const HeaderIconsAppliarise({super.key, required this.grade});
 
   @override
@@ -19,7 +20,7 @@ class HeaderIconsAppliariseState extends State<HeaderIconsAppliarise> {
   late List<Map<String, dynamic>> appmonCodeList;
   
   _getAppmonCodeList() async {
-    appmonCodeList = await _databaseHelper.getAppmonCodeList();
+    appmonCodeList = await _databaseHelper.getAppmonCodeList(widget.grade.id);
   }
 
   @override
@@ -35,7 +36,7 @@ class HeaderIconsAppliariseState extends State<HeaderIconsAppliarise> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(widget.grade == "standard")
+          if(widget.grade.name == "standard")
             iconPairing(context),
           const Spacer(),
           iconAppmonListCode(context)

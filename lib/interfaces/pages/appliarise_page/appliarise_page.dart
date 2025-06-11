@@ -52,26 +52,54 @@ class AppliarisePageState extends State<AppliarisePage> {
             right: 0,
             child: Column(
               children: [
-                HeaderIconsAppliarise(grade: widget.appmon.grade.name),
+                HeaderIconsAppliarise(grade: widget.appmon.grade),
               ]
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppmonSummaryInfo(appmon: widget.appmon),
-                const SizedBox(height: 20),
-                AppmonImage(appmon: widget.appmon),
-                const SizedBox(height: 40),
-                AppmonActions(
-                  appmon: widget.appmon,
-                  hasAppmonLinked: widget.appmonLinked != null,
-                  onLanguageChange: widget.onLanguageChange
-                ),
-              ],
+
+          // APPLI ARRISE
+          Visibility(
+            visible: widget.appmonLinked == null,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppmonSummaryInfo(appmon: widget.appmon),
+                  const SizedBox(height: 20),
+                  AppmonImage(appmon: widget.appmon),
+                  const SizedBox(height: 40),
+                  AppmonActions(
+                    appmon: widget.appmon,
+                    onLanguageChange: widget.onLanguageChange
+                  ),
+                ],
+              ),
             ),
           ),
+
+          // APP LINK
+          Visibility(
+            visible: widget.appmonLinked != null,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //Criar appmon link summary
+                  AppmonSummaryInfo(appmon: widget.appmon),
+                  const SizedBox(height: 40),
+                  //Criar imagem appmon link
+                  AppmonImage(appmon: widget.appmon),
+                  const SizedBox(height: 40),
+                  //Criar appmon link actions
+                  AppmonActions(
+                    appmon: widget.appmon,
+                    onLanguageChange: widget.onLanguageChange
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
           ClosePageButton(onLanguageChange: widget.onLanguageChange),
         ],
       )

@@ -20,7 +20,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
   late List<Map<String, dynamic>> appmonCodeList;
   
   _getAppmonCodeList() async {
-    appmonCodeList = await _databaseHelper.getAppmonCodeList();
+    appmonCodeList = await _databaseHelper.getAppmonCodeList(1);
   }
 
   @override
