@@ -10,11 +10,9 @@ import 'package:flutter/material.dart';
 class AppmonActions extends StatefulWidget {
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
-  final bool hasAppmonLinked;
   const AppmonActions({
     super.key,
     required this.appmon,
-    required this.hasAppmonLinked,
     required this.onLanguageChange
   });
 
@@ -53,27 +51,24 @@ class AppmonActionsState extends State<AppmonActions> {
             ),
           ),
           const Spacer(),
-          Visibility(
-            visible: !widget.hasAppmonLinked,
-            child: GestureDetector(
-              onTap: () async {
-                Appmon? appmonLinked = await showDialog<Appmon>(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) => DialogInsertCode(fusionInfo: widget.appmon.fusionInfo),
-                );
-                if(appmonLinked != null) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => AppliarisePage(
-                      onLanguageChange: widget.onLanguageChange,
-                      appmon: appmonLinked.fusioned != null ? appmonLinked : widget.appmon,
-                      appmonLinked: appmonLinked.fusioned != null ? null : appmonLinked
-                    ),
-                  ));
-                }
-              },
-              child: const AnimatedWhiteButton(text: 'APPLINK'),
-            ),
+          GestureDetector(
+            onTap: () async {
+              Appmon? appmonLinked = await showDialog<Appmon>(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) => DialogInsertCode(fusionInfo: widget.appmon.fusionInfo),
+              );
+              if(appmonLinked != null) {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => AppliarisePage(
+                    onLanguageChange: widget.onLanguageChange,
+                    appmon: appmonLinked.fusioned != null ? appmonLinked : widget.appmon,
+                    appmonLinked: appmonLinked.fusioned != null ? null : appmonLinked
+                  ),
+                ));
+              }
+            },
+            child: const AnimatedWhiteButton(text: 'APPLINK'),
           ),
         ],
       ),

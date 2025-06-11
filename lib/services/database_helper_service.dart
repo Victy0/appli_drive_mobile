@@ -78,7 +78,7 @@ class DatabaseHelper {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getAppmonCodeList() async {
+  Future<List<Map<String, dynamic>>> getAppmonCodeList(int gradeLevelId) async {
     final db = await database;
     String sql = '''
       SELECT 
@@ -86,8 +86,9 @@ class DatabaseHelper {
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
+      WHERE grade.id >= ?
       ORDER BY grade.id, appmon.inner_id;
     ''';
-    return await db.rawQuery(sql);
+    return await db.rawQuery(sql, [gradeLevelId]);
   }
 }
