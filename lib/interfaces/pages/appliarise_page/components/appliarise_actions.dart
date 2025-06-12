@@ -8,20 +8,20 @@ import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-class AppmonActions extends StatefulWidget {
+class AppliariseActions extends StatefulWidget {
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
-  const AppmonActions({
+  const AppliariseActions({
     super.key,
     required this.appmon,
     required this.onLanguageChange
   });
 
   @override
-  AppmonActionsState createState() => AppmonActionsState();
+  AppliariseActionsState createState() => AppliariseActionsState();
 }
 
-class AppmonActionsState extends State<AppmonActions> {
+class AppliariseActionsState extends State<AppliariseActions> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   
   @override

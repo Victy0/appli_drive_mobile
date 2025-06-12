@@ -53,7 +53,7 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
       ),
       title: Center(
         child: Text(
-          AppLocalization.of(context).translate("componentsDialogs.changeLanguage.chooseLanguage"),
+          AppLocalization.of(context).translate("components.dialogs.changeLanguage.chooseLanguage"),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontWeight: FontWeight.bold,

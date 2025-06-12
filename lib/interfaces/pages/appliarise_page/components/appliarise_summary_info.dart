@@ -2,15 +2,15 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 
-class AppmonSummaryInfo extends StatefulWidget {
+class AppliariseSummaryInfo extends StatefulWidget {
   final Appmon appmon;
-  const AppmonSummaryInfo({super.key, required this.appmon});
+  const AppliariseSummaryInfo({super.key, required this.appmon});
 
   @override
-  AppmonSummaryInfoState createState() => AppmonSummaryInfoState();
+  AppliariseSummaryInfoState createState() => AppliariseSummaryInfoState();
 }
 
-class AppmonSummaryInfoState extends State<AppmonSummaryInfo> {
+class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
   @override
   Widget build(BuildContext context) {
     return Column(

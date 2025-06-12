@@ -36,7 +36,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
       ),
       title: Center(
         child: Text(
-          AppLocalization.of(context).translate("componentsDialogs.insertCode.enterAppmonCode"),
+          AppLocalization.of(context).translate("components.dialogs.insertCode.enterAppmonCode"),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                 String code = _controller.text;
                 if( code == "") {
                   _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
-                  setState(() { _errorCode = "componentsDialogs.insertCode.codeIsRequired"; });
+                  setState(() { _errorCode = "components.dialogs.insertCode.codeIsRequired"; });
                   return;
                 }
                 Appmon? appmon;
@@ -121,7 +121,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                     appmon = await _databaseHelper.getAppmonByCode(code.toUpperCase());
                     if(appmon == null) {
                     _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
-                    setState(() { _errorCode = "componentsDialogs.insertCode.invalidCode"; });
+                    setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
                     return;
                   }
                 }

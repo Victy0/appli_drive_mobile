@@ -60,13 +60,11 @@ class AppLinkPageState extends State<AppLinkPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                //Criar appmon link summary
                 AppLinkSummaryInfo(
                   appmon: widget.appmon,
                   appmonLinked: widget.appmonLinked
                 ),
                 const SizedBox(height: 100),
-                //Criar imagem appmon link
                 AppLinkImage(
                   appmon: widget.appmon,
                   appmonLinked: widget.appmonLinked,
