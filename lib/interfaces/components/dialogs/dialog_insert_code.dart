@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DialogInsertCode extends StatefulWidget {
-  final FusionInfo? fusionInfo;
-  final String appmonCodeArised;
-  const DialogInsertCode({super.key, this.fusionInfo, this.appmonCodeArised = ""});
+  final Appmon? currentAppmon;
+  const DialogInsertCode({super.key, this.currentAppmon});
 
   @override
   DialogInsertCodeState createState() => DialogInsertCodeState();
@@ -104,23 +103,27 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   return;
                 }
                 Appmon? appmon;
-                FusionInfo? fusion = widget.fusionInfo;
-                if(
-                  fusion != null &&
-                  widget.appmonCodeArised != code.toUpperCase() &&
-                  (fusion.appmonBase1 == code.toUpperCase() || fusion.appmonBase2 == code.toUpperCase())
-                ) {
-                  appmon = await _databaseHelper.getAppmonByCode(fusion.id);
-                  if(appmon != null) {
-                    appmon.fusioned = true;
+                if(widget.currentAppmon != null) {
+                  FusionInfo? fusion = widget.currentAppmon?.fusionInfo;
+                  if(widget.currentAppmon?.code == code.toUpperCase()) {
+                    appmon = widget.currentAppmon;
+                    appmon?.fusioned = null;
+                  } else {
+                    if(fusion != null && (fusion.appmonBase1 == code.toUpperCase() || fusion.appmonBase2 == code.toUpperCase())) {
+                      appmon = await _databaseHelper.getAppmonByCode(fusion.id);
+                      if(appmon != null) {
+                        appmon.fusioned = true;
+                      }
+                    }
                   }
-                } else {
-                  appmon = await _databaseHelper.getAppmonByCode(code.toUpperCase());
                 }
                 if(appmon == null) {
-                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
-                  setState(() { _errorCode = "componentsDialogs.insertCode.invalidCode"; });
-                  return;
+                    appmon = await _databaseHelper.getAppmonByCode(code.toUpperCase());
+                    if(appmon == null) {
+                    _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
+                    setState(() { _errorCode = "componentsDialogs.insertCode.invalidCode"; });
+                    return;
+                  }
                 }
                 Navigator.pop(context, appmon);
               },

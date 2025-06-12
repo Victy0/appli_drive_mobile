@@ -49,7 +49,12 @@
         }
     },
     "pages": {
-        "dataCenter": {
+        "appLinkPage": {
+            "unlinkDialog": {
+                "context": "アンドゥアプリンク"
+            }
+        },
+        "dataCenterPage": {
             "dataCenter": "データセンター"
         },
         "hintsPage": {

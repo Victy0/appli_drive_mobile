@@ -49,7 +49,12 @@
         }
     },
     "pages": {
-        "dataCenter": {
+        "appLinkPage": {
+            "unlinkDialog": {
+                "context": "Desfazer APP LINK"
+            }
+        },
+        "dataCenterPage": {
             "dataCenter": "Centro de dados"
         },
         "hintsPage": {

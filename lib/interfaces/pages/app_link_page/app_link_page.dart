@@ -1,22 +1,22 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_actions.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_image.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_summary_info.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/header_icons_appliarise.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_summary_info.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 
-class AppliarisePage extends StatefulWidget {
+class AppLinkPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
-  const AppliarisePage({super.key, required this.onLanguageChange, required this.appmon});
+  final Appmon appmonLinked;
+  const AppLinkPage({super.key, required this.onLanguageChange, required this.appmon, required this.appmonLinked});
 
   @override
-  AppliarisePageState createState() => AppliarisePageState();
+  AppLinkPageState createState() => AppLinkPageState();
 }
 
-class AppliarisePageState extends State<AppliarisePage> {
+class AppLinkPageState extends State<AppLinkPage> {
   _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
@@ -51,7 +51,7 @@ class AppliarisePageState extends State<AppliarisePage> {
             right: 0,
             child: Column(
               children: [
-                HeaderIconsAppliarise(grade: widget.appmon.grade),
+                AppLinkHeader(appmon: widget.appmon, onLanguageChange: widget.onLanguageChange),
               ]
             ),
           ),
@@ -60,13 +60,17 @@ class AppliarisePageState extends State<AppliarisePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AppmonSummaryInfo(appmon: widget.appmon),
-                const SizedBox(height: 20),
-                AppmonImage(appmon: widget.appmon),
-                const SizedBox(height: 40),
-                AppmonActions(
+                //Criar appmon link summary
+                AppLinkSummaryInfo(
                   appmon: widget.appmon,
-                  onLanguageChange: widget.onLanguageChange
+                  appmonLinked: widget.appmonLinked
+                ),
+                const SizedBox(height: 100),
+                //Criar imagem appmon link
+                AppLinkImage(
+                  appmon: widget.appmon,
+                  appmonLinked: widget.appmonLinked,
+                  linkColor: _getColorByAppmonType(widget.appmonLinked.type.name),
                 ),
               ],
             ),

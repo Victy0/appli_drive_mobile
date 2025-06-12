@@ -68,7 +68,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     );
                     if(appmon != null) {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: appmon, appmonLinked: null),
+                        builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: appmon),
                       ));
                     }
                   },
