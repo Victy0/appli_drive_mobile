@@ -1,9 +1,9 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_actions.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_image.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appmon_summary_info.dart';
-import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/header_icons_appliarise.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +51,7 @@ class AppliarisePageState extends State<AppliarisePage> {
             right: 0,
             child: Column(
               children: [
-                HeaderIconsAppliarise(grade: widget.appmon.grade),
+                AppliariseHeader(grade: widget.appmon.grade),
               ]
             ),
           ),
@@ -60,11 +60,11 @@ class AppliarisePageState extends State<AppliarisePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                AppmonSummaryInfo(appmon: widget.appmon),
+                AppliariseSummaryInfo(appmon: widget.appmon),
                 const SizedBox(height: 20),
-                AppmonImage(appmon: widget.appmon),
+                AppliariseImage(appmon: widget.appmon),
                 const SizedBox(height: 40),
-                AppmonActions(
+                AppliariseActions(
                   appmon: widget.appmon,
                   onLanguageChange: widget.onLanguageChange
                 ),

@@ -1,5 +1,6 @@
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
+import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -66,7 +67,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
               ),
               title: const Center( 
                 child: Text(
-                  'Título',
+                  "APPLI DRIVE MOBILE",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -74,16 +75,16 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
                   ),
                 ),
               ),
-              content: const SizedBox(
+              content: SizedBox(
                 width: 300,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Contexto',
+                        AppLocalization.of(context).translate("pages.homePage.informationDialog.context"),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),

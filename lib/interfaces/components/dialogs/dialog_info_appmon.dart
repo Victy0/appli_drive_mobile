@@ -104,7 +104,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             children: [
               const Spacer(),
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.name"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),
@@ -165,7 +165,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
           Row(
             children: [
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.app"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),
@@ -223,7 +223,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             children: [
               const Spacer(),
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.grade"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.grade"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),
@@ -271,7 +271,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
           Row(
             children: [
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.type"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),
@@ -329,7 +329,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             children: [
               const Spacer(),
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.power"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),
@@ -377,7 +377,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
           Row(
             children: [
               Text(
-                AppLocalization.of(context).translate("componentsDialogs.infoAppmon.profile"),
+                AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: _getColorBorderAndText(),

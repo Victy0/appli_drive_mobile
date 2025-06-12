@@ -27,25 +27,30 @@
             "tools": "FERRAMENTAS"
         }
     },
-    "componentsDialogs": {
-        "appmonCodeList": {
-            "codeList": "Lista de códigos"
+    "components": {
+        "closePageButton": {
+            "exit": "SAIR"
         },
-        "changeLanguage": {
-            "chooseLanguage": "Escolha o idioma"
-        },
-        "infoAppmon": {
-            "name": "NOME",
-            "app": "APP",
-            "grade": "NÍVEL",
-            "type": "ATRIBUTO",
-            "power": "PODER",
-            "profile": "PERFIL"
-        },
-        "insertCode": {
-            "codeIsRequired": "Código é obrigatório",
-            "enterAppmonCode": "Informe o código do Appmon",
-            "invalidCode": "Código inválido"
+        "dialogs": {
+            "appmonCodeList": {
+                "codeList": "Lista de códigos"
+            },
+            "changeLanguage": {
+                "chooseLanguage": "Escolha o idioma"
+            },
+            "infoAppmon": {
+                "name": "NOME",
+                "app": "APP",
+                "grade": "NÍVEL",
+                "type": "ATRIBUTO",
+                "power": "PODER",
+                "profile": "PERFIL"
+            },
+            "insertCode": {
+                "codeIsRequired": "Código é obrigatório",
+                "enterAppmonCode": "Informe o código do Appmon",
+                "invalidCode": "Código inválido"
+            }
         }
     },
     "pages": {
@@ -62,6 +67,9 @@
         },
         "homePage": {
             "appliDriveVersion": "VERSÃO APPLI DRIVE",
+            "informationDialog": {
+                "context": "O Appli Drive Mobile é um aplicativo inspirado na série animada Digimon Universe Appli Monsters, que tem o intuito de retratar e expandir as funcionalidades do Appli Drive utilizados pelos humanos durante a série.\n\nCriado por Victor Marques como forma de estudo do framework Flutter."
+            },
             "pairing": "EMPARELHAMENTO"
         },
         "initialPage": {

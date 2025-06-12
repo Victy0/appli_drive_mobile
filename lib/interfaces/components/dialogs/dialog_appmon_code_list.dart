@@ -23,7 +23,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       ),
       title: Center(
         child: Text(
-          AppLocalization.of(context).translate("componentsDialogs.appmonCodeList.codeList"),
+          AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontWeight: FontWeight.bold,

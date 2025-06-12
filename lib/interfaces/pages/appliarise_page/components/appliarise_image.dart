@@ -6,15 +6,15 @@ import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-class AppmonImage extends StatefulWidget {
+class AppliariseImage extends StatefulWidget {
   final Appmon appmon;
-  const AppmonImage({super.key, required this.appmon});
+  const AppliariseImage({super.key, required this.appmon});
 
   @override
-  AppmonImageState createState() => AppmonImageState();
+  AppliariseImageState createState() => AppliariseImageState();
 }
 
-class AppmonImageState extends State<AppmonImage> {
+class AppliariseImageState extends State<AppliariseImage> {
   double _tiltAngle = 0.0;
   StreamSubscription<AccelerometerEvent>? _accelSub;
   

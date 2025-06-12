@@ -5,15 +5,15 @@ import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-class HeaderIconsAppliarise extends StatefulWidget {
+class AppliariseHeader extends StatefulWidget {
   final GradeAppmon grade;
-  const HeaderIconsAppliarise({super.key, required this.grade});
+  const AppliariseHeader({super.key, required this.grade});
 
   @override
-  HeaderIconsAppliariseState createState() => HeaderIconsAppliariseState();
+  AppliariseHeaderState createState() => AppliariseHeaderState();
 }
 
-class HeaderIconsAppliariseState extends State<HeaderIconsAppliarise> {
+class AppliariseHeaderState extends State<AppliariseHeader> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   
@@ -36,8 +36,8 @@ class HeaderIconsAppliariseState extends State<HeaderIconsAppliarise> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(widget.grade.name == "standard")
-            iconPairing(context),
+          //if(widget.grade.name == "standard")
+          //  iconPairing(context),
           const Spacer(),
           iconAppmonListCode(context)
         ],

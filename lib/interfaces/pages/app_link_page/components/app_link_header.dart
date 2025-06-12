@@ -65,11 +65,11 @@ class AppLinkHeaderState extends State<AppLinkHeader> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "${widget.appmon.name.toUpperCase()}: ${AppLocalization.of(context).translate("pages.appLinkPage.unlinkDialog.context")}",
+                        AppLocalization.of(context).translate("pages.appLinkPage.unlinkDialog.context"),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                          fontSize: 30,
                         ),
                       ),
                     ],

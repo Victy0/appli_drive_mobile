@@ -27,25 +27,30 @@
             "tools": "TOOLS"
         }
     },
-    "componentsDialogs": {
-        "appmonCodeList": {
-            "codeList": "Code list"
+    "components": {
+        "closePageButton": {
+            "exit": "EXIT"
         },
-        "changeLanguage": {
-            "chooseLanguage": "Choose language"
-        },
-        "infoAppmon": {
-            "name": "NAME",
-            "app": "APP",
-            "grade": "GRADE",
-            "type": "TYPE",
-            "power": "POWER",
-            "profile": "PROFILE"
-        },
-        "insertCode": {
-            "codeIsRequired": "Code is required",
-            "enterAppmonCode": "Enter the Appmon code",
-            "invalidCode": "Invalid code"
+        "dialogs": {
+            "appmonCodeList": {
+                "codeList": "Code list"
+            },
+            "changeLanguage": {
+                "chooseLanguage": "Choose language"
+            },
+            "infoAppmon": {
+                "name": "NAME",
+                "app": "APP",
+                "grade": "GRADE",
+                "type": "TYPE",
+                "power": "POWER",
+                "profile": "PROFILE"
+            },
+            "insertCode": {
+                "codeIsRequired": "Code is required",
+                "enterAppmonCode": "Enter the Appmon code",
+                "invalidCode": "Invalid code"
+            }
         }
     },
     "pages": {
@@ -62,6 +67,9 @@
         },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE VERSION",
+            "informationDialog": {
+                "context": "Appli Drive Mobile is an application inspired by the animated series Digimon Universe Appli Monsters, which aims to portray and expand the Appli Drive functionalities used by humans during the series. \n\nCreated by Victor Marques as a way of studying the Flutter framework."
+            },
             "pairing": "PAIRING"
         },
         "initialPage": {
