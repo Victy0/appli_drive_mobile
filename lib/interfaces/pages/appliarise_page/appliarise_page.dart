@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
-  final Appmon? appmonLinked;
-  const AppliarisePage({super.key, required this.onLanguageChange, required this.appmon, required this.appmonLinked});
+  const AppliarisePage({super.key, required this.onLanguageChange, required this.appmon});
 
   @override
   AppliarisePageState createState() => AppliarisePageState();
@@ -57,46 +56,19 @@ class AppliarisePageState extends State<AppliarisePage> {
             ),
           ),
 
-          // APPLI ARRISE
-          Visibility(
-            visible: widget.appmonLinked == null,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AppmonSummaryInfo(appmon: widget.appmon),
-                  const SizedBox(height: 20),
-                  AppmonImage(appmon: widget.appmon),
-                  const SizedBox(height: 40),
-                  AppmonActions(
-                    appmon: widget.appmon,
-                    onLanguageChange: widget.onLanguageChange
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // APP LINK
-          Visibility(
-            visible: widget.appmonLinked != null,
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //Criar appmon link summary
-                  AppmonSummaryInfo(appmon: widget.appmon),
-                  const SizedBox(height: 40),
-                  //Criar imagem appmon link
-                  AppmonImage(appmon: widget.appmon),
-                  const SizedBox(height: 40),
-                  //Criar appmon link actions
-                  AppmonActions(
-                    appmon: widget.appmon,
-                    onLanguageChange: widget.onLanguageChange
-                  ),
-                ],
-              ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppmonSummaryInfo(appmon: widget.appmon),
+                const SizedBox(height: 20),
+                AppmonImage(appmon: widget.appmon),
+                const SizedBox(height: 40),
+                AppmonActions(
+                  appmon: widget.appmon,
+                  onLanguageChange: widget.onLanguageChange
+                ),
+              ],
             ),
           ),
           

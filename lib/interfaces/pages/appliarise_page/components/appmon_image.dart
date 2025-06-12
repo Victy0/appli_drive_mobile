@@ -34,9 +34,9 @@ class AppmonImageState extends State<AppmonImage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         Stack(
           children: [
+            // APPMON CONTRAST IMAGE
             Container(
               width: 320,
               height: 320,
@@ -56,6 +56,7 @@ class AppmonImageState extends State<AppmonImage> {
                 ),
               ),
             ),
+            // APPMON IMAGE
             Transform(
               alignment: Alignment.center,
               transform: Matrix4.identity()
@@ -69,8 +70,9 @@ class AppmonImageState extends State<AppmonImage> {
             ),
           ],
         ),
-        
+        // SPACING
         const SizedBox(height: 5),
+        // APPMON NAME
         Text(
           AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
           style: const TextStyle(

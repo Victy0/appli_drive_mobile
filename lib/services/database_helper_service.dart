@@ -86,7 +86,7 @@ class DatabaseHelper {
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
-      WHERE grade.id >= ?
+      WHERE grade.id <= ?
       ORDER BY grade.id, appmon.inner_id;
     ''';
     return await db.rawQuery(sql, [gradeLevelId]);

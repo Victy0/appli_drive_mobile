@@ -1,6 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
@@ -56,19 +57,28 @@ class AppmonActionsState extends State<AppmonActions> {
               Appmon? appmonLinked = await showDialog<Appmon>(
                 context: context,
                 barrierDismissible: false,
-                builder: (BuildContext context) => DialogInsertCode(fusionInfo: widget.appmon.fusionInfo),
+                builder: (BuildContext context) => DialogInsertCode(currentAppmon: widget.appmon),
               );
               if(appmonLinked != null) {
+                if(appmonLinked.fusioned != null) {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => AppliarisePage(
+                      onLanguageChange: widget.onLanguageChange,
+                      appmon: appmonLinked,
+                    ),
+                  ));
+                  return;
+                }
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => AppliarisePage(
+                  builder: (context) => AppLinkPage(
                     onLanguageChange: widget.onLanguageChange,
-                    appmon: appmonLinked.fusioned != null ? appmonLinked : widget.appmon,
-                    appmonLinked: appmonLinked.fusioned != null ? null : appmonLinked
+                    appmon: widget.appmon,
+                    appmonLinked: appmonLinked,
                   ),
                 ));
               }
             },
-            child: const AnimatedWhiteButton(text: 'APPLINK'),
+            child: const AnimatedWhiteButton(text: 'APP LINK'),
           ),
         ],
       ),

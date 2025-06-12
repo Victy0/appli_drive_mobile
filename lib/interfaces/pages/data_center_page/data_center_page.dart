@@ -76,7 +76,7 @@ class DataCenterPageState extends State<DataCenterPage>{
       ),
       centerTitle: true,
       title: Text(
-        AppLocalization.of(context).translate("pages.dataCenter.dataCenter"),
+        AppLocalization.of(context).translate("pages.dataCenterPage.dataCenter"),
         style: const TextStyle(color: Colors.white),
       ),
       actions: [
