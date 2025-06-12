@@ -18,7 +18,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
       children: [
 
         Container(
-          margin: const EdgeInsets.only(left: 0, right: 30),
+          margin: const EdgeInsets.only(left: 0, right: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -85,11 +85,11 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
         ),
 
         Container(
-          margin: const EdgeInsets.only(left: 30, right: 0),
+          margin: const EdgeInsets.only(left: 10, right: 0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(),
               Expanded(
                 child: Text(
                   AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
@@ -126,6 +126,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
                   ),
                   softWrap: true,
                   overflow: TextOverflow.visible,
+                  textAlign: TextAlign.right,
                 ),
               ),
               Padding(

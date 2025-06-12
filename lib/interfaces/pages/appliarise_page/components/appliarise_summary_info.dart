@@ -17,7 +17,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
       children: [
 
         Container(
-          margin: const EdgeInsets.only(left: 0, right: 30),
+          margin: const EdgeInsets.only(left: 0, right: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -86,11 +86,11 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
         const SizedBox(height: 5),
 
         Container(
-          margin: const EdgeInsets.only(left: 30, right: 0),
+          margin: const EdgeInsets.only(left: 10, right: 0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Spacer(),
               Text(
                 AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
                 style: const TextStyle(
@@ -124,6 +124,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
                     ),
                   ],
                 ),
+                textAlign: TextAlign.right,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

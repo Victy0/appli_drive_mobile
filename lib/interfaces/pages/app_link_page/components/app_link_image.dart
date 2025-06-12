@@ -40,6 +40,34 @@ class AppLinkImageState extends State<AppLinkImage> {
         Stack(
           alignment: Alignment.center,
           children: [
+            // APPMON LINKED CONTRAST IMAGE
+            Transform.translate(
+              offset: const Offset(100, -120),
+              child: Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()
+                  ..setEntry(3, 2, 0.007)
+                  ..rotateY(-_tiltAngle),
+                child: ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return _buildScanlineShader(bounds.size);
+                  },
+                  blendMode: BlendMode.srcATop,
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(
+                      Colors.white.withOpacity(0.5),
+                      BlendMode.srcATop,
+                    ),
+                    child: Image.asset(
+                      "assets/images/appmons/${widget.appmonLinked.id}.png",
+                      width: 250,
+                      height: 250,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             // APPMON CONTRAST IMAGE
             Transform.translate(
               offset: const Offset(-65, 5),

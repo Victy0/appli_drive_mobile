@@ -18,52 +18,66 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Dialog(
       backgroundColor: _getColorDialogBackground(),
+      insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      title: nameContainer(),
-      content: SizedBox(
-        width: 600,
-        height: 400,
-        child: SingleChildScrollView(
+      child: SizedBox.expand(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
-              appContainer(),
-              divider(),
-              gradeContainer(),
-              divider(),
-              typeContainer(),
-              divider(),
-              powerContainer(),
-              divider(),
-              profileContainer(),
+              nameContainer(),
+              const SizedBox(height: 8),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      appContainer(),
+                      divider(),
+                      gradeContainer(),
+                      divider(),
+                      typeContainer(),
+                      divider(),
+                      powerContainer(),
+                      divider(),
+                      profileContainer(),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: const CircleBorder(),
+                  ),
+                  onPressed: () {
+                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.check,
+                    size: 40.0,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.check,
-            size: 40.0,
-            color: Colors.green,
-          ),
-        ),
-      ],
     );
   }
 
   Color _getColorDialogBackground() {
     switch (widget.interface){
       case "appliArise":
-        return const Color.fromARGB(255, 241, 241, 241);
+        return const Color.fromARGB(255, 223, 222, 222);
       case "dataCenter":
       default:
         return const Color.fromARGB(255, 0, 86, 247);
@@ -73,7 +87,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   Color _getColorBackground() {
     switch (widget.interface){
       case "appliArise":
-        return const Color.fromARGB(255, 66, 66, 66);
+        return const Color.fromARGB(255, 255, 255, 255);
       case "dataCenter":
       default:
         return const Color.fromARGB(255, 16, 47, 63);
@@ -83,7 +97,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   Color _getColorBorderAndText() {
     switch (widget.interface){
       case "appliArise":
-        return const Color.fromARGB(255, 255, 255, 255);
+        return const Color.fromARGB(255, 0, 0, 0);
       case "dataCenter":
       default:
         return const Color.fromARGB(225, 31, 241, 237);
@@ -98,45 +112,48 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Spacer(),
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              const Spacer(),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                const Spacer(),
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Text(
+                  AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                 ),
-                softWrap: true,
-                overflow: TextOverflow.visible,
-              ),
-              const Spacer(),
-            ],
-          ),
-        ],
+                const Spacer(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -160,51 +177,54 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Image.asset(
-                  "assets/images/apps/${widget.appmon.id}.png",
-                  width: 45,
-                  height: 45,
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: _getColorBorderAndText(),
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Image.asset(
+                    "assets/images/apps/${widget.appmon.id}.png",
+                    width: 45,
+                    height: 45,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+                    style: TextStyle(
+                      color: _getColorBorderAndText(),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -217,43 +237,47 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.grade"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.grade"),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                AppLocalization.of(context).translate("appmons.grades.${widget.appmon.grade.name}"),
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("appmons.grades.${widget.appmon.grade.name}"),
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                 ),
-                softWrap: true,
-                overflow: TextOverflow.visible,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -266,51 +290,54 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Image.asset(
-                  "assets/images/types/${widget.appmon.type.name}.png",
-                  width: 45,
-                  height: 45,
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     color: _getColorBorderAndText(),
-                    fontSize: 24,
                     fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Image.asset(
+                    "assets/images/types/${widget.appmon.type.name}.png",
+                    width: 45,
+                    height: 45,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
+                    style: TextStyle(
+                      color: _getColorBorderAndText(),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -323,43 +350,47 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              const Spacer(),
-              Text(
-                widget.appmon.power.toString(),
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  widget.appmon.power.toString(),
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                 ),
-                softWrap: true,
-                overflow: TextOverflow.visible,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -372,46 +403,50 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(
-                AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: _getColorBorderAndText(),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
-          Divider(
-            color: _getColorBorderAndText(),
-            thickness: 2,
-            height: 0,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child:Text(
-                    AppLocalization.of(context).translate("appmons.profile.${widget.appmon.id}"),
-                    style: TextStyle(
-                      color: _getColorBorderAndText(),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child:Text(
+                      AppLocalization.of(context).translate("appmons.profiles.${widget.appmon.code.toLowerCase()}"),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: _getColorBorderAndText(),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
