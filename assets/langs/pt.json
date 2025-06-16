@@ -1,9 +1,27 @@
 {
     "appmons": {
         "apps": {
+            "action": "AÇÃO",
+            "calendar": "CALENDÁRIO",
+            "camera": "CÂMERA",
+            "fighting": "COMBATE",
+            "gourmet": "GASTRONOMIA",
+            "hacking": "HACKING",
+            "logoff": "LOGOFF",
+            "mediaPlayer": "REPRODUTOR DE MÍDIA",
+            "monitoring": "MONITORAMENTO",
+            "music": "MÚSICA",
             "navi": "NAVEGAÇÃO",
+            "recording": "GRAVAÇÃO",
             "search": "PESQUISA",
-            "superSearch": "SUPER PESQUISA"
+            "security": "SEGURANÇA",
+            "shooting": "TIRO",
+            "superHacking": "SUPER HACKING",
+            "superSearch": "SUPER PESQUISA",
+            "offline": "OFFLINE",
+            "timeSlip": "REGISTRO DE HORAS",
+            "video": "VÍDEO",
+            "watch": "RELÓGIO"
         },
         "grades": {
             "standard": "PADRÃO",
@@ -12,9 +30,50 @@
             "god": "DEUS"
         },
         "names": {
+            "calendamon": "CALENDAMON",
+            "cameramon": "CAMERAMON",
+            "dogamon": "DOGAMON",
             "dogatchmon": "DOGATCHMON",
+            "dokamon": "DOKAMON",
+            "dosukomon": "DOSUKOMON",
             "gatchmon": "GATCHMON",
-            "navimon": "NAVIMON"
+            "hackmon": "HACKMON",
+            "logamon": "LOGAMON",
+            "mediamon": "MEDIAMON",
+            "musimon": "MUSIMON",
+            "navimon": "NAVIMON",
+            "offmon": "OFFMON",
+            "perorimon": "PERORIMON",
+            "protecmon": "PROTECMON",
+            "raidramon": "RAIDRAMON",
+            "recomon": "RECOMON",
+            "scorpmon": "SCORPMON",
+            "shotmon": "SHOTMON",
+            "timemon": "TIMEMON",
+            "watchmon": "WATHCMON"
+        },
+        "profiles": {
+            "aaa": "Um Appmon cheio de curiosidade que adora pesquisar. Desde o conhecimento da vida cotidiana até às fraquezas dos outros, ele pode procurar tudo pesquisando no Oceano da Rede.",
+            "alc": "É um Appmon que nos guia pelo caminho mais curto até o nosso destino. Com uma personalidade tão direta quanto as setas em ambos os braços, ele odeia desvios.",
+            "asb": "Um guarda robusto que se destaca na defesa. Usando os dois braços como escudos resistentes, ele protege dados valiosos contra ataques de vírus dia após dia.",
+            "ata": "O proprietário de uma habilidade perigosa capaz de levar o mundo a uma crise, dependendo de como é usada. Ele enxerga as vulnerabilidades de um programa à primeira vista e lida imediatamente até mesmo com bloqueios fortes.",
+            "bea": "Um músico cujo lema é “A música muda o mundo”. A música que ele cria move com grande força os corações de todos que a ouvem.",
+            "bfa": "Um glutão que adora a hora da refeição acima de tudo. Embora geralmente seja tranquilo, quando fica com fome, sua personalidade se torna feroz em seu desespero por comida.",
+            "bga": "Este Appmon está familiarizado com o funcionamento do vídeo e com a forma como ele é transmitido em todo o mundo. Ao operar o controle remoto em seus braços, é possível alterar o que a tela em seu rosto mostra.",
+            "caa": "Um cinegrafista que captura alvos sem pontos cegos com as lentes espalhadas pelo corpo. Ele tem a capacidade de acessar câmeras de vigilância e monitorar secretamente as cidades.",
+            "cbb": "Um Appmon que tem a capacidade de gravar sons ou discursos feitos por seus alvos. Devido à sua disposição muito diligente, ele registrará imediatamente até mesmo conversas triviais.",
+            "cga": "Um Appmon cujo corpo contém um relógio preciso. Ele executa todos os seus planos com precisão de segundos e tem uma personalidade irritante que não para de falar sobre as horas.",
+            "cia": "Um aplicativo que gerencia todos os tipos de planos. As informações que ele possui variam de datas de reuniões importantes a períodos de vendas em supermercados e tudo mais.",
+            "cka": "É um lutador briguento por natureza, e lutar contra oponentes fortes o deixa animado. Com grandes habilidades físicas e um punho forte, ele sempre busca oportunidades para testar seu poder.",
+            "cla": "Um franco-atirador de primeira linha especializado em tiro de longo alcance. Seu revólver de orgulho é feito sob medida e, de tempos em tempos, é capaz de derrubar seus alvos sem deixar qualquer presença ou som.",
+            "cra": "Um Appmon com uma capacidade de pesquisa super aprimorada. Ele é capaz de recuperar informações desconhecidas ao mergulhar na parte mais profunda do Oceano da Rede.",
+            "cxa": "Uma existência incrivelmente perigosa que é capaz de destruir a segurança total da defesa em um instante. Ela tem a capacidade de manipular à vontade os dados dos quais usurpou a propriedade.",
+            "dea": "Um Appmon com a capacidade de manipular som e vídeo com habilidade. Ao combinar imagens holográficas e áudio, ele cria ilusões de coisas que não estão realmente lá.",
+            "dla": "Um Appmon com a rara capacidade de transcender o fluxo do tempo e do espaço. Ele é capaz de interferir não apenas em seu próprio fluxo de tempo, mas também no fluxo de tempo de qualquer oponente que atingir com seus punhos.",
+            "dna": "Um clarividente moderno que pode transformar todas as câmeras do mundo em seus próprios olhos. Quando essa habilidade é acionada, não há ponto cego para o Scorpmon.",
+            "dqa": "Um lutador incomparável que domina as artes marciais. Ele tem a capacidade de expandir seu Dohyō, um campo sagrado onde somente duelos justos um a um são permitidos.",
+            "era": "Um Appmon com a capacidade de drenar completamente a motivação do alvo, como se estivesse desligando um interruptor. Devido a essa habilidade ou não, o próprio Offmon também está sempre apático.",
+            "eta": "Um Appmon com a capacidade de bloquear um alvo fora do sistema. O Logamon cria muitos bolsões de espaço usando essa habilidade para seu próprio uso e lazer."
         },
         "types": {
             "entertainment": "ENTRETERIMENTO",
@@ -24,7 +83,7 @@
             "navi": "NAVEGAÇÃO",
             "social": "SOCIAL",
             "system": "SISTEMA",
-            "tools": "FERRAMENTAS"
+            "tool": "FERRAMENTA"
         }
     },
     "components": {
