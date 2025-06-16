@@ -7,7 +7,7 @@ class VersionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "${AppLocalization.of(context).translate("pages.initialPage.version")} 0.0.1",
+      "${AppLocalization.of(context).translate("pages.initialPage.version")} 0.0.0",
       style: const TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
