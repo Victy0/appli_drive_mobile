@@ -33,7 +33,7 @@ class AppLinkPageState extends State<AppLinkPage> {
         return "blue";
       case "system":
         return "yellow";
-      case "tools":
+      case "tool":
         return "purple";
     }
   }

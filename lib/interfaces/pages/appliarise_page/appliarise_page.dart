@@ -33,7 +33,7 @@ class AppliarisePageState extends State<AppliarisePage> {
         return "blue";
       case "system":
         return "yellow";
-      case "tools":
+      case "tool":
         return "purple";
     }
   }

@@ -1,9 +1,27 @@
 {
     "appmons": {
         "apps": {
+            "action": "ACTION",
+            "calendar": "CALENDAR",
+            "camera": "CAMERA",
+            "fighting": "FIGHTING",
+            "gourmet": "GOURMET",
+            "hacking": "HACKING",
+            "logoff": "LOGOFF",
+            "mediaPlayer": "MEDIA PLAYER",
+            "monitoring": "MONITORING",
+            "music": "MUSIC",
             "navi": "NAVI",
+            "recording": "RECORDING",
             "search": "SEARCH",
-            "superSearch": "SUPER SEARCH"
+            "security": "SECURITY",
+            "shooting": "SHOOTING",
+            "superHacking": "SUPER HACKING",
+            "superSearch": "SUPER SEARCH",
+            "offline": "OFFLINE",
+            "timeSlip": "TIME SLIP",
+            "video": "VIDEO",
+            "watch": "WATCH"
         },
         "grades": {
             "standard": "STANDART",
@@ -12,9 +30,50 @@
             "god": "GOD"
         },
         "names": {
+            "calendamon": "CALENDAMON",
+            "cameramon": "CAMERAMON",
+            "dogamon": "DOGAMON",
             "dogatchmon": "DOGATCHMON",
+            "dokamon": "DOKAMON",
+            "dosukomon": "DOSUKOMON",
             "gatchmon": "GATCHMON",
-            "navimon": "NAVIMON"
+            "hackmon": "HACKMON",
+            "logamon": "LOGAMON",
+            "mediamon": "MEDIAMON",
+            "musimon": "MUSIMON",
+            "navimon": "NAVIMON",
+            "offmon": "OFFMON",
+            "perorimon": "PERORIMON",
+            "protecmon": "PROTECMON",
+            "raidramon": "RAIDRAMON",
+            "recomon": "RECOMON",
+            "scorpmon": "SCORPMON",
+            "shotmon": "SHOTMON",
+            "timemon": "TIMEMON",
+            "watchmon": "WATCHMON"
+        },
+        "profiles": {
+            "aaa": "An Appmon brimming with curiosity that loves searching out. From daily life knowledge to other's weaknesses, it can look up anything by searching the Net Ocean.",
+            "alc": "It's an Appmon that guides us through the shortest route to our destination. With a personality as straightforward as the arrows on both arms, it hates detours.",
+            "asb": "A robust guardsman who excels in defense. Using both arms as sturdy shields, it protects valuable data from virus attacks day in and day out.",
+            "ata": "The owner of a dangerous ability capable of leading the world into a crisis depending on how it is used. It sees through a program's vulnerabilities at first glance, and immediately unlocks even strong locks.",
+            "bea": "A musician whose motto is “Music Changes the World”. The music it creates moves with great force the hearts of all who hear it.",
+            "bfa": "A glutton that loves mealtime more than anything. Although it is usually easygoing, when it gets hungry, its personality turns ferocious in its desperation for food.",
+            "bga": "This Appmon is familiar with the workings of video and how it is delivered around the world. By operating the remote control on its arms, you can change what the screen in its face shows.",
+            "caa": "A go-getter cameraman who captures targets lacking blind spots with the lenses throughout its body. It has the ability to access surveillance cameras, and secretly monitor around towns.",
+            "cbb": "An Appmon that has the ability to record sounds or speeches made by its targets. Due to its very diligent disposition, it will immediately record even trivial conversations.",
+            "cga": "An Appmon whose body contains an accurate clock. It carries out all of its plans accurately to the second, and sports an annoying personality that will not shut up when talking about the time.",
+            "cia": "An Appmon that manages all sorts of plans. The information it has ranges from dates of important meetings to supermarket sales periods, and everything in between.",
+            "cka": "Rowdy by nature, fighting against strong opponents fires it up. Possessing great physical abilities as well as a sturdy fist, it always seeks for opportunities to test its power.",
+            "cla": "A first-rate sniper that specializes in long-range shooting. Its prided revolver is custom-made, and from time to time it is capable of taking down its targets without leaving any presence or sound.",
+            "cra": "An Appmon with a super enhanced search ability. It is able to retrieve unknown information by diving into the deeper part of the Net Ocean.",
+            "cxa": "An incredibly dangerous existence that is capable of destroying full defense security in an instant. It has the ability to manipulate the data it has usurped the ownership of at will.",
+            "dea": "An Appmon with the ability to manipulate sound and video skillfully. By combining holographic images and audio together, it creates illusions of things that are not really there.",
+            "dla": "An Appmon with the rare ability to transcend the flow of time and space. It is able to interfere with not only its own flow of time, but also the flow of time of any opponent it strikes with its fists.",
+            "dna": "A modern-day clairvoyant who can turn all cameras around the world into its own eyes. Once it triggers this ability, there is no blind spot from Scorpmon.",
+            "dqa": "An unparalleled fighter that has mastered the martial arts. It has the ability to expand its Dohyō Field, a sacred field where only fair one-on-one duels are allowed.",
+            "era": "An Appmon with the ability to completely drain the target's motivation as if it were turning off a switch. Whether or not due to this ability, Offmon itself is always listless as well.",
+            "eta": "An Appmon with the ability to lock a target out from the system. Logamon has created many pockets of space using this ability for its own use at its leisure."
         },
         "types": {
             "entertainment": "ENTERTAINMENT",
@@ -24,7 +83,7 @@
             "navi": "NAVI",
             "social": "SOCIAL",
             "system": "SYSTEM",
-            "tools": "TOOLS"
+            "tool": "TOOL"
         }
     },
     "components": {
