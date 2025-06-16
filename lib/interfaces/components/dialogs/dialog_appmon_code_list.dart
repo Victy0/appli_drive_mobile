@@ -16,12 +16,18 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
   
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return Dialog(
       backgroundColor: const Color.fromARGB(255, 241, 241, 241),
+      insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      title: Center(
+      child: SizedBox.expand(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Center(
         child: Text(
           AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
           textAlign: TextAlign.center,
@@ -31,28 +37,38 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
           ),
         ),
       ),
-      content: SizedBox(
-        width: double.maxFinite,
-        child: SingleChildScrollView(
+              const SizedBox(height: 8),
+              Expanded(
+                child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: _buildGroupedList(widget.appmonCodeList),
           ),
         ),
-      ),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
-            Navigator.pop(context);
-          },
-          child: const Icon(
-            Icons.check,
-            size: 40.0,
-            color: Colors.green,
+              ),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: const CircleBorder(),
+                  ),
+                  onPressed: () {
+                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.check,
+                    size: 40.0,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 
