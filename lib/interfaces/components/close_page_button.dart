@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -62,20 +63,9 @@ class ClosePageButtonState extends State<ClosePageButton> {
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
-                AppLocalization.of(context).translate("components.closePageButton.exit"),
-                style: const TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  shadows: [
-                    Shadow(
-                      color: Colors.white,
-                      offset: Offset(1, 1),
-                      blurRadius: 2,
-                    ),
-                  ],
-                ),
+              TextWithWhiteShadow(
+                text: AppLocalization.of(context).translate("components.closePageButton.exit"),
+                fontSize: 25,
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
@@ -90,12 +91,9 @@ class DataCenterPageState extends State<DataCenterPage>{
       codeWidgets.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Text(
-            AppLocalization.of(context).translate("appmons.grades.$gradeName"),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-            ),
+          child: TextWithWhiteShadow(
+            text: AppLocalization.of(context).translate("appmons.grades.$gradeName"),
+            fontSize: 22,
           ),
         ),
       );
@@ -124,7 +122,7 @@ class DataCenterPageState extends State<DataCenterPage>{
                     item['name'].toString().toUpperCase(),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios, size: 15),
@@ -170,40 +168,10 @@ class DataCenterPageState extends State<DataCenterPage>{
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      "$_appmonReveleadedListSize / ${_seeAll ? _appmonInBdSize : '?'}",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        shadows: [
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(0, 0),
-                            blurRadius: 10,
-                          ),
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(2, 2),
-                            blurRadius: 10,
-                          ),
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(-2, -2),
-                            blurRadius: 10,
-                          ),
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(2, -2),
-                            blurRadius: 10,
-                          ),
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(-2, 2),
-                            blurRadius: 10,
-                          ),
-                        ],
-                      ),
+                    child: TextWithWhiteShadow(
+                      text: "$_appmonReveleadedListSize / ${_seeAll ? _appmonInBdSize : '?'}",
+                      fontSize: 25,
+                      align: "right",
                     ),
                   ),
                 ],

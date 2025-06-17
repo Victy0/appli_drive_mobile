@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
@@ -73,39 +74,9 @@ class AppliariseImageState extends State<AppliariseImage> {
         // SPACING
         const SizedBox(height: 5),
         // APPMON NAME
-        Text(
-          AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-          style: const TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            shadows: [
-              Shadow(
-                color: Colors.white,
-                offset: Offset(0, 0),
-                blurRadius: 10,
-              ),
-              Shadow(
-                color: Colors.white,
-                offset: Offset(2, 2),
-                blurRadius: 10,
-              ),
-              Shadow(
-                color: Colors.white,
-                offset: Offset(-2, -2),
-                blurRadius: 10,
-              ),
-              Shadow(
-                color: Colors.white,
-                offset: Offset(2, -2),
-                blurRadius: 10,
-              ),
-              Shadow(
-                color: Colors.white,
-                offset: Offset(-2, 2),
-                blurRadius: 10,
-              ),
-            ],
-          ),
+        TextWithWhiteShadow(
+          text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
+          fontSize: 40,
         ),
       ],
     );
