@@ -60,52 +60,74 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
           showDialog<String>(
             barrierDismissible: false,
             context: context,
-            builder: (BuildContext context) => AlertDialog(
+            builder: (BuildContext context) => Dialog(
               backgroundColor: const Color.fromARGB(255, 241, 241, 241),
+              insetPadding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              title: const Center( 
-                child: Text(
-                  "APPLI DRIVE MOBILE",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-              content: SizedBox(
-                width: 300,
-                child: SingleChildScrollView(
+              child: SizedBox.expand(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        AppLocalization.of(context).translate("pages.homePage.informationDialog.context"),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                      const Center(
+                        child: Text(
+                          "APPLI DRIVE MOBILE",
+                          textAlign: TextAlign.center,
+                          style:  TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: Center (
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: Text(
+                                    AppLocalization.of(context).translate("pages.homePage.informationDialog.context"),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Align(
+                        alignment: Alignment.center,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                          ),
+                          onPressed: () {
+                            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.check,
+                            size: 40.0,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => {
-                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
-                    Navigator.pop(context),
-                  },
-                  child: const Icon(
-                    Icons.check,
-                    size: 40.0,
-                    color: Colors.green,
-                  ),
-                ),
-              ],
             ),
           ),
         },
