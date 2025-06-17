@@ -6,6 +6,7 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/a
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -36,6 +37,22 @@ class AppliarisePageState extends State<AppliarisePage> {
       case "tool":
         return "purple";
     }
+  }
+
+  _setAppmonReveleadedId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> idList = prefs.getStringList('appmon_reveled_ids') ?? [];
+    String appmonId = widget.appmon.id;
+    if (!idList.contains(appmonId)) {
+      idList.add(appmonId);
+      await prefs.setStringList('appmon_reveled_ids', idList);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setAppmonReveleadedId();
   }
 
   @override

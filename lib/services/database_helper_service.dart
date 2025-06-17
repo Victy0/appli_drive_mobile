@@ -86,9 +86,34 @@ class DatabaseHelper {
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
-      WHERE grade.id <= ?
+        WHERE grade.id <= ?
       ORDER BY grade.id, appmon.code_text;
     ''';
     return await db.rawQuery(sql, [gradeLevelId]);
+  }
+
+  Future<List<Map<String, dynamic>>> getAppmonCodeListToDataCenter({List<String>? ids, bool filterByIds = true}) async {
+    final db = await database;
+
+    String whereClause = '';
+    List<dynamic> whereArgs = [];
+
+    if (filterByIds && ids != null && ids.isNotEmpty) {
+      final placeholders = List.filled(ids.length, '?').join(', ');
+      whereClause = 'WHERE appmon.inner_id IN ($placeholders)';
+      whereArgs = ids;
+    }
+
+    String sql = '''
+      SELECT 
+        appmon.inner_id AS id, appmon.name AS name, appmon.code_text AS code,
+        grade.name AS gradeName 
+      FROM appmon
+      INNER JOIN grade ON appmon.grade_id = grade.id
+        $whereClause
+      ORDER BY grade.id, appmon.name;
+    ''';
+
+    return await db.rawQuery(sql, whereArgs);
   }
 }
