@@ -28,23 +28,23 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
           child: Column(
             children: [
               Center(
-        child: Text(
-          AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-          ),
-        ),
-      ),
+                child: Text(
+                  AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
               const SizedBox(height: 8),
               Expanded(
                 child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _buildGroupedList(widget.appmonCodeList),
-          ),
-        ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: _buildGroupedList(widget.appmonCodeList),
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
               Align(

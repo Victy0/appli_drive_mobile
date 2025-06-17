@@ -80,28 +80,16 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         return const Color.fromARGB(255, 223, 222, 222);
       case "dataCenter":
       default:
-        return const Color.fromARGB(255, 0, 86, 247);
+        return const Color.fromARGB(255, 171, 224, 255);
     }
   }
 
   Color _getColorBackground() {
-    switch (widget.interface){
-      case "appliArise":
-        return const Color.fromARGB(255, 255, 255, 255);
-      case "dataCenter":
-      default:
-        return const Color.fromARGB(255, 16, 47, 63);
-    }
+    return const Color.fromARGB(255, 255, 255, 255);
   }
 
   Color _getColorBorderAndText() {
-    switch (widget.interface){
-      case "appliArise":
-        return const Color.fromARGB(255, 0, 0, 0);
-      case "dataCenter":
-      default:
-        return const Color.fromARGB(225, 31, 241, 237);
-    }
+    return const Color.fromARGB(255, 0, 0, 0);
   }
 
   Widget nameContainer() {

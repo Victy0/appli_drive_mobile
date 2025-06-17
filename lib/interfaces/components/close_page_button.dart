@@ -7,7 +7,8 @@ import '../../services/audio_service_momentary.dart';
 
 class ClosePageButton extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const ClosePageButton({super.key, required this.onLanguageChange});
+  final void Function(BuildContext)? onTap;
+  const ClosePageButton({super.key, required this.onLanguageChange, this.onTap});
 
   @override
   ClosePageButtonState createState() => ClosePageButtonState();
@@ -15,6 +16,18 @@ class ClosePageButton extends StatefulWidget {
 
 class ClosePageButtonState extends State<ClosePageButton> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+
+  void _defaultOnTap(BuildContext context) {
+    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => HomePage(
+          onLanguageChange: widget.onLanguageChange,
+          initSound: false,
+        ),
+      ),
+    );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -24,16 +37,11 @@ class ClosePageButtonState extends State<ClosePageButton> {
         padding: const EdgeInsets.all(30),
         child: GestureDetector(
           onTap: () {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
-
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => HomePage(
-                  onLanguageChange: widget.onLanguageChange,
-                  initSound: false,
-                ),
-              ),
-            );
+            if (widget.onTap != null) {
+              widget.onTap!(context);
+            } else {
+              _defaultOnTap(context);
+            }
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
