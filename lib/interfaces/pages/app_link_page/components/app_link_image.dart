@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class AppLinkImageState extends State<AppLinkImage> {
                   blendMode: BlendMode.srcATop,
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.5),
+                      Colors.white.withOpacity(0.8),
                       BlendMode.srcATop,
                     ),
                     child: Image.asset(
@@ -143,111 +144,40 @@ class AppLinkImageState extends State<AppLinkImage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-              style: const TextStyle(
-                fontSize: 40,
-                height: 1.0,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(0, 0),
-                    blurRadius: 10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
+                    fontSize: 40,
+                    height: 1.0,
+                    align: "left",
                   ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, 2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, 2),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
+                ),
+              ]
             ),
-            Text(
-              AppLocalization.of(context).translate("PLUS"),
-              style: const TextStyle(
-                fontSize: 30,
-                height: 1.0,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(0, 0),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, 2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, 2),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
+            const TextWithWhiteShadow(
+              text: "PLUS",
+              fontSize: 30,
+              height: 1.0,
             ),
-            Text(
-              AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked.name}"),
-              style: const TextStyle(
-                fontSize: 40,
-                height: 1.0,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(0, 0),
-                    blurRadius: 10,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked.name}"),
+                    fontSize: 40,
+                    height: 1.0,
+                    align: "right",
                   ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, 2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(2, -2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.white,
-                    offset: Offset(-2, 2),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
+                ),
+              ]
             ),
+            
           ],
         ),
       ],

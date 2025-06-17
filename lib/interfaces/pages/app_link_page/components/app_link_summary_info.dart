@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
@@ -43,41 +44,10 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
                 ),
               ),
               Expanded(
-                child: Text(
-                  AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(0, 0),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(2, 2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(-2, -2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(2, -2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(-2, 2),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
+                child: TextWithWhiteShadow(
+                  text: AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+                  fontSize: 24,
+                  applySoftWrap: true,
                 ),
               ),
             ],
@@ -91,42 +61,11 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
-                child: Text(
-                  AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    shadows: [
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(0, 0),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(2, 2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(-2, -2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(2, -2),
-                        blurRadius: 10,
-                      ),
-                      Shadow(
-                        color: Colors.white,
-                        offset: Offset(-2, 2),
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.right,
+                child: TextWithWhiteShadow(
+                  text: AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
+                  fontSize: 24,
+                  align: "right",
+                  applySoftWrap: true,
                 ),
               ),
               Padding(
