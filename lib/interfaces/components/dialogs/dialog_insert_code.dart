@@ -61,6 +61,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
                 LengthLimitingTextInputFormatter(3),
+                UpperCaseTextFormatter(),
               ],
               keyboardType: TextInputType.text,
             ),
@@ -96,6 +97,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
             ),
             TextButton(
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 String code = _controller.text;
                 if( code == "") {
                   _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
@@ -125,7 +127,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                     return;
                   }
                 }
-                Navigator.pop(context, appmon);
+                navigator.pop(appmon);
               },
               child: const Icon(
                 Icons.check,
@@ -136,6 +138,19 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    return TextEditingValue(
+      text: newValue.text.toUpperCase(),
+      selection: newValue.selection,
     );
   }
 }
