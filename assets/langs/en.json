@@ -1,6 +1,7 @@
 {
     "appmons": {
         "apps": {
+            "7code": "7 CODE",
             "action": "ACTION",
             "calendar": "CALENDAR",
             "camera": "CAMERA",
@@ -27,11 +28,20 @@
             "standard": "STANDART",
             "super": "SUPER",
             "ultimate": "ULTIMATE",
+            "unknown": "UNKNOWN",
             "god": "GOD"
         },
         "names": {
             "calendamon": "CALENDAMON",
             "cameramon": "CAMERAMON",
+            "code1": "CODE 1 - MAILMON",
+            "code2": "CODE 2 - ROPUREMON",
+            "code3": "CODE 3 - GOMIMON",
+            "code4": "CODE 4 - TELLERMON",
+            "code5": "CODE 5 - COPIPEMON",
+            "code6": "CODE 6 - MEDICMON",
+            "code7": "CODE 7 - WEATHERDRAMON",
+            "dantemon": "DANTEMON",
             "dogamon": "DOGAMON",
             "dogatchmon": "DOGATCHMON",
             "dokamon": "DOKAMON",
@@ -66,6 +76,7 @@
             "cia": "An Appmon that manages all sorts of plans. The information it has ranges from dates of important meetings to supermarket sales periods, and everything in between.",
             "cka": "Rowdy by nature, fighting against strong opponents fires it up. Possessing great physical abilities as well as a sturdy fist, it always seeks for opportunities to test its power.",
             "cla": "A first-rate sniper that specializes in long-range shooting. Its prided revolver is custom-made, and from time to time it is capable of taking down its targets without leaving any presence or sound.",
+            "code": "An avatar that opens up great paths. A special Appmon that possesses the power to open the gate leading to the abyss of the Net, seven hidden codes are required to see it. It can bisect any enemy with its gigantic sword, and it is said that once a battle has ended, it will sing a song of victory.",
             "cra": "An Appmon with a super enhanced search ability. It is able to retrieve unknown information by diving into the deeper part of the Net Ocean.",
             "cxa": "An incredibly dangerous existence that is capable of destroying full defense security in an instant. It has the ability to manipulate the data it has usurped the ownership of at will.",
             "dea": "An Appmon with the ability to manipulate sound and video skillfully. By combining holographic images and audio together, it creates illusions of things that are not really there.",
@@ -81,6 +92,7 @@
             "god": "GOD",
             "life": "LIFE",
             "navi": "NAVI",
+            "none": "NONE",
             "social": "SOCIAL",
             "system": "SYSTEM",
             "tool": "TOOL"

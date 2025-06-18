@@ -1,6 +1,7 @@
 {
     "appmons": {
         "apps": {
+            "7code": "7 CODE",
             "action": "AÇÃO",
             "calendar": "CALENDÁRIO",
             "camera": "CÂMERA",
@@ -19,6 +20,7 @@
             "superHacking": "SUPER HACKING",
             "superSearch": "SUPER PESQUISA",
             "offline": "OFFLINE",
+            "open": "ABRIR",
             "timeSlip": "REGISTRO DE HORAS",
             "video": "VÍDEO",
             "watch": "RELÓGIO"
@@ -27,11 +29,20 @@
             "standard": "PADRÃO",
             "super": "SUPER",
             "ultimate": "FINAL",
+            "unknown": "DESCONHECIDO",
             "god": "DEUS"
         },
         "names": {
             "calendamon": "CALENDAMON",
             "cameramon": "CAMERAMON",
+            "code1": "CODE 1 - MAILMON",
+            "code2": "CODE 2 - ROPUREMON",
+            "code3": "CODE 3 - GOMIMON",
+            "code4": "CODE 4 - TELLERMON",
+            "code5": "CODE 5 - COPIPEMON",
+            "code6": "CODE 6 - MEDICMON",
+            "code7": "CODE 7 - WEATHERDRAMON",
+            "dantemon": "DANTEMON",
             "dogamon": "DOGAMON",
             "dogatchmon": "DOGATCHMON",
             "dokamon": "DOKAMON",
@@ -66,6 +77,7 @@
             "cia": "Um aplicativo que gerencia todos os tipos de planos. As informações que ele possui variam de datas de reuniões importantes a períodos de vendas em supermercados e tudo mais.",
             "cka": "É um lutador briguento por natureza, e lutar contra oponentes fortes o deixa animado. Com grandes habilidades físicas e um punho forte, ele sempre busca oportunidades para testar seu poder.",
             "cla": "Um franco-atirador de primeira linha especializado em tiro de longo alcance. Seu revólver de orgulho é feito sob medida e, de tempos em tempos, é capaz de derrubar seus alvos sem deixar qualquer presença ou som.",
+            "code": "Um avatar que abre grandes caminhos. Um Appmon especial que possui o poder de abrir o portão que leva ao abismo da Rede. Para vê-lo, são necessários sete códigos ocultos. Ele pode cortar qualquer inimigo com sua espada gigantesca e diz-se que, uma vez terminada a batalha, ele cantará uma canção de vitória.",
             "cra": "Um Appmon com uma capacidade de pesquisa super aprimorada. Ele é capaz de recuperar informações desconhecidas ao mergulhar na parte mais profunda do Oceano da Rede.",
             "cxa": "Uma existência incrivelmente perigosa que é capaz de destruir a segurança total da defesa em um instante. Ela tem a capacidade de manipular à vontade os dados dos quais usurpou a propriedade.",
             "dea": "Um Appmon com a capacidade de manipular som e vídeo com habilidade. Ao combinar imagens holográficas e áudio, ele cria ilusões de coisas que não estão realmente lá.",
@@ -81,6 +93,7 @@
             "god": "DEUS",
             "life": "VIDA",
             "navi": "NAVEGAÇÃO",
+            "none": "NENHUM",
             "social": "SOCIAL",
             "system": "SISTEMA",
             "tool": "FERRAMENTA"

@@ -37,6 +37,7 @@ flutter:
   assets:
     - assets/appli_drive_database.db
     - assets/images/
+    - assets/images/7code/
     - assets/images/appmons/
     - assets/images/apps/
     - assets/images/flags/

@@ -41,11 +41,11 @@ class AppliarisePageState extends State<AppliarisePage> {
 
   _setAppmonReveleadedId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> idList = prefs.getStringList('appmon_reveled_ids') ?? [];
+    List<String> idList = prefs.getStringList('appmon_revealed_ids') ?? [];
     String appmonId = widget.appmon.id;
     if (!idList.contains(appmonId)) {
       idList.add(appmonId);
-      await prefs.setStringList('appmon_reveled_ids', idList);
+      await prefs.setStringList('appmon_revealed_ids', idList);
     }
   }
 

@@ -1,6 +1,16 @@
+import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/components/pad_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/components/square_7code.dart';
+import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SevenCodePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -11,6 +21,39 @@ class SevenCodePage extends StatefulWidget {
 }
 
 class SevenCodePageState extends State<SevenCodePage>{
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  
+  bool _hasAppliarise = false;
+  bool _showAppliariseButton = false;
+  List<String> _sevenCodeRevealed = [];
+  Appmon? _dantemonInfo;
+  bool _isLoading = true;
+
+  _get7codeRevealed() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? [];
+    bool dantemonAppliarise = prefs.getBool('dantemon_appliarise') ?? false;
+
+    Appmon? resultDantemon;
+    if(dantemonAppliarise) {
+      resultDantemon = await _databaseHelper.getSevenCodeInfo("CODE");
+    }
+
+    setState(() {
+      _hasAppliarise = dantemonAppliarise;
+      _sevenCodeRevealed = sevenCodeRevealedIdsUser;
+      _dantemonInfo = resultDantemon;
+      _showAppliariseButton = !dantemonAppliarise && sevenCodeRevealedIdsUser.length == 7;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _get7codeRevealed();
+  }
+
   void _returnToHomePage(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -36,21 +79,89 @@ class SevenCodePageState extends State<SevenCodePage>{
   }
   
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
-      appBar: _appBarComponent(context),
-      body: const Stack(
+      appBar: appBarComponent(context),
+      body: Stack(
         children: [
-          BackgroundImage(color: "purple"),
-          Center(
-            child: Text("7code page")
+          const BackgroundImage(color: "purple"),
+          Column(
+            children: [
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Square7Code(
+                      code:"COD1",
+                      disabled: !_sevenCodeRevealed.contains("1"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                    Square7Code(
+                      code:"COD2",
+                      disabled: !_sevenCodeRevealed.contains("2"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                    Square7Code(
+                      code:"COD3",
+                      disabled: !_sevenCodeRevealed.contains("3"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                    Square7Code(
+                      code:"COD4",
+                      disabled: !_sevenCodeRevealed.contains("4"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Square7Code(
+                      code:"COD5",
+                      disabled: !_sevenCodeRevealed.contains("5"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                    Square7Code(
+                      code:"COD6",
+                      disabled: !_sevenCodeRevealed.contains("6"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                    Square7Code(
+                      code:"COD7",
+                      disabled: !_sevenCodeRevealed.contains("7"),
+                      hasAppliarise: _hasAppliarise
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Flexible(
+                fit: FlexFit.loose,
+                child: PadImage(
+                  hasAppliarise: _hasAppliarise,
+                ),
+              ),
+              const SizedBox(height: 10),
+              actionsRow(),
+              const SizedBox(height: 120),
+            ],
           ),
+          ClosePageButton(onLanguageChange: widget.onLanguageChange, onTap: _returnToHomePage),
         ],
       ),
     );
   }
 
-  AppBar _appBarComponent(context){
+  AppBar appBarComponent(context){
     return AppBar(
       flexibleSpace: Container(
         decoration: const BoxDecoration(
@@ -64,19 +175,13 @@ class SevenCodePageState extends State<SevenCodePage>{
           ),
         ),
       ),
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          _returnToHomePage(context);
-        },
-      ),
       centerTitle: true,
       title: const Text(
-        "7code",
-        style: TextStyle(color: Colors.white),
+        "7 CODE",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
       actions: [
         IconButton(
@@ -96,5 +201,64 @@ class SevenCodePageState extends State<SevenCodePage>{
         ),
       ),
     );
+  }
+
+  Widget actionsRow() {
+    return _hasAppliarise && _dantemonInfo != null
+      ? Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                child: IconButton(
+                  onPressed: () => {
+                    showDialog<String>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) => DialogInfoAppmon(appmon: _dantemonInfo, interface: "appliArise"),
+                    ),
+                    null
+                  },
+                  icon: Image.asset(
+                    'assets/images/icons/magnifying_glass_box.png',
+                    height: 50,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              TextWithWhiteShadow(
+                text: AppLocalization.of(context).translate("appmons.names.${_dantemonInfo?.name}"),
+                fontSize: 40
+              )
+            ],
+          ),
+        )
+      : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: _showAppliariseButton
+                ? () async {
+                    setState(() {
+                      _hasAppliarise = true;
+                    });
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('dantemon_appliarise', true);
+                  }
+                : null,
+              child: Opacity(
+                opacity: _showAppliariseButton ? 1.0 : 0.2,
+                child: const AnimatedWhiteButton(text: 'APPLIARISE'),
+              ),
+            ),
+          ],
+        );
   }
 }
