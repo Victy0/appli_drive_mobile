@@ -26,9 +26,9 @@ class DataCenterPageState extends State<DataCenterPage>{
   int _appmonReveleadedListSize = 0;
   bool _isLoading = true;
   
-  _getAppmonReveleadedList() async {
+  _getAppmonRevealedList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> appmonRevealedIdsUser = prefs.getStringList('appmon_reveled_ids') ?? [];
+    List<String> appmonRevealedIdsUser = prefs.getStringList('appmon_revealed_ids') ?? [];
     bool seeAllAppmon = prefs.getBool('see_all_appmon') ?? false;
     
     List<Map<String, dynamic>> result = [];
@@ -48,7 +48,7 @@ class DataCenterPageState extends State<DataCenterPage>{
   @override
   void initState() {
     super.initState();
-    _getAppmonReveleadedList();
+    _getAppmonRevealedList();
   }
   
   void _returnToHomePage(BuildContext context) {

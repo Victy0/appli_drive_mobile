@@ -5,7 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class DialogInfoAppmon extends StatefulWidget {
-  final Appmon appmon;
+  final Appmon? appmon;
   final String interface;
   const DialogInfoAppmon({super.key, required this.appmon, required this.interface});
 
@@ -128,7 +128,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               children: [
                 const Spacer(),
                 Text(
-                  AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
+                  AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
                   style: TextStyle(
                     color: _getColorBorderAndText(),
                     fontSize: 30,
@@ -189,17 +189,18 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Image.asset(
-                    "assets/images/apps/${widget.appmon.id}.png",
-                    width: 45,
-                    height: 45,
+                if (widget.appmon?.app != "open")
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Image.asset(
+                      "assets/images/apps/${widget.appmon?.id}.png",
+                      width: 45,
+                      height: 45,
+                    ),
                   ),
-                ),
                 Expanded(
                   child: Text(
-                    AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+                    AppLocalization.of(context).translate("appmons.apps.${widget.appmon?.app}"),
                     style: TextStyle(
                       color: _getColorBorderAndText(),
                       fontSize: 24,
@@ -252,7 +253,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  AppLocalization.of(context).translate("appmons.grades.${widget.appmon.grade.name}"),
+                  AppLocalization.of(context).translate("appmons.grades.${widget.appmon?.grade.name}"),
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: _getColorBorderAndText(),
@@ -302,17 +303,18 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             ),
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Image.asset(
-                    "assets/images/types/${widget.appmon.type.name}.png",
-                    width: 45,
-                    height: 45,
+                if (widget.appmon?.type.name != "none")
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Image.asset(
+                      "assets/images/types/${widget.appmon!.type.name}.png",
+                      width: 45,
+                      height: 45,
+                    ),
                   ),
-                ),
                 Expanded(
                   child: Text(
-                    AppLocalization.of(context).translate("appmons.types.${widget.appmon.type.name}"),
+                    AppLocalization.of(context).translate("appmons.types.${widget.appmon?.type.name}"),
                     style: TextStyle(
                       color: _getColorBorderAndText(),
                       fontSize: 24,
@@ -365,7 +367,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  widget.appmon.power.toString(),
+                  widget.appmon?.power.toString() ?? "",
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: _getColorBorderAndText(),
@@ -419,7 +421,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child:Text(
-                      AppLocalization.of(context).translate("appmons.profiles.${widget.appmon.code.toLowerCase()}"),
+                      AppLocalization.of(context).translate("appmons.profiles.${widget.appmon?.code.toLowerCase()}"),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: _getColorBorderAndText(),

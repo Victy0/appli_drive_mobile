@@ -82,7 +82,7 @@ class AppliariseImageState extends State<AppliariseImage> {
     );
   }
 
-@override
+  @override
   void dispose() {
     _accelSub?.cancel();
     super.dispose();

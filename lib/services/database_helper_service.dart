@@ -116,4 +116,21 @@ class DatabaseHelper {
 
     return await db.rawQuery(sql, whereArgs);
   }
+
+  Future<Appmon> getSevenCodeInfo(String code) async {
+    final db = await database;
+    String sql = '''
+      SELECT 
+        seven_code.inner_id AS id, seven_code.inner_id AS code_text, seven_code.name, seven_code.app, seven_code.power, 
+        grade.id AS grade_id, grade.name AS grade_name, 
+        type.id AS type_id, type.name AS type_name 
+      FROM seven_code
+      INNER JOIN type ON seven_code.type_id = type.id
+      INNER JOIN grade ON seven_code.grade_id = grade.id
+        WHERE seven_code.inner_id = ?;
+    ''';
+    List<Map<String, dynamic>> result = await db.rawQuery(sql, [code]);
+
+    return Appmon.fromMap(result.first);
+  }
 }
