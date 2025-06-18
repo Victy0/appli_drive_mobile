@@ -54,6 +54,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
           const Spacer(),
           GestureDetector(
             onTap: () async {
+              final navigator = Navigator.of(context);
               Appmon? appmonLinked = await showDialog<Appmon>(
                 context: context,
                 barrierDismissible: false,
@@ -61,7 +62,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
               );
               if(appmonLinked != null) {
                 if(appmonLinked.fusioned != null) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  navigator.pushReplacement(MaterialPageRoute(
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,
                       appmon: appmonLinked,
@@ -69,7 +70,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
                   ));
                   return;
                 }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                navigator.pushReplacement(MaterialPageRoute(
                   builder: (context) => AppLinkPage(
                     onLanguageChange: widget.onLanguageChange,
                     appmon: widget.appmon,

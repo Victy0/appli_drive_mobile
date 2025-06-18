@@ -100,13 +100,14 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
       actions: <Widget>[
         TextButton(
           onPressed: () async {
+            final navigator = Navigator.of(context);
             _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
 
             SharedPreferences prefs = await SharedPreferences.getInstance();
             await prefs.setString('selected_language', _selectedLocale.languageCode);
             await prefs.setString('selected_country', _selectedLocale.countryCode ?? '');
 
-            Navigator.pop(context);
+            navigator.pop();
           },
           child: const Icon(
             Icons.check,

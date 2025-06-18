@@ -61,13 +61,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 const SizedBox(height: 70),
                 GestureDetector(
                   onTap: () async {
+                    final navigator = Navigator.of(context);
                     Appmon? appmon = await showDialog<Appmon>(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) => const DialogInsertCode(),
                     );
                     if(appmon != null) {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      navigator.pushReplacement(MaterialPageRoute(
                         builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: appmon),
                       ));
                     }

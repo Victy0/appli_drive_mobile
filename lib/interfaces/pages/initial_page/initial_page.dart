@@ -84,8 +84,9 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   }
 
   void _navigateToNextPage(BuildContext context) async {
+    final navigator = Navigator.of(context);
     await _audioPlayerContinuous.stop();
-    Navigator.of(context).pushReplacement(_createRouteHomePage(widget.onLanguageChange));
+    navigator.pushReplacement(_createRouteHomePage(widget.onLanguageChange));
   }
 
   @override
