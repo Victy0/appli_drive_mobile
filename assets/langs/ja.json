@@ -153,6 +153,7 @@
         },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE バージョン",
+            "confirmAppliarise": "に変更 ",
             "informationDialog": {
                 "context": "アプリドライブモバイルは、アニメシリーズ「デジモンユニバース アプリモンスターズ」にインスパイアされたアプリケーションで、シリーズ中に人間が使用したアプリドライブの機能を描写し、拡張することを目的としている。\n\nFlutterフレームワークを研究するためにVictor Marquesによって作られた。"
             },

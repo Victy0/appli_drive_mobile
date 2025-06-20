@@ -9,6 +9,7 @@ import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_ic
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -22,18 +23,39 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+
+  String _appmonPairingName = "";
+  List<Map<String, String>> _appmonPairingEvolutionInfo = [];
+  bool _isLoading = true;
+
+  _getInitialValues() async {
+    final String appmonName = await _preferencesService.getString("appmon_pairing_name") ?? "";
+    final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
+    
+    setState(() {
+      _appmonPairingName = appmonName;
+      _appmonPairingEvolutionInfo = appmonPairingEvolutionInfo;
+      _isLoading = false;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     if(widget.initSound) {
       _audioPlayerMomentary.play(AssetSource('sounds/start.mp3'));
-    }    
+    }
+    _getInitialValues();
   }
 
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -60,7 +82,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const PairingMenu(),
+                PairingMenu(
+                  onLanguageChange: widget.onLanguageChange,
+                  appmonPairingName: _appmonPairingName,
+                  appmonEvolutionInfo: _appmonPairingEvolutionInfo,
+                ),
                 const SizedBox(height: 70),
                 GestureDetector(
                   onTap: () async {
