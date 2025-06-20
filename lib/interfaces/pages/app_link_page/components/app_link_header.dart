@@ -48,16 +48,6 @@ class AppLinkHeaderState extends State<AppLinkHeader> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              title: const Center( 
-                child: Text(
-                  'APP UNLINK',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
               content: SizedBox(
                 width: 300,
                 child: SingleChildScrollView(

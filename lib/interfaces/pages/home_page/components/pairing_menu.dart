@@ -65,16 +65,6 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        title: const Center( 
-          child: Text(
-            'APPLIARISE',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
-          ),
-        ),
         content: SizedBox(
           width: 300,
           child: SingleChildScrollView(
@@ -178,7 +168,6 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             InkWell(
               onTap: () async {
                 final appmon = await _databaseHelper.getAppmonByCode(widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "");
-                if (!mounted) return;
                 if (appmon != null) {
                   _showConfirmationDialog(appmon);
                 }
