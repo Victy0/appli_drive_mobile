@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 class DialogInfoAppmon extends StatefulWidget {
   final Appmon? appmon;
   final String interface;
-  const DialogInfoAppmon({super.key, required this.appmon, required this.interface});
+  final String imageDirectory;
+  const DialogInfoAppmon({super.key, required this.appmon, required this.interface, this.imageDirectory = "apps"});
 
   @override
   DialogInfoAppmonState createState() => DialogInfoAppmonState();
@@ -78,6 +79,8 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
     switch (widget.interface){
       case "appliArise":
         return const Color.fromARGB(255, 223, 222, 222);
+      case "7code":
+        return const Color.fromARGB(255, 189, 145, 190);
       case "dataCenter":
       default:
         return const Color.fromARGB(255, 171, 224, 255);
@@ -103,20 +106,24 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
-                const Spacer(),
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                Expanded(
+                  child: Text(
+                    AppLocalization.of(context)
+                        .translate("components.dialogs.infoAppmon.name"),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: _getColorBorderAndText(),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                   ),
                 ),
-                const Spacer(),
               ],
             ),
             Divider(
@@ -126,18 +133,20 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             ),
             Row(
               children: [
-                const Spacer(),
-                Text(
-                  AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    AppLocalization.of(context)
+                        .translate("appmons.names.${widget.appmon?.name}"),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: _getColorBorderAndText(),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
                 ),
-                const Spacer(),
               ],
             ),
           ],
@@ -193,7 +202,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Image.asset(
-                      "assets/images/apps/${widget.appmon?.id}.png",
+                      "assets/images/${widget.imageDirectory}/${widget.appmon?.id}.png",
                       width: 45,
                       height: 45,
                     ),

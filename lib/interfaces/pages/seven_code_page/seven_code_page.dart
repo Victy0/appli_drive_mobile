@@ -31,7 +31,7 @@ class SevenCodePageState extends State<SevenCodePage>{
 
   _get7codeRevealed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? [];
+    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? ["2", "7", "1"];
     bool dantemonAppliarise = prefs.getBool('dantemon_appliarise') ?? false;
 
     Appmon? resultDantemon;
@@ -100,22 +100,26 @@ class SevenCodePageState extends State<SevenCodePage>{
                     Square7Code(
                       code:"COD1",
                       disabled: !_sevenCodeRevealed.contains("1"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                     Square7Code(
                       code:"COD2",
                       disabled: !_sevenCodeRevealed.contains("2"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                     Square7Code(
                       code:"COD3",
                       disabled: !_sevenCodeRevealed.contains("3"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper, 
                     ),
                     Square7Code(
                       code:"COD4",
                       disabled: !_sevenCodeRevealed.contains("4"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                   ],
                 ),
@@ -128,17 +132,20 @@ class SevenCodePageState extends State<SevenCodePage>{
                     Square7Code(
                       code:"COD5",
                       disabled: !_sevenCodeRevealed.contains("5"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                     Square7Code(
                       code:"COD6",
                       disabled: !_sevenCodeRevealed.contains("6"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                     Square7Code(
                       code:"COD7",
                       disabled: !_sevenCodeRevealed.contains("7"),
-                      hasAppliarise: _hasAppliarise
+                      hasAppliarise: _hasAppliarise,
+                      databaseHelper: _databaseHelper,
                     ),
                   ],
                 ),
@@ -224,7 +231,6 @@ class SevenCodePageState extends State<SevenCodePage>{
                       barrierDismissible: false,
                       builder: (BuildContext context) => DialogInfoAppmon(appmon: _dantemonInfo, interface: "appliArise"),
                     ),
-                    null
                   },
                   icon: Image.asset(
                     'assets/images/icons/magnifying_glass_box.png',
