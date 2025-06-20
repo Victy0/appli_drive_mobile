@@ -1,8 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
-import 'package:appli_drive_mobile/interfaces/pages/home_page/components/detail_rectangle_left.dart';
-import 'package:appli_drive_mobile/interfaces/pages/home_page/components/detail_rectangle_right.dart';
+import 'package:appli_drive_mobile/interfaces/pages/home_page/components/detail_rectangle.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/header_icons_home.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
@@ -48,7 +47,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Column(
               children: [
                 HeaderIconsHome(onLanguageChange: widget.onLanguageChange),
-                const DetailRectangleLeft(),
+                const DetailRectangle(
+                  position: 'left',
+                  primaryColor: 'white',
+                  secondaryColor: 'blue',
+                ),
               ]
             ),
           ),
@@ -100,7 +103,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                const DetailRectangleRight(),
+                const DetailRectangle(
+                  position: 'right',
+                  primaryColor: 'white',
+                  secondaryColor: 'blue',
+                ),
               ]
             ),
           ),
