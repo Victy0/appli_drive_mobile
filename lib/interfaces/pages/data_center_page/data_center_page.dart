@@ -5,8 +5,8 @@ import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DataCenterPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -17,6 +17,7 @@ class DataCenterPage extends StatefulWidget {
 }
 
 class DataCenterPageState extends State<DataCenterPage>{
+  final PreferencesService _preferencesService = PreferencesService();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   List<Map<String, dynamic>> _appmonReveleadedList = [];
@@ -27,9 +28,8 @@ class DataCenterPageState extends State<DataCenterPage>{
   bool _isLoading = true;
   
   _getAppmonRevealedList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> appmonRevealedIdsUser = prefs.getStringList('appmon_revealed_ids') ?? [];
-    bool seeAllAppmon = prefs.getBool('see_all_appmon') ?? false;
+    List<String> appmonRevealedIdsUser = await _preferencesService.getStringList('appmon_revealed_ids');
+    bool seeAllAppmon = await _preferencesService.getBool('see_all_appmon');
     
     List<Map<String, dynamic>> result = [];
     if(appmonRevealedIdsUser.isNotEmpty) {

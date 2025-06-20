@@ -5,8 +5,8 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/a
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -18,6 +18,8 @@ class AppliarisePage extends StatefulWidget {
 }
 
 class AppliarisePageState extends State<AppliarisePage> {
+  final PreferencesService _preferencesService = PreferencesService();
+  
   _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
@@ -40,13 +42,7 @@ class AppliarisePageState extends State<AppliarisePage> {
   }
 
   _setAppmonReveleadedId() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> idList = prefs.getStringList('appmon_revealed_ids') ?? [];
-    String appmonId = widget.appmon.id;
-    if (!idList.contains(appmonId)) {
-      idList.add(appmonId);
-      await prefs.setStringList('appmon_revealed_ids', idList);
-    }
+    _preferencesService.setStringInStringList('appmon_revealed_ids', widget.appmon.id);
   }
 
   @override

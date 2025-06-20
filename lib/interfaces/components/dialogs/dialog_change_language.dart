@@ -1,8 +1,8 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DialogChangeLanguage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -13,6 +13,7 @@ class DialogChangeLanguage extends StatefulWidget {
 }
 
 class DialogChangeLanguageState extends State<DialogChangeLanguage> {
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   final List<Map<String, dynamic>> _languages = [
     {'label': 'Português', 'locale': const Locale('pt', 'BR'), 'flag': 'assets/images/flags/br.png'},
@@ -23,9 +24,8 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
   late Locale _selectedLocale;
 
   Future<Locale> getSavedLocale() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? languageCode = prefs.getString('selected_language');
-    String? countryCode = prefs.getString('selected_country');
+    String? languageCode = await _preferencesService.getString('selected_language');
+    String? countryCode = await _preferencesService.getString('selected_country');
 
     if (languageCode != null && countryCode != null) {
       return Locale(languageCode, countryCode);
@@ -103,9 +103,8 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
             final navigator = Navigator.of(context);
             _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
 
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.setString('selected_language', _selectedLocale.languageCode);
-            await prefs.setString('selected_country', _selectedLocale.countryCode ?? '');
+            _preferencesService.setString('selected_language', _selectedLocale.languageCode);
+            _preferencesService.setString('selected_country', _selectedLocale.countryCode ?? '');
 
             navigator.pop();
           },

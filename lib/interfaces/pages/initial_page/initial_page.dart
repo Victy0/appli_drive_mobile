@@ -5,10 +5,10 @@ import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/vers
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_state/screen_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -19,6 +19,7 @@ class InitialPage extends StatefulWidget {
 }
 
 class InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerContinuous = AudioServiceContinuous.instance.player;
 
   final Screen _screen = Screen();
@@ -42,8 +43,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   }
 
   Future<void> _checkIfLanguageHasBeenChosen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? languageCode = prefs.getString('selected_language');
+    String? languageCode = await _preferencesService.getString('selected_language');
 
     if (languageCode == null) {
       _showLanguageDialog();
