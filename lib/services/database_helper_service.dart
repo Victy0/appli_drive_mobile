@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
+  final PreferencesService _preferencesService = PreferencesService();
 
   factory DatabaseHelper() {
     return _instance;
@@ -26,15 +27,14 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'appli_drive_database.db');
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int currentVersion = prefs.getInt('db_version') ?? -1;
+    int currentVersion = await _preferencesService.getInt('db_version') ?? -1;
     int newVersion = 0;
 
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
         await deleteDatabase(path);
       }
-      await prefs.setInt('db_version', newVersion);
+      await _preferencesService.setInt('db_version', newVersion);
     }
 
     if (!await File(path).exists()) {

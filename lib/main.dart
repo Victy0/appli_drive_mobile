@@ -1,9 +1,9 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
@@ -42,9 +42,9 @@ class MyAppState extends State<MyApp> {
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
 
   Future<Locale> getSavedLocale() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? languageCode = prefs.getString('selected_language');
-    String? countryCode = prefs.getString('selected_country');
+    PreferencesService preferencesService = PreferencesService();
+    String? languageCode = await preferencesService.getString('selected_language');
+    String? countryCode = await preferencesService.getString('selected_country');
 
     if (languageCode != null && countryCode != null) {
       return Locale(languageCode, countryCode);

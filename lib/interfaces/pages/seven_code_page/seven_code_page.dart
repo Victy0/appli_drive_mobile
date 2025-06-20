@@ -9,8 +9,8 @@ import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/components/s
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SevenCodePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -21,6 +21,7 @@ class SevenCodePage extends StatefulWidget {
 }
 
 class SevenCodePageState extends State<SevenCodePage>{
+  final PreferencesService _preferencesService = PreferencesService();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   
   bool _hasAppliarise = false;
@@ -30,9 +31,8 @@ class SevenCodePageState extends State<SevenCodePage>{
   bool _isLoading = true;
 
   _get7codeRevealed() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? [];
-    bool dantemonAppliarise = prefs.getBool('dantemon_appliarise') ?? false;
+    List<String> sevenCodeRevealedIdsUser = await _preferencesService.getStringList('sevencode_revealed_ids');
+    bool dantemonAppliarise = await _preferencesService.getBool('dantemon_appliarise');
 
     Appmon? resultDantemon;
     if(dantemonAppliarise) {
@@ -255,8 +255,7 @@ class SevenCodePageState extends State<SevenCodePage>{
                     setState(() {
                       _hasAppliarise = true;
                     });
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.setBool('dantemon_appliarise', true);
+                    _preferencesService.setBool('dantemon_appliarise', true);
                   }
                 : null,
               child: Opacity(
