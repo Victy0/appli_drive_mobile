@@ -12,6 +12,8 @@ class Appmon {
   final GradeAppmon grade;
   final FusionInfo? fusionInfo;
   bool? fusioned;
+  final String? primaryColor;
+  final String? secondaryColor;
 
   Appmon({
     required this.id,
@@ -23,6 +25,8 @@ class Appmon {
     required this.grade,
     required this.fusionInfo,
     this.fusioned,
+    this.primaryColor,
+    this.secondaryColor,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -36,6 +40,8 @@ class Appmon {
       grade: GradeAppmon.fromMap(map),
       fusionInfo: map['fusion_id'] != null ? FusionInfo.fromMap(map) : null,
       fusioned: null,
+      primaryColor: map['color_1'],
+      secondaryColor: map['color_2'],
     );
   }
 }

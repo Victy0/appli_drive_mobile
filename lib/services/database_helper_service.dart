@@ -59,7 +59,7 @@ class DatabaseHelper {
     final db = await database;
     String sql = '''
       SELECT 
-        appmon.inner_id AS id, appmon.code_text, appmon.name, appmon.app, appmon.power, 
+        appmon.inner_id AS id, appmon.code_text, appmon.name, appmon.app, appmon.power, appmon.color_1, appmon.color_2,
         grade.id AS grade_id, grade.name AS grade_name, 
         type.id AS type_id, type.name AS type_name, 
         fusion.id AS fusion_id, fusion.appmon_base_1, fusion.appmon_base_2
