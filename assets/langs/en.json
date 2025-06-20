@@ -124,12 +124,13 @@
                 "chooseLanguage": "Choose language"
             },
             "infoAppmon": {
-                "name": "NAME",
                 "app": "APP",
+                "chip": "CHIP",
                 "grade": "GRADE",
-                "type": "TYPE",
+                "name": "NAME",
                 "power": "POWER",
-                "profile": "PROFILE"
+                "profile": "PROFILE",
+                "type": "TYPE"
             },
             "insertCode": {
                 "codeIsRequired": "Code is required",

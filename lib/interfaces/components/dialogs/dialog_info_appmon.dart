@@ -8,7 +8,14 @@ class DialogInfoAppmon extends StatefulWidget {
   final Appmon? appmon;
   final String interface;
   final String imageDirectory;
-  const DialogInfoAppmon({super.key, required this.appmon, required this.interface, this.imageDirectory = "apps"});
+  final bool showChipContainer;
+  const DialogInfoAppmon({
+    super.key,
+    required this.appmon,
+    required this.interface,
+    this.imageDirectory = "apps",
+    this.showChipContainer = false,
+  });
 
   @override
   DialogInfoAppmonState createState() => DialogInfoAppmonState();
@@ -45,6 +52,10 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                       powerContainer(),
                       divider(),
                       profileContainer(),
+                      if (widget.showChipContainer) ...[
+                        divider(),
+                        chipContainer(),
+                      ],
                     ],
                   ),
                 ),
@@ -441,6 +452,53 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                       overflow: TextOverflow.visible,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget chipContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _getColorBackground(),
+        border: Border.all(color: _getColorBorderAndText(), width: 2),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.chip"),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/${widget.imageDirectory}/${widget.appmon?.id}.png",
+                  width: 200,
+                  height: 200,
                 ),
               ],
             ),

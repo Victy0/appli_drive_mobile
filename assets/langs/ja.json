@@ -124,12 +124,13 @@
                 "chooseLanguage": "言語を選択"
             },
             "infoAppmon": {
-                "name": "名称",
                 "app": "アプリ",
+                "chip": "チップ",
                 "grade": "グレード",
-                "type": "属性",
+                "name": "名称",
                 "power": "パワー値",
-                "profile": "プロフィール"
+                "profile": "プロフィール",
+                "type": "属性"
             },
             "insertCode": {
                 "codeIsRequired": "コードが必要です",

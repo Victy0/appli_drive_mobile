@@ -31,7 +31,7 @@ class SevenCodePageState extends State<SevenCodePage>{
 
   _get7codeRevealed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? ["2", "7", "1"];
+    List<String> sevenCodeRevealedIdsUser = prefs.getStringList('sevencode_revealed_ids') ?? [];
     bool dantemonAppliarise = prefs.getBool('dantemon_appliarise') ?? false;
 
     Appmon? resultDantemon;
