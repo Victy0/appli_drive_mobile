@@ -125,12 +125,13 @@
                 "chooseLanguage": "Escolha o idioma"
             },
             "infoAppmon": {
-                "name": "NOME",
                 "app": "APP",
+                "chip": "CHIP",
                 "grade": "NÍVEL",
-                "type": "ATRIBUTO",
+                "name": "NOME",
                 "power": "PODER",
-                "profile": "PERFIL"
+                "profile": "PERFIL",
+                "type": "ATRIBUTO"
             },
             "insertCode": {
                 "codeIsRequired": "Código é obrigatório",

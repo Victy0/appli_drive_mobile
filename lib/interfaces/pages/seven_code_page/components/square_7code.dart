@@ -20,6 +20,23 @@ class Square7Code extends StatefulWidget {
 }
 
 class Square7CodeState extends State<Square7Code> {
+  Future<void> _handle7codeInfo() async {
+    final appmon7Code = await widget.databaseHelper.getSevenCodeInfo(widget.code);
+
+    if (!mounted) return;
+
+    showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => DialogInfoAppmon(
+        appmon: appmon7Code,
+        interface: "7code",
+        imageDirectory: "7code",
+        showChipContainer: true,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.disabled
@@ -33,7 +50,7 @@ class Square7CodeState extends State<Square7Code> {
         )
       : GestureDetector(
           onTap: () async {
-            _handleTap();
+            _handle7codeInfo();
           },
           child: Container(
             width: 55,
@@ -55,21 +72,5 @@ class Square7CodeState extends State<Square7Code> {
             ),
           ),
         );
-  }
-
-  Future<void> _handleTap() async {
-    final appmon7Code = await widget.databaseHelper.getSevenCodeInfo(widget.code);
-
-    if (!mounted) return;
-
-    showDialog<String>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => DialogInfoAppmon(
-        appmon: appmon7Code,
-        interface: "7code",
-        imageDirectory: "7code",
-      ),
-    );
   }
 }
