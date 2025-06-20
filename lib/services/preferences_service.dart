@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
@@ -54,12 +56,34 @@ class PreferencesService {
       list.add(value);
       await prefs.setStringList(key, list);
     }
-    await prefs.setString(key, value);
   }
 
   Future<List<String>> getStringList(String key) async {
     final prefs = await sharedPrefs;
     return prefs.getStringList(key) ?? [];
+  }
+
+  Future<void> setAppmonPairingEvolutionInfo(Map<String, String> value) async {
+    final prefs = await sharedPrefs;
+    final list = await getAppmonPairingEvolutionInfo();
+    if (!list.contains(value)) {
+      list.add(value);
+    }
+    final jsonString = jsonEncode(list);
+    await prefs.setString('appmon_pairing_evolution', jsonString);
+  }
+
+  Future<List<Map<String, String>>> getAppmonPairingEvolutionInfo() async {
+    final prefs = await sharedPrefs;
+    final jsonString = prefs.getString('appmon_pairing_evolution');
+
+    if (jsonString == null) return [{"id": "D1Y8", "code": "AAA"}];
+
+    final decoded = jsonDecode(jsonString);
+
+    return List<Map<String, String>>.from(
+      decoded.map((item) => Map<String, String>.from(item)),
+    );
   }
 
   Future<void> remove(String key) async {
