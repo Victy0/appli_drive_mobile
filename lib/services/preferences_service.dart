@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
@@ -19,48 +20,48 @@ class PreferencesService {
     return _preferences!;
   }
 
-  Future<void> setString(String key, String value) async {
+  Future<void> setString(AppPreferenceKey key, String value) async {
     final prefs = await sharedPrefs;
-    await prefs.setString(key, value);
+    await prefs.setString(key.value, value);
   }
 
-  Future<String?> getString(String key) async {
+  Future<String?> getString(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
-    return prefs.getString(key);
+    return prefs.getString(key.value);
   }
 
-  Future<void> setBool(String key, bool value) async {
+  Future<void> setBool(AppPreferenceKey key, bool value) async {
     final prefs = await sharedPrefs;
-    await prefs.setBool(key, value);
+    await prefs.setBool(key.value, value);
   }
 
-  Future<bool> getBool(String key) async {
+  Future<bool> getBool(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
-    return prefs.getBool(key) ?? false;
+    return prefs.getBool(key.value) ?? false;
   }
 
-  Future<void> setInt(String key, int value) async {
+  Future<void> setInt(AppPreferenceKey key, int value) async {
     final prefs = await sharedPrefs;
-    await prefs.setInt(key, value);
+    await prefs.setInt(key.value, value);
   }
 
-  Future<int?> getInt(String key) async {
+  Future<int?> getInt(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
-    return prefs.getInt(key);
+    return prefs.getInt(key.value);
   }
 
-  Future<void> setStringInStringList(String key, String value) async {
+  Future<void> setStringInStringList(AppPreferenceKey key, String value) async {
     final prefs = await sharedPrefs;
-    List<String> list = prefs.getStringList(key) ?? [];
+    List<String> list = prefs.getStringList(key.value) ?? [];
     if (!list.contains(value)) {
       list.add(value);
-      await prefs.setStringList(key, list);
+      await prefs.setStringList(key.value, list);
     }
   }
 
-  Future<List<String>> getStringList(String key) async {
+  Future<List<String>> getStringList(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
-    return prefs.getStringList(key) ?? [];
+    return prefs.getStringList(key.value) ?? [];
   }
 
   Future<void> setAppmonPairingEvolutionInfo(Map<String, String> value) async {
@@ -86,8 +87,8 @@ class PreferencesService {
     );
   }
 
-  Future<void> remove(String key) async {
+  Future<void> remove(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
-    await prefs.remove(key);
+    await prefs.remove(key.value);
   }
 }

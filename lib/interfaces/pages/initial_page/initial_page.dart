@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
@@ -43,7 +44,9 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
   }
 
   Future<void> _checkIfLanguageHasBeenChosen() async {
-    String? languageCode = await _preferencesService.getString('selected_language');
+    String? languageCode = await _preferencesService.getString(
+      AppPreferenceKey.selectLanguage,
+    );
 
     if (languageCode == null) {
       _showLanguageDialog();

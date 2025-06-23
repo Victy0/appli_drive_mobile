@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
@@ -31,8 +32,12 @@ class SevenCodePageState extends State<SevenCodePage>{
   bool _isLoading = true;
 
   _get7codeRevealed() async {
-    List<String> sevenCodeRevealedIdsUser = await _preferencesService.getStringList('sevencode_revealed_ids');
-    bool dantemonAppliarise = await _preferencesService.getBool('dantemon_appliarise');
+    List<String> sevenCodeRevealedIdsUser = await _preferencesService.getStringList(
+      AppPreferenceKey.sevencodeRevealedIds,
+    );
+    bool dantemonAppliarise = await _preferencesService.getBool(
+      AppPreferenceKey.dantemonAppliarise,
+    );
 
     Appmon? resultDantemon;
     if(dantemonAppliarise) {
@@ -255,7 +260,10 @@ class SevenCodePageState extends State<SevenCodePage>{
                     setState(() {
                       _hasAppliarise = true;
                     });
-                    _preferencesService.setBool('dantemon_appliarise', true);
+                    _preferencesService.setBool(
+                      AppPreferenceKey.dantemonAppliarise,
+                      true,
+                    );
                   }
                 : null,
               child: Opacity(
