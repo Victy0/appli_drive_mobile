@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
@@ -28,8 +29,12 @@ class DataCenterPageState extends State<DataCenterPage>{
   bool _isLoading = true;
   
   _getAppmonRevealedList() async {
-    List<String> appmonRevealedIdsUser = await _preferencesService.getStringList('appmon_revealed_ids');
-    bool seeAllAppmon = await _preferencesService.getBool('see_all_appmon');
+    List<String> appmonRevealedIdsUser = await _preferencesService.getStringList(
+      AppPreferenceKey.appmonRevealedIds,
+    );
+    bool seeAllAppmon = await _preferencesService.getBool(
+      AppPreferenceKey.seeAllAppmons,
+    );
     
     List<Map<String, dynamic>> result = [];
     if(appmonRevealedIdsUser.isNotEmpty) {

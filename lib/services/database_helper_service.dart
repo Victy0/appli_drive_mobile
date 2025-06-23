@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/services.dart';
@@ -27,14 +28,14 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'appli_drive_database.db');
 
-    int currentVersion = await _preferencesService.getInt('db_version') ?? -1;
+    int currentVersion = await _preferencesService.getInt(AppPreferenceKey.dbVersion) ?? -1;
     int newVersion = 0;
 
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
         await deleteDatabase(path);
       }
-      await _preferencesService.setInt('db_version', newVersion);
+      await _preferencesService.setInt(AppPreferenceKey.dbVersion, newVersion);
     }
 
     if (!await File(path).exists()) {

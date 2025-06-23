@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
@@ -24,8 +25,8 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
   late Locale _selectedLocale;
 
   Future<Locale> getSavedLocale() async {
-    String? languageCode = await _preferencesService.getString('selected_language');
-    String? countryCode = await _preferencesService.getString('selected_country');
+    String? languageCode = await _preferencesService.getString(AppPreferenceKey.selectLanguage);
+    String? countryCode = await _preferencesService.getString(AppPreferenceKey.selectCountry);
 
     if (languageCode != null && countryCode != null) {
       return Locale(languageCode, countryCode);
@@ -103,8 +104,8 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
             final navigator = Navigator.of(context);
             _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
 
-            _preferencesService.setString('selected_language', _selectedLocale.languageCode);
-            _preferencesService.setString('selected_country', _selectedLocale.countryCode ?? '');
+            _preferencesService.setString(AppPreferenceKey.selectLanguage, _selectedLocale.languageCode);
+            _preferencesService.setString(AppPreferenceKey.selectCountry, _selectedLocale.countryCode ?? '');
 
             navigator.pop();
           },

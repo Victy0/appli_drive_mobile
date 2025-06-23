@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
@@ -43,8 +44,8 @@ class MyAppState extends State<MyApp> {
 
   Future<Locale> getSavedLocale() async {
     PreferencesService preferencesService = PreferencesService();
-    String? languageCode = await preferencesService.getString('selected_language');
-    String? countryCode = await preferencesService.getString('selected_country');
+    String? languageCode = await preferencesService.getString(AppPreferenceKey.selectLanguage);
+    String? countryCode = await preferencesService.getString(AppPreferenceKey.selectCountry);
 
     if (languageCode != null && countryCode != null) {
       return Locale(languageCode, countryCode);

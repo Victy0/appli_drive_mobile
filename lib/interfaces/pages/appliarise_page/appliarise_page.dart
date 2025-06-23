@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
@@ -42,7 +43,10 @@ class AppliarisePageState extends State<AppliarisePage> {
   }
 
   _setAppmonReveleadedId() async {
-    _preferencesService.setStringInStringList('appmon_revealed_ids', widget.appmon.id);
+    _preferencesService.setStringInStringList(
+      AppPreferenceKey.appmonRevealedIds,
+      widget.appmon.id,
+    );
   }
 
   @override

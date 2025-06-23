@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
@@ -31,7 +32,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool _isLoading = true;
 
   _getInitialValues() async {
-    final String appmonName = await _preferencesService.getString("appmon_pairing_name") ?? "";
+    final String appmonName = await _preferencesService.getString(AppPreferenceKey.appmonPairingName) ?? "";
     final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
     
     setState(() {
