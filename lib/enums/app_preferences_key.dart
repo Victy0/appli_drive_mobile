@@ -42,7 +42,7 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
       case AppPreferenceKey.appmonRevealedIds:
         return 'appmon_revealed_ids';
       case AppPreferenceKey.seeAllAppmons:
-        return 'appmon_revealed_ids';
+        return 'see_all_appmons';
     // 7CODE
       case AppPreferenceKey.dantemonAppliarise:
         return 'dantemon_appliarise';

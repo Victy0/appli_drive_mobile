@@ -49,7 +49,7 @@ class QuestionAppliDriveState extends State<QuestionAppliDrive> {
         name = "dokamon";
         info = {"id": "D5S7", "code": "CKA"};
         primaryColor = "blue";
-        secondaryColor = "green";
+        secondaryColor = "grey";
         break;
       case "1.false":  // DRESSMON
         name = "dressmon";
@@ -61,7 +61,7 @@ class QuestionAppliDriveState extends State<QuestionAppliDrive> {
         name = "musimon";
         info = {"id": "D6R3", "code": "BEA"};
         primaryColor = "yellow";
-        secondaryColor = "blue";
+        secondaryColor = "orange";
         break;
       case "2.false":  // GENGOMON
         name = "gengomon";
