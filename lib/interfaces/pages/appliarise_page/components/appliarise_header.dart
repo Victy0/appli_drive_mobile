@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 
 class AppliariseHeader extends StatefulWidget {
   final GradeAppmon grade;
-  const AppliariseHeader({super.key, required this.grade});
+  final bool tutorialFinished;
+  const AppliariseHeader({
+    super.key,
+    required this.grade,
+    required this.tutorialFinished
+  });
 
   @override
   AppliariseHeaderState createState() => AppliariseHeaderState();
@@ -39,7 +44,8 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
           //if(widget.grade.name == "standard")
           //  iconPairing(context),
           const Spacer(),
-          iconAppmonListCode(context)
+          if(widget.tutorialFinished)
+            iconAppmonListCode(context)
         ],
       ),
     );

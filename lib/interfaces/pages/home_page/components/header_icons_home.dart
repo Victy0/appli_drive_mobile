@@ -8,7 +8,12 @@ import 'package:flutter/material.dart';
 
 class HeaderIconsHome extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const HeaderIconsHome({super.key, required this.onLanguageChange});
+  final bool tutorialFinished;
+  const HeaderIconsHome({
+    super.key,
+    required this.onLanguageChange,
+    required this.tutorialFinished,
+  });
 
   @override
   HeaderIconsHomeState createState() => HeaderIconsHomeState();
@@ -41,7 +46,8 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
           const SizedBox(width: 15),
           iconLanguage(context, widget.onLanguageChange),
           const Spacer(),
-          iconAppmonListCode(context)
+          if(widget.tutorialFinished)
+            iconAppmonListCode(context)
         ],
       ),
     );

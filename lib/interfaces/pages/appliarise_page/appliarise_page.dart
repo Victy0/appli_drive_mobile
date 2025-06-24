@@ -12,7 +12,13 @@ import 'package:flutter/material.dart';
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
-  const AppliarisePage({super.key, required this.onLanguageChange, required this.appmon});
+  final bool tutorialFinished;
+  const AppliarisePage({
+    super.key,
+    required this.onLanguageChange,
+    required this.appmon,
+    this.tutorialFinished = true,
+  });
 
   @override
   AppliarisePageState createState() => AppliarisePageState();
@@ -43,6 +49,10 @@ class AppliarisePageState extends State<AppliarisePage> {
   }
 
   _setAppmonReveleadedId() async {
+    _preferencesService.setBool(
+      AppPreferenceKey.tutorialFinished,
+      true
+    );
     _preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
       widget.appmon.id,
@@ -68,7 +78,10 @@ class AppliarisePageState extends State<AppliarisePage> {
             right: 0,
             child: Column(
               children: [
-                AppliariseHeader(grade: widget.appmon.grade),
+                AppliariseHeader(
+                  grade: widget.appmon.grade,
+                  tutorialFinished: widget.tutorialFinished,
+                ),
               ]
             ),
           ),
@@ -83,7 +96,8 @@ class AppliarisePageState extends State<AppliarisePage> {
                 const SizedBox(height: 40),
                 AppliariseActions(
                   appmon: widget.appmon,
-                  onLanguageChange: widget.onLanguageChange
+                  onLanguageChange: widget.onLanguageChange,
+                  tutorialFinished: widget.tutorialFinished,
                 ),
               ],
             ),

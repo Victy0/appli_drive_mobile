@@ -11,10 +11,12 @@ import 'package:flutter/material.dart';
 class AppliariseActions extends StatefulWidget {
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
+  final bool tutorialFinished;
   const AppliariseActions({
     super.key,
     required this.appmon,
-    required this.onLanguageChange
+    required this.onLanguageChange,
+    required this.tutorialFinished,
   });
 
   @override
@@ -52,35 +54,36 @@ class AppliariseActionsState extends State<AppliariseActions> {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () async {
-              final navigator = Navigator.of(context);
-              Appmon? appmonLinked = await showDialog<Appmon>(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) => DialogInsertCode(currentAppmon: widget.appmon),
-              );
-              if(appmonLinked != null) {
-                if(appmonLinked.fusioned != null) {
+          if(widget.tutorialFinished)
+            GestureDetector(
+              onTap: () async {
+                final navigator = Navigator.of(context);
+                Appmon? appmonLinked = await showDialog<Appmon>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => DialogInsertCode(currentAppmon: widget.appmon),
+                );
+                if(appmonLinked != null) {
+                  if(appmonLinked.fusioned != null) {
+                    navigator.pushReplacement(MaterialPageRoute(
+                      builder: (context) => AppliarisePage(
+                        onLanguageChange: widget.onLanguageChange,
+                        appmon: appmonLinked,
+                      ),
+                    ));
+                    return;
+                  }
                   navigator.pushReplacement(MaterialPageRoute(
-                    builder: (context) => AppliarisePage(
+                    builder: (context) => AppLinkPage(
                       onLanguageChange: widget.onLanguageChange,
-                      appmon: appmonLinked,
+                      appmon: widget.appmon,
+                      appmonLinked: appmonLinked,
                     ),
                   ));
-                  return;
                 }
-                navigator.pushReplacement(MaterialPageRoute(
-                  builder: (context) => AppLinkPage(
-                    onLanguageChange: widget.onLanguageChange,
-                    appmon: widget.appmon,
-                    appmonLinked: appmonLinked,
-                  ),
-                ));
-              }
-            },
-            child: const AnimatedWhiteButton(text: 'APP LINK'),
-          ),
+              },
+              child: const AnimatedWhiteButton(text: 'APP LINK'),
+            ),
         ],
       ),
     );

@@ -283,7 +283,8 @@
             "informationDialog": {
                 "context": "Appli Drive Mobile is an application inspired by the animated series Digimon Universe Appli Monsters, which aims to portray and expand the Appli Drive functionalities used by humans during the series. \n\nCreated by Victor Marques as a way of studying the Flutter framework."
             },
-            "pairing": "PAIRING"
+            "pairing": "PAIRING",
+            "tutorialAppliarise": "Click on my app icon to Appliarise!"
         },
         "initialPage": {
             "tapToStart": "Tap to start",

@@ -30,6 +30,14 @@ class DetailRectangle extends StatelessWidget {
           Colors.blue.shade700,
           Colors.blue.shade900,
         ];
+      case "cyan":
+        return [
+          Colors.cyan,
+          Colors.cyan.shade300,
+          Colors.cyan.shade200,
+          Colors.cyan.shade300,
+          Colors.cyan,
+        ];
       case "green":
         return [
           Colors.green.shade900,
