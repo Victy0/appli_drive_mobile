@@ -6,13 +6,15 @@ class TextWithWhiteShadow extends StatefulWidget {
   final String align;
   final double? height;
   final bool applySoftWrap;
+  final bool fontFamily;
   const TextWithWhiteShadow({
     super.key,
     required this.text,
     required this.fontSize,
     this.align = "",
     this.height,
-    this.applySoftWrap = false
+    this.applySoftWrap = false,
+    this.fontFamily = false,
   });
 
   @override
@@ -28,10 +30,13 @@ class TextWithWhiteShadowState extends State<TextWithWhiteShadow> {
         ? TextAlign.right
         : widget.align == "left"
           ? TextAlign.left
-          : null,
+          : widget.align == "center"
+            ? TextAlign.center
+            : null,
       softWrap: widget.applySoftWrap,
       overflow: widget.applySoftWrap ? TextOverflow.visible : TextOverflow.ellipsis,
       style: TextStyle(
+        fontFamily: widget.fontFamily ? Icons.arrow_upward.fontFamily : null,
         fontSize: widget.fontSize,
         fontWeight: FontWeight.bold,
         height: widget.height,

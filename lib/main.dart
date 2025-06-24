@@ -44,7 +44,6 @@ class MyAppState extends State<MyApp> {
   final PreferencesService _preferencesService = PreferencesService();
 
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
-  bool _tutorialFinished = false;
   bool _appmonPairing = false;
   bool _isLoading = true;
 
@@ -67,10 +66,9 @@ class MyAppState extends State<MyApp> {
   }
 
   void _getSetUp() async {
-    String? languageCode = await _preferencesService.getString(AppPreferenceKey.selectLanguage);
-    String? countryCode = await _preferencesService.getString(AppPreferenceKey.selectCountry);
-    bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
-    String? appmonPairing = await _preferencesService.getString(AppPreferenceKey.appmonPairingName);
+    final String? languageCode = await _preferencesService.getString(AppPreferenceKey.selectLanguage);
+    final String? countryCode = await _preferencesService.getString(AppPreferenceKey.selectCountry);
+    final String? appmonPairing = await _preferencesService.getString(AppPreferenceKey.appmonPairingName);
     Locale localeSelected = WidgetsBinding.instance.platformDispatcher.locale;
 
     if (languageCode != null && countryCode != null) {
@@ -79,7 +77,6 @@ class MyAppState extends State<MyApp> {
 
     setState(() {
       _deviceLocale = localeSelected;
-      _tutorialFinished = tutorialFinished;
       _appmonPairing = appmonPairing != null;
       _isLoading = false;
     });
@@ -129,7 +126,7 @@ class MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       locale: _deviceLocale,
-      home: (_tutorialFinished || _appmonPairing)
+      home: _appmonPairing
         ? InitialPage(onLanguageChange: _changeLanguage)
         : FirstSetupPage(onLanguageChange: _changeLanguage),
     );

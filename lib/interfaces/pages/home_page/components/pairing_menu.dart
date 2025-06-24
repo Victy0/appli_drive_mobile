@@ -8,11 +8,13 @@ class PairingMenu extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final String appmonPairingName;
   final List<Map<String, String>> appmonEvolutionInfo;
+  final bool tutorialFinished;
   const PairingMenu({
     super.key,
     required this.onLanguageChange,
     required this.appmonPairingName,
-    required this.appmonEvolutionInfo
+    required this.appmonEvolutionInfo,
+    required this.tutorialFinished,
   });
 
   @override
@@ -103,6 +105,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,
                       appmon: appmon,
+                      tutorialFinished: widget.tutorialFinished,
                     ),
                   ));
                 },
