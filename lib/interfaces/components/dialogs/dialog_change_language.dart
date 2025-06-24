@@ -22,7 +22,7 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
     {'label': '日本語', 'locale': const Locale('ja', 'JP'), 'flag': 'assets/images/flags/jp.png'},
   ];
 
-  late Locale _selectedLocale;
+  Locale _selectedLocale = WidgetsBinding.instance.platformDispatcher.locale;
 
   Future<Locale> getSavedLocale() async {
     String? languageCode = await _preferencesService.getString(AppPreferenceKey.selectLanguage);

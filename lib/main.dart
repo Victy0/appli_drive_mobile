@@ -1,4 +1,5 @@
 import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
+import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/first_setup_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
@@ -40,7 +41,12 @@ class MyApp extends StatefulWidget  {
 }
 
 class MyAppState extends State<MyApp> {
+  final PreferencesService _preferencesService = PreferencesService();
+
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
+  bool _tutorialFinished = false;
+  bool _appmonPairing = false;
+  bool _isLoading = true;
 
   Future<Locale> getSavedLocale() async {
     PreferencesService preferencesService = PreferencesService();
@@ -54,25 +60,53 @@ class MyAppState extends State<MyApp> {
     return WidgetsBinding.instance.platformDispatcher.locale;
   }
 
-  void changeLanguage(Locale newLocale) {
+  void _changeLanguage(Locale newLocale) {
     setState(() {
       _deviceLocale = newLocale;
+    });
+  }
+
+  void _getSetUp() async {
+    String? languageCode = await _preferencesService.getString(AppPreferenceKey.selectLanguage);
+    String? countryCode = await _preferencesService.getString(AppPreferenceKey.selectCountry);
+    bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
+    String? appmonPairing = await _preferencesService.getString(AppPreferenceKey.appmonPairingName);
+    Locale localeSelected = WidgetsBinding.instance.platformDispatcher.locale;
+
+    if (languageCode != null && countryCode != null) {
+      localeSelected = Locale(languageCode, countryCode);
+    }
+
+    setState(() {
+      _deviceLocale = localeSelected;
+      _tutorialFinished = tutorialFinished;
+      _appmonPairing = appmonPairing != null;
+      _isLoading = false;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    getSavedLocale().then((locale) {
-      setState(() {
-        _deviceLocale = locale;
-      });
-    });
+    _getSetUp();
     WakelockPlus.enable();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const MaterialApp(
+        home: Scaffold(
+          backgroundColor: Colors.black,
+          body: Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          ),
+        ),
+      );
+    }
+
     return MaterialApp(
       title: 'Appli Drive',
       supportedLocales: const [
@@ -95,7 +129,9 @@ class MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       locale: _deviceLocale,
-      home: InitialPage(onLanguageChange: changeLanguage),
+      home: (_tutorialFinished || _appmonPairing)
+        ? InitialPage(onLanguageChange: _changeLanguage)
+        : FirstSetupPage(onLanguageChange: _changeLanguage),
     );
   }
 }
