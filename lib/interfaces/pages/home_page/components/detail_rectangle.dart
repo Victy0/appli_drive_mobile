@@ -40,19 +40,19 @@ class DetailRectangle extends StatelessWidget {
         ];
       case "green":
         return [
-          Colors.green.shade900,
           Colors.green.shade700,
+          Colors.green.shade600,
           Colors.green.shade400,
+          Colors.green.shade600,
           Colors.green.shade700,
-          Colors.green.shade900,
         ];
       case "grey":
         return [
-          Colors.grey.shade700,
           Colors.grey.shade600,
           Colors.grey.shade500,
+          Colors.grey.shade400,
+          Colors.grey.shade500,
           Colors.grey.shade600,
-          Colors.grey.shade700,
         ];
       case "orange":
         return [
@@ -64,27 +64,27 @@ class DetailRectangle extends StatelessWidget {
         ];
       case "pink":
         return [
-          Colors.pink.shade700,
           Colors.pink.shade500,
           Colors.pink.shade400,
+          Colors.pink.shade300,
+          Colors.pink.shade400,
           Colors.pink.shade500,
-          Colors.pink.shade700,
         ];
       case "purple":
         return [
-          Colors.purple.shade800,
+          Colors.purple.shade700,
           Colors.purple.shade600,
           Colors.purple.shade400,
           Colors.purple.shade600,
-          Colors.purple.shade800,
+          Colors.purple.shade700,
         ];
       case "red":
         return [
-          Colors.red.shade900,
           Colors.red.shade700,
-          Colors.red.shade400,
+          Colors.red.shade600,
+          Colors.red.shade500,
+          Colors.red.shade600,
           Colors.red.shade700,
-          Colors.red.shade900,
         ];
       case "yellow":
         return [
