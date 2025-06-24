@@ -239,6 +239,41 @@
         "dataCenterPage": {
             "dataCenter": "CENTRO DE DADOS"
         },
+        "firstSetupPage": {
+            "continue": "CONTINUAR",
+            "forEveryApplicationTherIsAnAppmon": "Para cada aplicativo que existe, há um appmon como eu.",
+            "iAmYourPartnerAppmon": "Eu sou seu companheiro appmon. Meu nome é: ",
+            "itsAllUpToYouWithAppliDrive": "TUDO DEPENDE DE VOCÊ COM APPLI DRIVE",
+            "no": "NÃO",
+            "options": {
+                "purpose": "PROPÓSITO",
+                "determination": "DETERMINAÇÃO",
+                "change": "MUDANÇA",
+                "conclusion": "CONCLUSÃO",
+                "understanding": "ENTENDIMENTO"
+            },
+            "presentation": { 
+                "D1Y8": "Eu sou o appmon de aplicativo de pesquisa. Com uma simples pesquisa consigo saber de tudo!",
+                "D8I0": "Eu sou o appmon do aplicativo de análise de fofoca. Não tem nada que eu não possa te contar!",
+                "D5S7": "Eu sou o appmon do aplicativo de ação. Posso dar um soco no seu coração!",
+                "D5V7": "Eu sou o appmon do aplicativo de moda. Posso criar qualquer roupa que imaginar!",
+                "D6R3": "Eu sou o appmon do aplicativo de música. Sintonizando a batida com o momento!",
+                "D0Z8": "Eu sou o appmon do aplicativo de tradução. Consigo entender qulaquer idioma que precisar!",
+                "D8B1": "Eu sou o appmon do aplicativo de resgate. Eu vou ajudar qualquer um que precisar!",
+                "D9B2": "Eu sou o appmon do aplicativo de hack. Não há sistema que eu não possa entrar!",
+                "D1V2": "Eu sou o appmon do aplicativo online. Estou animado para começar!",
+                "D2U8": "Eu sou o appmon do aplicativo offline. Tô cansado! Podemos ir devagar?"
+            },
+            "questions": {
+                "areYouAProtagonist": "VOCÊ É UM PROTAGONISTA?",
+                "doYouWantToMakeSomeoneSmile": "VOCÊ QUER FAZER ALGUÉM SORRIR?",
+                "areYouFeelinIt": "ESTÁ SENTINDO ISSO?",
+                "areYouAlone": "VOCÊ ESTÁ SOZINHO?",
+                "doYouWantToConnect": "DESEJA SE CONECTAR?"
+            },
+            "yes": "SIM",
+            "whatYouAreLookinFor": "O QUE VOCÊ PROCURA:"
+        },
         "hintsPage": {
             "hints": "Dicas"
         },

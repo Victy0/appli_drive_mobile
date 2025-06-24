@@ -239,6 +239,41 @@
         "dataCenterPage": {
             "dataCenter": "データセンター"
         },
+        "firstSetupPage": {
+            "continue": "続ける",
+            "forEveryApplicationTherIsAnAppmon": "すべてのアプリには、私のようなアプモンがいる。",
+                "iAmYourPartnerAppmon": "私はあなたのパートナーアプモンです。私の名前は：",
+                "itsAllUpToYouWithAppliDrive": "アプリドライブで決めるのはあなた次第。",
+                "no": "NO",
+                "options": {
+                    "purpose": "目的",
+                    "determination": "決意",
+                    "change": "変化",
+                    "conclusion": "結論",
+                    "understanding": "理解"
+                },
+                "presentation": {
+                    "D1Y8": "私は検索アプリのアプモン。簡単な検索で何でもわかるよ！",
+                    "D8I0": "私はゴシップ解析アプリのアプモン。知らないことなんてないよ！",
+                    "D5S7": "私はアクションアプリのアプモン。君の心にパンチを届けるよ！",
+                    "D5V7": "私はファッションアプリのアプモン。想像する服は何でも作れる！",
+                    "D6R3": "私は音楽アプリのアプモン。どんなビートでも作れるよ！",
+                    "D0Z8": "私は翻訳アプリのアプモン。どんな言語でも理解できるよ！",
+                    "D8B1": "私はレスキューアプリのアプモン。困ってる人は必ず助けるよ！",
+                    "D9B2": "私はハッキングアプリのアプモン。入れないシステムはない！",
+                    "D1V2": "私はオンラインアプリのアプモン。始めるのが楽しみだね！",
+                    "D2U8": "私はオフラインアプリのアプモン。ちょっと疲れてるけど、ゆっくりやろう！"
+                },
+                "questions": {
+                    "areYouAProtagonist": "あなたは主人公ですか？",
+                    "doYouWantToMakeSomeoneSmile": "誰かを笑顔にしたいですか？",
+                    "areYouFeelinIt": "ノレる？",
+                    "areYouAlone": "あなたは一人ですか？",
+                    "doYouWantToConnect": "あなたはつながりたいですか？"
+                },
+                "yes": "YES",
+                "whatYouAreLookinFor": "あなたが探しているものは："
+        },
         "hintsPage": {
             "hints": "ヒンツ"
         },

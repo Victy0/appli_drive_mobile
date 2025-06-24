@@ -71,14 +71,14 @@ class PreferencesService {
       list.add(value);
     }
     final jsonString = jsonEncode(list);
-    await prefs.setString('appmon_pairing_evolution', jsonString);
+    await prefs.setString(AppPreferenceKey.appmonPairingEvolution.value, jsonString);
   }
 
   Future<List<Map<String, String>>> getAppmonPairingEvolutionInfo() async {
     final prefs = await sharedPrefs;
-    final jsonString = prefs.getString('appmon_pairing_evolution');
+    final jsonString = prefs.getString(AppPreferenceKey.appmonPairingEvolution.value);
 
-    if (jsonString == null) return [{"id": "D1Y8", "code": "AAA"}];
+    if (jsonString == null) return [];
 
     final decoded = jsonDecode(jsonString);
 
