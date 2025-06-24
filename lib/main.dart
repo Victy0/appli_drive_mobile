@@ -26,11 +26,10 @@ void main() {
     DeviceOrientation.portraitDown,
   ]).then((_) {
     runApp(const MyApp());
+    WidgetsBinding.instance.addObserver(
+      LifecycleEventHandler(resumeCallBack: () async => hideSystemUI()),
+    );
   });
-
-  WidgetsBinding.instance.addObserver(
-    LifecycleEventHandler(resumeCallBack: () async => hideSystemUI()),
-  );
 }
 
 class MyApp extends StatefulWidget  {
@@ -46,18 +45,6 @@ class MyAppState extends State<MyApp> {
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
   bool _appmonPairing = false;
   bool _isLoading = true;
-
-  Future<Locale> getSavedLocale() async {
-    PreferencesService preferencesService = PreferencesService();
-    String? languageCode = await preferencesService.getString(AppPreferenceKey.selectLanguage);
-    String? countryCode = await preferencesService.getString(AppPreferenceKey.selectCountry);
-
-    if (languageCode != null && countryCode != null) {
-      return Locale(languageCode, countryCode);
-    }
-
-    return WidgetsBinding.instance.platformDispatcher.locale;
-  }
 
   void _changeLanguage(Locale newLocale) {
     setState(() {
@@ -118,18 +105,38 @@ class MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (locale != null && locale.languageCode == supportedLocale.languageCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
+        return supportedLocales.firstWhere(
+          (supportedLocale) => locale?.languageCode == supportedLocale.languageCode,
+          orElse: () => supportedLocales.first,
+        );
       },
       locale: _deviceLocale,
-      home: _appmonPairing
-        ? InitialPage(onLanguageChange: _changeLanguage)
-        : FirstSetupPage(onLanguageChange: _changeLanguage),
+      home: MainAppPage(
+        locale: _deviceLocale,
+        appmonPairing: _appmonPairing,
+        onLanguageChange: _changeLanguage,
+      ),
     );
+  }
+}
+
+class MainAppPage extends StatelessWidget {
+  final Locale locale;
+  final bool appmonPairing;
+  final void Function(Locale) onLanguageChange;
+
+  const MainAppPage({
+    super.key,
+    required this.locale,
+    required this.appmonPairing,
+    required this.onLanguageChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return appmonPairing
+      ? InitialPage(onLanguageChange: onLanguageChange)
+      : FirstSetupPage(onLanguageChange: onLanguageChange);
   }
 }
 
