@@ -33,6 +33,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   String _appmonColorSecondary = "";
   List<Map<String, String>> _appmonPairingEvolutionInfo = [];
   bool _tutorialFinished = false;
+  bool _show7codeIcon = false;
   bool _isLoading = true;
 
   _getInitialValues() async {
@@ -41,6 +42,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final String appmonColorSecondary = await _preferencesService.getString(AppPreferenceKey.secondaryColor) ?? "";
     final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
     final bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
+    final bool show7codeIcon = await _preferencesService.getBool(AppPreferenceKey.show7codeIcon);
     
     setState(() {
       _appmonPairingName = appmonName;
@@ -48,6 +50,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _appmonColorSecondary = appmonColorSecondary;
       _appmonPairingEvolutionInfo = appmonPairingEvolutionInfo;
       _tutorialFinished = tutorialFinished;
+      _show7codeIcon = show7codeIcon;
       _isLoading = false;
     });
   }
@@ -102,79 +105,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   appmonEvolutionInfo: _appmonPairingEvolutionInfo,
                   tutorialFinished: _tutorialFinished,
                 ),
-                
-                if(_tutorialFinished) ...[
-                  const SizedBox(height: 70),
-                  GestureDetector(
-                    onTap: () async {
-                      final navigator = Navigator.of(context);
-                      Appmon? appmon = await showDialog<Appmon>(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) => const DialogInsertCode(),
-                      );
-                      if(appmon != null) {
-                        navigator.pushReplacement(MaterialPageRoute(
-                          builder: (context) => AppliarisePage(onLanguageChange: widget.onLanguageChange, appmon: appmon),
-                        ));
-                      }
-                    },
-                    child: const AnimatedWhiteButton(text: 'APPLIARISE'),
-                  ),
-                  const SizedBox(height: 20),
-                  MenuIcons(onLanguageChange: widget.onLanguageChange),
-                ] else ...[
-                  const SizedBox(height: 10),
-                  TextWithWhiteShadow(
-                    text: String.fromCharCode(Icons.arrow_upward.codePoint),
-                    fontSize: 30,
-                    align: "center",
-                    applySoftWrap: true,
-                    fontFamily: true,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: ShaderMask(
-                            shaderCallback: (Rect bounds) {
-                              return _buildScanlineShader(bounds.size);
-                            },
-                            blendMode: BlendMode.srcATop,
-                            child: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                Color.fromARGB(226, 255, 255, 255),
-                                BlendMode.modulate,
-                              ),
-                              child: Image.asset(
-                                "assets/images/appmons/${_appmonPairingEvolutionInfo[0]["id"]}.png",
-                                width: 150,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextWithWhiteShadow(
-                            text: AppLocalization.of(context).translate("pages.homePage.tutorialAppliarise"),
-                            fontSize: 26,
-                            align: "center",
-                            applySoftWrap: true,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ...(_tutorialFinished
+                  ? tutorialFinishedWidgets()
+                  : tutorialUnfinishedWidgets()
+                ),
               ],
             ),
           ),
@@ -211,7 +145,93 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Shader _buildScanlineShader(Size size) {
+  List<Widget> tutorialFinishedWidgets() {
+    return [
+      const SizedBox(height: 70),
+      GestureDetector(
+        onTap: () async {
+          final navigator = Navigator.of(context);
+          Appmon? appmon = await showDialog<Appmon>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => const DialogInsertCode(),
+          );
+          if (appmon != null) {
+            navigator.pushReplacement(MaterialPageRoute(
+              builder: (context) => AppliarisePage(
+                onLanguageChange: widget.onLanguageChange,
+                appmon: appmon,
+              ),
+            ));
+          }
+        },
+        child: const AnimatedWhiteButton(text: 'APPLIARISE'),
+      ),
+      const SizedBox(height: 20),
+      MenuIcons(
+        onLanguageChange: widget.onLanguageChange,
+        show7codeIcon: _show7codeIcon,
+      ),
+    ];
+  }
+
+  List<Widget> tutorialUnfinishedWidgets() {
+    return [
+      const SizedBox(height: 10),
+      TextWithWhiteShadow(
+        text: String.fromCharCode(Icons.arrow_upward.codePoint),
+        fontSize: 30,
+        align: "center",
+        applySoftWrap: true,
+        fontFamily: true,
+      ),
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 150,
+              width: 150,
+              child: ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return scanlineShader(bounds.size);
+                },
+                blendMode: BlendMode.srcATop,
+                child: ColorFiltered(
+                  colorFilter: const ColorFilter.mode(
+                    Color.fromARGB(226, 255, 255, 255),
+                    BlendMode.modulate,
+                  ),
+                  child: Image.asset(
+                    "assets/images/appmons/${_appmonPairingEvolutionInfo[0]["id"]}.png",
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: TextWithWhiteShadow(
+                text: AppLocalization.of(context)
+                    .translate("pages.homePage.tutorialAppliarise"),
+                fontSize: 26,
+                align: "center",
+                applySoftWrap: true,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ];
+  }
+
+  Shader scanlineShader(Size size) {
     return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
