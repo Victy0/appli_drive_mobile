@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 
 class MenuIcons extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  const MenuIcons({super.key, required this.onLanguageChange});
+  final bool show7codeIcon;
+  const MenuIcons({
+    super.key,
+    required this.onLanguageChange,
+    required this.show7codeIcon
+  });
 
   @override
   MenuIconsState createState() => MenuIconsState();
@@ -96,7 +101,8 @@ class MenuIconsState extends State<MenuIcons> {
         children: [
           const Spacer(),
           iconDataCenter(context),
-          iconSevenCode(context),
+          if(widget.show7codeIcon)
+            iconSevenCode(context),
           iconHints(context),
           const Spacer(),
         ],

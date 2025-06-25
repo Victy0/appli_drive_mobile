@@ -3,7 +3,8 @@ enum AppPreferenceKey {
   dbVersion,               // número de versionamento do banco de dados
   selectCountry,           // país selecionado 
   selectLanguage,          // idioma selecionado
-  tutorialFinished,
+  tutorialFinished,        // informação booleana se tutorial foi finalizado
+  show7codeIcon,           // informação booleana se deve mostrar o icone de 7code
 // APPMON PAIRING
   appmonPairingName,       // nome do appmon pareado
   appmonPairingEvolution,  // informação linha evolutiva appmon pareado
@@ -16,7 +17,7 @@ enum AppPreferenceKey {
   dantemonAppliarise,      // informação booleana se foi realizado appliarise de Dantemon
   sevencodeRevealedIds,    // lista de 7code revelados
 // HINTS
-  hintRevealedList,
+  hintRevealedList,        // lista de dicas reveladas
 }
 
 extension AppPreferenceKeyExt on AppPreferenceKey {
@@ -31,6 +32,8 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
         return 'selected_language';
       case AppPreferenceKey.tutorialFinished:
         return 'tutorial_finished';
+      case AppPreferenceKey.show7codeIcon:
+        return 'show_7code_icon';
     // APPMON PAIRING
       case AppPreferenceKey.appmonPairingName:
         return 'appmon_pairing_name';
