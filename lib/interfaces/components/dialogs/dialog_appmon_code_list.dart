@@ -13,6 +13,19 @@ class DialogAppmonCodeList extends StatefulWidget {
 
 class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+
+  _getAppmonQuantityByGrade(String grade) {
+    switch(grade) {
+      case "standard":
+        return 74;
+      case "super":
+        return 37;
+      case "ultimate":
+        return 14;
+      case "god":
+        return 6;
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -42,7 +55,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: _buildGroupedList(widget.appmonCodeList),
+                    children: groupedList(widget.appmonCodeList),
                   ),
                 ),
               ),
@@ -72,56 +85,97 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
     );
   }
 
-  List<Widget> _buildGroupedList(List<Map<String, dynamic>> appmonCodeList) {
+  List<Widget> groupedList(List<Map<String, dynamic>> appmonCodeList) {
     Map<String, List<Map<String, dynamic>>> groupedItems = {};
 
     for (var item in appmonCodeList) {
       String gradeName = item['gradeName'];
-      if (!groupedItems.containsKey(gradeName)) {
-        groupedItems[gradeName] = [];
-      }
-      groupedItems[gradeName]!.add(item);
+      groupedItems.putIfAbsent(gradeName, () => []).add(item);
     }
 
-    List<Widget> codeWidgets = [];
+    return groupedItems.entries.map((entry) {
+      final gradeName = entry.key;
+      final items = entry.value;
+      final titleText = AppLocalization.of(context).translate("appmons.grades.$gradeName");
+      final appmonQuantity = _getAppmonQuantityByGrade(gradeName);
 
-    groupedItems.forEach((gradeName, items) {
-      codeWidgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Text(
-            AppLocalization.of(context).translate("appmons.grades.$gradeName"),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            dividerColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+          ),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            clipBehavior: Clip.antiAlias,
+            child: ExpansionTile(
+              tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+              childrenPadding: const EdgeInsets.all(16),
+              backgroundColor: Colors.white,
+              collapsedBackgroundColor: Colors.white,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      titleText,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Text(
+                    "${items.length}/$appmonQuantity",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
+              ),
+              children: items.map((item) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.all(12.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: const [
+                      BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "assets/images/apps/${item['id']}.png",
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          item['code'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
             ),
           ),
         ),
       );
-      for (var item in items) {
-        codeWidgets.add(
-          Column(
-            children: [
-              ListTile(
-                leading: Image.asset(
-                  "assets/images/apps/${item['id']}.png",
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
-                title: Text(
-                  item['code'],
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    });
-    return codeWidgets;
+    }).toList();
   }
 }

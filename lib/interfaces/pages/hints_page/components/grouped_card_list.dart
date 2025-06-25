@@ -45,19 +45,22 @@ class GroupedCardListState extends State<GroupedCardList> {
             child: Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Text(
-                          AppLocalization.of(context).translate("pages.hintsPage.texts.$hintCode"),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: Colors.black,
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            AppLocalization.of(context).translate("pages.hintsPage.texts.$hintCode"),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 25,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -153,12 +156,18 @@ class GroupedCardListState extends State<GroupedCardList> {
                               BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
                             ],
                           ),
-                          child: Text(
-                            AppLocalization.of(context).translate("pages.hintsPage.titles.$type$number"),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
+                          child: Row(
+                              children: [
+                                Text(
+                                  AppLocalization.of(context).translate("pages.hintsPage.titles.$type$number"),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                const Spacer(),
+                                const Icon(Icons.arrow_forward_ios, size: 15),
+                              ],
                           ),
                         ),
                       );
