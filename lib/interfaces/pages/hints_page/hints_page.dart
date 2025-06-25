@@ -1,6 +1,9 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
+import 'package:appli_drive_mobile/interfaces/pages/hints_page/components/grouped_card_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
 class HintsPage extends StatefulWidget {
@@ -11,7 +14,27 @@ class HintsPage extends StatefulWidget {
   HintsPagePageState createState() => HintsPagePageState();
 }
 
-class HintsPagePageState extends State<HintsPage>{
+class HintsPagePageState extends State<HintsPage> {
+  final PreferencesService _preferencesService = PreferencesService();
+  
+  List<Map<String, dynamic>> _hintList = [];
+  bool _isLoading = true;
+
+  _getHintList() async {
+    List<Map<String, dynamic>> result = await _preferencesService.getHintRevealedList();
+
+    setState(() {
+      _hintList = result;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getHintList();
+  }
+  
   void _returnToHomePage(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -35,23 +58,42 @@ class HintsPagePageState extends State<HintsPage>{
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {    
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
-      appBar: _appBarComponent(context),
-      body: const Stack(
+      appBar: appBarComponent(context),
+      body: Stack(
         children: [
-          BackgroundImage(color: "yellow"),
-          Center(
-            child: Text("Hints page")
+          const BackgroundImage(color: "yellow"),
+          Column(
+            children: [
+              const SizedBox(height: 20),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GroupedCardList(
+                        hintList: _hintList,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 100),
+            ],
           ),
+          ClosePageButton(onLanguageChange: widget.onLanguageChange, onTap: _returnToHomePage),
         ],
       ),
     );
   }
 
-  AppBar _appBarComponent(context){
+  AppBar appBarComponent(context){
     return AppBar(
       flexibleSpace: Container(
         decoration: const BoxDecoration(
@@ -65,19 +107,13 @@ class HintsPagePageState extends State<HintsPage>{
           ),
         ),
       ),
-      leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          _returnToHomePage(context);
-        },
-      ),
       centerTitle: true,
       title: Text(
         AppLocalization.of(context).translate("pages.hintsPage.hints"),
-        style: const TextStyle(color: Colors.black),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
       ),
       actions: [
         IconButton(

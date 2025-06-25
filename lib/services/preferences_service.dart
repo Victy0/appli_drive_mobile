@@ -87,6 +87,50 @@ class PreferencesService {
     );
   }
 
+  Future<void> setHintInHintRevealedList(String type, [String? number]) async {
+    final prefs = await sharedPrefs;
+    final list = await getHintRevealedList();
+
+    final existing = list.firstWhere(
+      (item) => item['type'] == type,
+      orElse: () => {},
+    );
+
+    if (existing.isNotEmpty) {
+      List<String> numbers = List<String>.from(existing['number'] ?? []);
+      
+      if (number != null && number.isNotEmpty) {
+        if (!numbers.contains(number)) {
+          numbers.add(number);
+          existing['number'] = numbers;
+        }
+      } else {
+        existing['number'] = numbers.isNotEmpty ? numbers : [];
+      }
+    } else {
+      list.add({
+        'type': type,
+        'number': (number != null && number.isNotEmpty) ? [number] : [],
+      });
+    }
+
+    final jsonString = jsonEncode(list);
+    await prefs.setString(AppPreferenceKey.hintRevealedList.value, jsonString);
+  }
+
+  Future<List<Map<String, dynamic>>> getHintRevealedList() async {
+    final prefs = await sharedPrefs;
+    final jsonString = prefs.getString(AppPreferenceKey.hintRevealedList.value);
+
+    if (jsonString == null) return [];
+
+    final decoded = jsonDecode(jsonString);
+
+    return List<Map<String, dynamic>>.from(
+      decoded.map((item) => Map<String, dynamic>.from(item)),
+    );
+  }
+
   Future<void> remove(AppPreferenceKey key) async {
     final prefs = await sharedPrefs;
     await prefs.remove(key.value);

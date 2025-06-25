@@ -15,6 +15,8 @@ enum AppPreferenceKey {
 // 7CODE
   dantemonAppliarise,      // informação booleana se foi realizado appliarise de Dantemon
   sevencodeRevealedIds,    // lista de 7code revelados
+// HINTS
+  hintRevealedList,
 }
 
 extension AppPreferenceKeyExt on AppPreferenceKey {
@@ -48,6 +50,9 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
         return 'dantemon_appliarise';
       case AppPreferenceKey.sevencodeRevealedIds:
         return 'sevencode_revealed_ids';
+    // HINTS
+      case AppPreferenceKey.hintRevealedList:
+        return 'hint_revealed_list';
     }
   }
 }

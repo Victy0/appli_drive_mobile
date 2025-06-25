@@ -275,7 +275,30 @@
             "whatYouAreLookinFor": "WHAT YOU ARE LOOKING FOR:"
         },
         "hintsPage": {
-            "hints": "Hints"
+            "hints": "HINTS",
+            "texts": {
+                "appliDrive1": "The standard version of Appli drive is the first version available on the device. It allows you to perform Appliarise and App link of standard grade appmons.\nTo upgrade to the next version, it is necessary to make an App link that generates an App gatai.",
+                "appmon1": "Appmon, short for Appli Monster , are a type of digital lifeforms based on smartphone apps that inherited the lineage of Digimon. Possessing artificial intelligence, being able to think and act independently, they are “app lifeforms” that were born within the boundary between the Real World and digital space, lurking within the Net Ocean.",
+                "appmon2": "Appliarise, a play on the words “app/application”, “arise” and “realize”, is the process in which an Appmon materializes from its Appmon Chip; this can be done through the use of a device such as the Appli Drive.\nWhile a Standard Grade Appmon materializing from its Appmon Chip is merely called “Appliarising”, for higher Grades, the name of the Grade is put before the term itself.",
+                "appmon3": "An App link is a process in which two Appmon (one in the form of an Appmon Chip) are linked together into a conglomerate entity by an Appli Drive user.\nSometimes, the subordinate Appmon forms weapons, armor or new abilities for the lead Appmon. Other times, the subordinate Appmon appears in a ghostly form floating behind the lead Appmon.",
+                "appmon4": "App attai is stated to be a variation of Applink in which two specific compatible Appmon combine together to become an Appmon of a higher Grade, either by an Appli Drive user, or by the volition of the active Appmon.",
+                "appmon5": "Appmon are found in the “Common network”, they are the “Apps” that humankind use everyday. They exist in this middle ground between the humans' physical world and the “Deeper network” of Digimon, commonly known as the Net. There are as many different species of Appmon as many apps exist.",
+                "appmon6": "A Buddy Appmon is an Appmon who has paired themselves with an person.\nUpon forming a partnership, the Appli Drive of the person,  takes characteristics of the Buddy Appmon. If said Appli Drive is destroyed, the Buddy Appmon will disappear and lose all memories of their bond."
+            },
+            "titles": {
+                "appliDrive1": "01 - STANDART",
+                "appmon1": "01 - APPMON",
+                "appmon2": "02 - APPLIARISE",
+                "appmon3": "03 - APP LINK",
+                "appmon4": "04 - APP GATTAI",
+                "appmon5": "05 - NET",
+                "appmon6": "06 - BUDDY"
+            },
+            "types": {
+                "appliDrive": "APPLI DRIVE",
+                "appmon": "APPMON",
+                "7code": "7 CODE"
+            }
         },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE VERSION",

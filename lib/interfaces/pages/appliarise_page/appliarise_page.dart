@@ -49,14 +49,21 @@ class AppliarisePageState extends State<AppliarisePage> {
   }
 
   _setAppmonReveleadedId() async {
-    _preferencesService.setBool(
-      AppPreferenceKey.tutorialFinished,
-      true
-    );
+    
     _preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
       widget.appmon.id,
     );
+    if(!widget.tutorialFinished) {
+      _preferencesService.setBool(
+      AppPreferenceKey.tutorialFinished,
+      true
+    );
+      _preferencesService.setHintInHintRevealedList("appmon", "1");
+      _preferencesService.setHintInHintRevealedList("appmon", "2");
+      _preferencesService.setHintInHintRevealedList("appliDrive", "1");
+      _preferencesService.setHintInHintRevealedList("7code");
+    }
   }
 
   @override
