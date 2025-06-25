@@ -6,10 +6,12 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseHeader extends StatefulWidget {
+  final DatabaseHelper databaseHelper;
   final GradeAppmon grade;
   final bool tutorialFinished;
   const AppliariseHeader({
     super.key,
+    required this.databaseHelper,
     required this.grade,
     required this.tutorialFinished
   });
@@ -19,13 +21,12 @@ class AppliariseHeader extends StatefulWidget {
 }
 
 class AppliariseHeaderState extends State<AppliariseHeader> {
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   
   late List<Map<String, dynamic>> appmonCodeList;
   
   _getAppmonCodeList() async {
-    appmonCodeList = await _databaseHelper.getAppmonCodeList(widget.grade.id);
+    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.grade.id);
   }
 
   @override

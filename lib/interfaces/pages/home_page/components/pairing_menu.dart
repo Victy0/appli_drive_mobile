@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 
 class PairingMenu extends StatefulWidget {
   final Function(Locale) onLanguageChange;
+  final DatabaseHelper databaseHelper;
   final String appmonPairingName;
   final List<Map<String, String>> appmonEvolutionInfo;
   final bool tutorialFinished;
   const PairingMenu({
     super.key,
     required this.onLanguageChange,
+    required this.databaseHelper,
     required this.appmonPairingName,
     required this.appmonEvolutionInfo,
     required this.tutorialFinished,
@@ -22,7 +24,6 @@ class PairingMenu extends StatefulWidget {
 }
 
 class PairingMenuState extends State<PairingMenu> with SingleTickerProviderStateMixin {
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
   late AnimationController _controllerRotation;
   late Animation<double> _rotationAnimation;
 
@@ -170,7 +171,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             ),
             InkWell(
               onTap: () async {
-                final appmon = await _databaseHelper.getAppmonByCode(widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "");
+                final appmon = await widget.databaseHelper.getAppmonByCode(widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "");
                 if (appmon != null) {
                   _showConfirmationDialog(appmon);
                 }

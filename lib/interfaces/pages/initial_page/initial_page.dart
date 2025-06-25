@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
-import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/version_app.dart';
+import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
@@ -86,16 +86,32 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
     _checkIfLanguageHasBeenChosen();
   }
 
-  void _navigateToNextPage(BuildContext context) async {
+  void _navigateToHomePage(BuildContext context) async {
     final navigator = Navigator.of(context);
     await _audioPlayerContinuous.stop();
-    navigator.pushReplacement(_createRouteHomePage(widget.onLanguageChange));
+    navigator.pushReplacement(
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 800),
+        pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: widget.onLanguageChange, initSound: true),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return Align(
+            alignment: Alignment.center,
+            child: SizeTransition(
+              sizeFactor: animation,
+              axis: Axis.vertical,
+              axisAlignment: -1.0,
+              child: child,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {    
     return GestureDetector(
-      onTap: () => _navigateToNextPage(context),
+      onTap: () => _navigateToHomePage(context),
       child: Scaffold(
         body: Stack(
           children: [
@@ -207,22 +223,4 @@ class NeonLinesPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
-Route _createRouteHomePage(onLanguageChangeFuction) {
-  return PageRouteBuilder(
-    transitionDuration: const Duration(milliseconds: 800),
-    pageBuilder: (context, animation, secondaryAnimation) => HomePage(onLanguageChange: onLanguageChangeFuction, initSound: true),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return Align(
-        alignment: Alignment.center,
-        child: SizeTransition(
-          sizeFactor: animation,
-          axis: Axis.vertical,
-          axisAlignment: -1.0,
-          child: child,
-        ),
-      );
-    },
-  );
 }

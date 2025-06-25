@@ -16,7 +16,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
+        // APP
         Container(
           margin: const EdgeInsets.only(left: 0, right: 10),
           child: Row(
@@ -52,9 +52,9 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
             ],
           ),
         ),
-        
+        // SPACING
         const SizedBox(height: 5),
-
+        // TYPE
         Container(
           margin: const EdgeInsets.only(left: 10, right: 0),
           child: Row(

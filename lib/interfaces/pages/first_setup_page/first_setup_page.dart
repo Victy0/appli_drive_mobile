@@ -4,7 +4,7 @@ import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/components/
 import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/components/individual_selection.dart';
 import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/components/question_appli_drive.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
-import 'package:appli_drive_mobile/interfaces/pages/initial_page/components/version_app.dart';
+import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';

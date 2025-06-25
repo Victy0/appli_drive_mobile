@@ -33,7 +33,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: _getBackgroundColor(widget.textBackgroundColor),
+            color: backgroundColor(widget.textBackgroundColor),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -61,7 +61,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
           width: 250,
           child: ShaderMask(
             shaderCallback: (Rect bounds) {
-              return _buildScanlineShader(bounds.size);
+              return scanlineShader(bounds.size);
             },
             blendMode: BlendMode.srcATop,
             child: ColorFiltered(
@@ -82,7 +82,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: _getBackgroundColor(widget.textBackgroundColor),
+            color: backgroundColor(widget.textBackgroundColor),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -108,7 +108,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
     );
   }
 
-  Shader _buildScanlineShader(Size size) {
+  Shader scanlineShader(Size size) {
     return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
@@ -126,7 +126,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
     ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
   }
 
-  Color? _getBackgroundColor(String color) {
+  Color? backgroundColor(String color) {
     switch(color) {
       case "red":
         return Colors.red[400];

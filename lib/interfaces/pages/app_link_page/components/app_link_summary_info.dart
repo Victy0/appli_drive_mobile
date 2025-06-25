@@ -17,7 +17,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
+        // APP 1
         Container(
           margin: const EdgeInsets.only(left: 0, right: 10),
           child: Row(
@@ -53,7 +53,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
             ],
           ),
         ),
-
+        // APP 2
         Container(
           margin: const EdgeInsets.only(left: 10, right: 0),
           child: Row(

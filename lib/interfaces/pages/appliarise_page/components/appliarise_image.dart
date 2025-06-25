@@ -22,7 +22,6 @@ class AppliariseImageState extends State<AppliariseImage> {
   @override
   void initState() {
     super.initState();
-
     _accelSub = accelerometerEvents.listen((AccelerometerEvent event) {
       if (!mounted) return;
       setState(() {

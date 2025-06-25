@@ -24,7 +24,6 @@ class AppLinkImageState extends State<AppLinkImage> {
   @override
   void initState() {
     super.initState();
-
     _accelSub = accelerometerEvents.listen((AccelerometerEvent event) {
       if (!mounted) return;
       setState(() {
@@ -37,7 +36,6 @@ class AppLinkImageState extends State<AppLinkImage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         Stack(
           alignment: Alignment.center,
           children: [
@@ -51,7 +49,7 @@ class AppLinkImageState extends State<AppLinkImage> {
                   ..rotateY(-_tiltAngle),
                 child: ShaderMask(
                   shaderCallback: (Rect bounds) {
-                    return _buildScanlineShader(bounds.size);
+                    return scanlineShader(bounds.size);
                   },
                   blendMode: BlendMode.srcATop,
                   child: ColorFiltered(
@@ -102,12 +100,12 @@ class AppLinkImageState extends State<AppLinkImage> {
                   ..rotateY(-_tiltAngle),
                 child: ShaderMask(
                   shaderCallback: (Rect bounds) {
-                    return _buildScanlineShader(bounds.size);
+                    return scanlineShader(bounds.size);
                   },
                   blendMode: BlendMode.srcATop,
                   child: ColorFiltered(
                     colorFilter: ColorFilter.mode(
-                      _defineColor(widget.linkColor),
+                      defineColor(widget.linkColor),
                       BlendMode.modulate,
                     ),
                     child: Image.asset(
@@ -184,7 +182,7 @@ class AppLinkImageState extends State<AppLinkImage> {
     );
   }
 
-  Color _defineColor(color) {
+  Color defineColor(color) {
     switch (color) {
       case "blue":
         return const Color.fromARGB(255, 0, 162, 255).withOpacity(0.6);
@@ -206,7 +204,7 @@ class AppLinkImageState extends State<AppLinkImage> {
     }
   }
 
-  Shader _buildScanlineShader(Size size) {
+  Shader scanlineShader(Size size) {
     return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,

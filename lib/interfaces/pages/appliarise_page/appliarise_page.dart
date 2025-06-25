@@ -6,6 +6,7 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/a
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class AppliarisePage extends StatefulWidget {
 }
 
 class AppliarisePageState extends State<AppliarisePage> {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
   
   _getColorByAppmonType(String? appmonType) {
@@ -86,6 +88,7 @@ class AppliarisePageState extends State<AppliarisePage> {
             child: Column(
               children: [
                 AppliariseHeader(
+                  databaseHelper: _databaseHelper,
                   grade: widget.appmon.grade,
                   tutorialFinished: widget.tutorialFinished,
                 ),
@@ -102,6 +105,7 @@ class AppliarisePageState extends State<AppliarisePage> {
                 AppliariseImage(appmon: widget.appmon),
                 const SizedBox(height: 40),
                 AppliariseActions(
+                  databaseHelper: _databaseHelper,
                   appmon: widget.appmon,
                   onLanguageChange: widget.onLanguageChange,
                   tutorialFinished: widget.tutorialFinished,

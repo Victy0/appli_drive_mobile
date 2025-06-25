@@ -5,15 +5,18 @@ import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseActions extends StatefulWidget {
+  final DatabaseHelper databaseHelper;
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
   final bool tutorialFinished;
   const AppliariseActions({
     super.key,
+    required this.databaseHelper,
     required this.appmon,
     required this.onLanguageChange,
     required this.tutorialFinished,
@@ -61,7 +64,10 @@ class AppliariseActionsState extends State<AppliariseActions> {
                 Appmon? appmonLinked = await showDialog<Appmon>(
                   context: context,
                   barrierDismissible: false,
-                  builder: (BuildContext context) => DialogInsertCode(currentAppmon: widget.appmon),
+                  builder: (BuildContext context) => DialogInsertCode(
+                    databaseHelper: widget.databaseHelper,
+                    currentAppmon: widget.appmon,
+                  ),
                 );
                 if(appmonLinked != null) {
                   if(appmonLinked.fusioned != null) {
