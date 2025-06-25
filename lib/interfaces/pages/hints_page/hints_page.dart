@@ -1,5 +1,6 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/custom_app_bar.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/components/grouped_card_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
@@ -66,7 +67,15 @@ class HintsPagePageState extends State<HintsPage> {
     }
 
     return Scaffold(
-      appBar: appBarComponent(context),
+      appBar: CustomAppBar(
+        titleText: AppLocalization.of(context).translate("pages.hintsPage.hints"),
+        image: "assets/images/icons/light_bulb_box.png",
+        backgroundColor: const [
+          Color.fromARGB(255, 255, 246, 124),
+          Color.fromARGB(255, 253, 216, 8),
+        ],
+        textBlack: true,
+      ),
       body: Stack(
         children: [
           const BackgroundImage(color: "yellow"),
@@ -89,48 +98,6 @@ class HintsPagePageState extends State<HintsPage> {
           ),
           ClosePageButton(onLanguageChange: widget.onLanguageChange, onTap: _returnToHomePage),
         ],
-      ),
-    );
-  }
-
-  AppBar appBarComponent(context){
-    return AppBar(
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 255, 246, 124),
-              Color.fromARGB(255, 253, 216, 8),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-      ),
-      centerTitle: true,
-      title: Text(
-        AppLocalization.of(context).translate("pages.hintsPage.hints"),
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () => (),
-          icon: Image.asset(
-            'assets/images/icons/light_bulb_box.png',
-            height: 50,
-            color: Colors.black,
-          ),
-        ),
-      ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(2.0),
-        child: Container(
-          color: Colors.black,
-          height: 2.0,
-        ),
       ),
     );
   }

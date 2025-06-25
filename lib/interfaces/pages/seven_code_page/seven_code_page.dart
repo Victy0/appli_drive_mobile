@@ -2,6 +2,7 @@ import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/custom_app_bar.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
@@ -90,7 +91,15 @@ class SevenCodePageState extends State<SevenCodePage>{
     }
 
     return Scaffold(
-      appBar: appBarComponent(context),
+      appBar: const CustomAppBar(
+        titleText: "7 CODE",
+        image: "assets/images/icons/orb_box.png",
+        backgroundColor: [
+          Color.fromARGB(255, 212, 0, 255),
+          Color.fromARGB(255, 162, 50, 253),
+        ],
+        textBlack: false,
+      ),
       body: Stack(
         children: [
           const BackgroundImage(color: "purple"),
@@ -169,48 +178,6 @@ class SevenCodePageState extends State<SevenCodePage>{
           ),
           ClosePageButton(onLanguageChange: widget.onLanguageChange, onTap: _returnToHomePage),
         ],
-      ),
-    );
-  }
-
-  AppBar appBarComponent(context){
-    return AppBar(
-      flexibleSpace: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 212, 0, 255),
-              Color.fromARGB(255, 162, 50, 253),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-      ),
-      centerTitle: true,
-      title: const Text(
-        "7 CODE",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () => (),
-          icon: Image.asset(
-            'assets/images/icons/orb_box.png',
-            height: 50,
-            color: Colors.white,
-          ),
-        ),
-      ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(2.0),
-        child: Container(
-          color: Colors.white,
-          height: 2.0,
-        ),
       ),
     );
   }
