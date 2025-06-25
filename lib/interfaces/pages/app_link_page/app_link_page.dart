@@ -55,7 +55,6 @@ class AppLinkPageState extends State<AppLinkPage> {
               ]
             ),
           ),
-
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

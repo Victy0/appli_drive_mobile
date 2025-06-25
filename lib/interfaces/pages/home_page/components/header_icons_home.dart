@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 
 class HeaderIconsHome extends StatefulWidget {
   final Function(Locale) onLanguageChange;
+  final DatabaseHelper databaseHelper;
   final bool tutorialFinished;
   const HeaderIconsHome({
     super.key,
     required this.onLanguageChange,
+    required this.databaseHelper,
     required this.tutorialFinished,
   });
 
@@ -20,13 +22,12 @@ class HeaderIconsHome extends StatefulWidget {
 }
 
 class HeaderIconsHomeState extends State<HeaderIconsHome> {
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   
   late List<Map<String, dynamic>> appmonCodeList;
   
   _getAppmonCodeList() async {
-    appmonCodeList = await _databaseHelper.getAppmonCodeList(1);
+    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(1);
   }
 
   @override

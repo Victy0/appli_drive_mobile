@@ -8,8 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DialogInsertCode extends StatefulWidget {
+  final DatabaseHelper databaseHelper;
   final Appmon? currentAppmon;
-  const DialogInsertCode({super.key, this.currentAppmon});
+  const DialogInsertCode({
+    super.key,
+    required this.databaseHelper,
+    this.currentAppmon,
+  });
 
   @override
   DialogInsertCodeState createState() => DialogInsertCodeState();
@@ -18,7 +23,6 @@ class DialogInsertCode extends StatefulWidget {
 class DialogInsertCodeState extends State<DialogInsertCode> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
   final TextEditingController _controller = TextEditingController();
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
 
   String _errorCode = "";
 
@@ -112,7 +116,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                     appmon?.fusioned = null;
                   } else {
                     if(fusion != null && (fusion.appmonBase1 == code.toUpperCase() || fusion.appmonBase2 == code.toUpperCase())) {
-                      appmon = await _databaseHelper.getAppmonByCode(fusion.id);
+                      appmon = await widget.databaseHelper.getAppmonByCode(fusion.id);
                       if(appmon != null) {
                         appmon.fusioned = true;
                       }
@@ -120,7 +124,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   }
                 }
                 if(appmon == null) {
-                    appmon = await _databaseHelper.getAppmonByCode(code.toUpperCase());
+                    appmon = await widget.databaseHelper.getAppmonByCode(code.toUpperCase());
                     if(appmon == null) {
                     _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
                     setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });

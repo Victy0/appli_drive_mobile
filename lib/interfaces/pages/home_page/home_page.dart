@@ -11,6 +11,7 @@ import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_ic
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
 
@@ -84,6 +86,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: [
                 HeaderIconsHome(
                   onLanguageChange: widget.onLanguageChange,
+                  databaseHelper: _databaseHelper,
                   tutorialFinished: _tutorialFinished,
                 ),
                 DetailRectangle(
@@ -101,6 +104,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: [
                 PairingMenu(
                   onLanguageChange: widget.onLanguageChange,
+                  databaseHelper: _databaseHelper,
                   appmonPairingName: _appmonPairingName,
                   appmonEvolutionInfo: _appmonPairingEvolutionInfo,
                   tutorialFinished: _tutorialFinished,
@@ -154,7 +158,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Appmon? appmon = await showDialog<Appmon>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => const DialogInsertCode(),
+            builder: (BuildContext context) => DialogInsertCode(
+              databaseHelper: _databaseHelper,
+            ),
           );
           if (appmon != null) {
             navigator.pushReplacement(MaterialPageRoute(

@@ -12,7 +12,57 @@ class DetailRectangle extends StatelessWidget {
     required this.secondaryColor,
   });
 
-  List<Color> _getColorGradient(String colorName) {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          margin: position == "left"
+            ? const EdgeInsets.only(left: 0, top: 0, right: 50)
+            : const EdgeInsets.only(left: 50, bottom: 0, right: 0),
+          height: 60,
+          child: ClipPath(
+            clipper: position == "left"
+              ? InvertedDiagonalClipper(breakSizeTop: 30, breakSizeBottom: 0, position: position)
+              : InvertedDiagonalClipper(breakSizeTop: 0, breakSizeBottom: 30, position: position),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: colorGradient(primaryColor),
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin: position == "left"
+            ? const EdgeInsets.only(left: 0, top: 0, right: 100)
+            : const EdgeInsets.only(left: 100, top: 40, right: 0),
+          height: 20,
+          child: ClipPath(
+            clipper: position == "left"
+              ? InvertedDiagonalClipper(breakSizeTop: 8, breakSizeBottom: 0, position: position)
+              : InvertedDiagonalClipper(breakSizeTop: 0, breakSizeBottom: 8, position: position),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: colorGradient(secondaryColor),
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Color> colorGradient(String colorName) {
     switch (colorName) {
       case "black":
         return [
@@ -105,56 +155,6 @@ class DetailRectangle extends StatelessWidget {
       default:
         return [Colors.black];
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: position == "left"
-            ? const EdgeInsets.only(left: 0, top: 0, right: 50)
-            : const EdgeInsets.only(left: 50, bottom: 0, right: 0),
-          height: 60,
-          child: ClipPath(
-            clipper: position == "left"
-              ? InvertedDiagonalClipper(breakSizeTop: 30, breakSizeBottom: 0, position: position)
-              : InvertedDiagonalClipper(breakSizeTop: 0, breakSizeBottom: 30, position: position),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: _getColorGradient(primaryColor),
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-                ),
-              ),
-            ),
-          ),
-        ),
-        Container(
-          margin: position == "left"
-            ? const EdgeInsets.only(left: 0, top: 0, right: 100)
-            : const EdgeInsets.only(left: 100, top: 40, right: 0),
-          height: 20,
-          child: ClipPath(
-            clipper: position == "left"
-              ? InvertedDiagonalClipper(breakSizeTop: 8, breakSizeBottom: 0, position: position)
-              : InvertedDiagonalClipper(breakSizeTop: 0, breakSizeBottom: 8, position: position),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: _getColorGradient(secondaryColor),
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }
 

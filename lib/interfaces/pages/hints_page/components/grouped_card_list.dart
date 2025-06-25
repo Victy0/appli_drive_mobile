@@ -14,7 +14,6 @@ class GroupedCardList extends StatefulWidget {
 }
 
 class GroupedCardListState extends State<GroupedCardList> {
-
   String _getNumberRevealdedToTotal(int revealedSize, String type) {
     int total = 0;
     switch(type){
