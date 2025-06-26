@@ -30,6 +30,8 @@ class BackgroundImageState extends State<BackgroundImage> {
 
   Color _defineColor(color) {
     switch (color) {
+      case "darkBlue":
+        return const Color.fromARGB(255, 0, 81, 255).withOpacity(0.3);
       case "blue":
         return const Color.fromARGB(255, 0, 162, 255).withOpacity(0.3);
       case "purple":

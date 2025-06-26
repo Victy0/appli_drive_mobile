@@ -227,6 +227,15 @@
                 "codeIsRequired": "Code is required",
                 "enterAppmonCode": "Enter the Appmon code",
                 "invalidCode": "Invalid code"
+            },
+            "powerDescription": {
+                "ability": "ABILITY",
+                "attack": "ATTACK",
+                "defense": "DEFENSE",
+                "energy": "ENERGY",
+                "name": "NAME",
+                "resistance": "RESISTENCE",
+                "technique": "TECHNIQUE"
             }
         }
     },

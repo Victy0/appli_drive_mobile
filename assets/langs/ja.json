@@ -227,6 +227,15 @@
                 "codeIsRequired": "コードが必要です",
                 "enterAppmonCode": "アプモンコードを入力",
                 "invalidCode": "無効なコード"
+            },
+            "powerDescription": {
+                "ability": "能力",
+                "attack": "攻撃",
+                "defense": "防御",
+                "energy": "エネルギー",
+                "name": "名前",
+                "resistance": "耐性",
+                "technique": "テクニカル"
             }
         }
     },

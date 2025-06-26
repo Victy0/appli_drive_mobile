@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
@@ -43,6 +44,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      divider(),
                       appContainer(),
                       divider(),
                       gradeContainer(),
@@ -56,6 +58,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                         divider(),
                         chipContainer(),
                       ],
+                      divider(),
                     ],
                   ),
                 ),
@@ -89,12 +92,12 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   Color _getColorDialogBackground() {
     switch (widget.interface){
       case "appliArise":
-        return const Color.fromARGB(255, 223, 222, 222);
+        return const Color.fromARGB(255, 122, 122, 122);
       case "7code":
         return const Color.fromARGB(255, 189, 145, 190);
       case "dataCenter":
       default:
-        return const Color.fromARGB(255, 171, 224, 255);
+        return const Color.fromARGB(255, 1, 97, 207);
     }
   }
 
@@ -119,23 +122,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    AppLocalization.of(context)
-                        .translate("components.dialogs.infoAppmon.name"),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: _getColorBorderAndText(),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
+              fontSize: 24,
+              color: "grey",
+              align: "center",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -189,18 +180,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
+              fontSize: 24,
+              color: "grey",
+              align: "left",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -250,19 +234,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.grade"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.grade"),
+              fontSize: 24,
+              color: "grey",
+              align: "right",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -303,18 +279,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
+              fontSize: 24,
+              color: "grey",
+              align: "left",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -364,19 +333,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
+              fontSize: 24,
+              color: "grey",
+              align: "right",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -417,18 +378,11 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
+              fontSize: 24,
+              color: "grey",
+              align: "center",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -482,7 +436,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                   style: TextStyle(
                     color: _getColorBorderAndText(),
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 24,
                   ),
                 ),
               ],

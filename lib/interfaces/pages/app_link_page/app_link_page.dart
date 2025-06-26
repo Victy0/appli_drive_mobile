@@ -62,6 +62,7 @@ class AppLinkPageState extends State<AppLinkPage> {
                 const SizedBox(height: 5),
                 AppLinkActions(
                   appmon: widget.appmon,
+                  appmonLinked: widget.appmonLinked,
                   onLanguageChange: widget.onLanguageChange
                 ),
                 const SizedBox(height: 10),
