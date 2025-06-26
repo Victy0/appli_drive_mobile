@@ -5,16 +5,16 @@ import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-class AppLinkHeader extends StatefulWidget {
+class AppLinkActions extends StatefulWidget {
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
-  const AppLinkHeader({super.key, required this.appmon, required this.onLanguageChange});
+  const AppLinkActions({super.key, required this.appmon, required this.onLanguageChange});
 
   @override
-  AppLinkHeaderState createState() => AppLinkHeaderState();
+  AppLinkActionsState createState() => AppLinkActionsState();
 }
 
-class AppLinkHeaderState extends State<AppLinkHeader> {
+class AppLinkActionsState extends State<AppLinkActions> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
 
   @override
@@ -24,6 +24,8 @@ class AppLinkHeaderState extends State<AppLinkHeader> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          iconUnlink(context),
+          const Spacer(),
           iconUnlink(context),
         ],
       ),

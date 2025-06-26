@@ -2,7 +2,7 @@ import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_image.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_summary_info.dart';
-import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_header.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_actions.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
 
@@ -45,16 +45,6 @@ class AppLinkPageState extends State<AppLinkPage> {
       body: Stack(
         children: [
           BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
-          Positioned(
-            top: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                AppLinkHeader(appmon: widget.appmon, onLanguageChange: widget.onLanguageChange),
-              ]
-            ),
-          ),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -69,6 +59,12 @@ class AppLinkPageState extends State<AppLinkPage> {
                   appmonLinked: widget.appmonLinked,
                   linkColor: _getColorByAppmonType(widget.appmonLinked.type.name),
                 ),
+                const SizedBox(height: 5),
+                AppLinkActions(
+                  appmon: widget.appmon,
+                  onLanguageChange: widget.onLanguageChange
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

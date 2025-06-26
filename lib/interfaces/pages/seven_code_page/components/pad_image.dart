@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
 class PadImage extends StatefulWidget {
   final bool hasAppliarise;
@@ -12,46 +10,72 @@ class PadImage extends StatefulWidget {
   PadImageState createState() => PadImageState();
 }
 
-class PadImageState extends State<PadImage> {
+class PadImageState extends State<PadImage> with SingleTickerProviderStateMixin {
   double _tiltAngle = 0.0;
-  StreamSubscription<AccelerometerEvent>? _accelSub;
-  
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
 
-    _accelSub = accelerometerEvents.listen((AccelerometerEvent event) {
-      if (!mounted) return;
-      setState(() {
-        _tiltAngle = event.x * 0.02;
+    _animation = Tween<double>(begin: 0.0, end: 0.0).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          _tiltAngle = _animation.value;
+        });
       });
-    });
   }
-  
+
+  void _animateBackToCenter() {
+    _animation = Tween<double>(
+      begin: _tiltAngle,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+    _controller.forward(from: 0.0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        widget.hasAppliarise
-          ? dantemonImage()
-          : Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 430,
-                  height: 430,
+    return GestureDetector(
+      onPanUpdate: (details) {
+        setState(() {
+          _controller.stop();
+          _tiltAngle += details.delta.dx * 0.01;
+          _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
+        });
+      },
+      onPanEnd: (_) => _animateBackToCenter(),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          widget.hasAppliarise
+              ? dantemonImage()
+              : Stack(
                   alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/images/7code/7code_pad.png",
-                    height: 410,
-                  ),
+                  children: [
+                    Container(
+                      width: 430,
+                      height: 430,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        "assets/images/7code/7code_pad.png",
+                        height: 410,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -95,7 +119,7 @@ class PadImageState extends State<PadImage> {
 
   @override
   void dispose() {
-    _accelSub?.cancel();
+    _controller.dispose();
     super.dispose();
   }
 }

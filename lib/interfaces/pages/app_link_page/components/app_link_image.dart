@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
 class AppLinkImage extends StatefulWidget {
   final Appmon appmon;
@@ -17,168 +15,195 @@ class AppLinkImage extends StatefulWidget {
   AppLinkImageState createState() => AppLinkImageState();
 }
 
-class AppLinkImageState extends State<AppLinkImage> {
+class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderStateMixin {
   double _tiltAngle = 0.0;
-  StreamSubscription<AccelerometerEvent>? _accelSub;
-  
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    _accelSub = accelerometerEvents.listen((AccelerometerEvent event) {
-      if (!mounted) return;
-      setState(() {
-        _tiltAngle = event.x * 0.02;
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 0.0
+    ).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          _tiltAngle = _animation.value;
+        });
       });
-    });
+  }
+
+  void _animateBackToCenter() {
+    _animation = Tween<double>(
+      begin: _tiltAngle,
+      end: 0.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+    _controller.forward(from: 0.0);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            // APPMON LINKED CONTRAST IMAGE
-            Transform.translate(
-              offset: const Offset(100, -120),
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.007)
-                  ..rotateY(-_tiltAngle),
-                child: ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return scanlineShader(bounds.size);
-                  },
-                  blendMode: BlendMode.srcATop,
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.8),
-                      BlendMode.srcATop,
-                    ),
-                    child: Image.asset(
-                      "assets/images/appmons/${widget.appmonLinked.id}.png",
-                      width: 250,
-                      height: 250,
-                      fit: BoxFit.cover,
+    return GestureDetector(
+      onPanUpdate: (details) {
+        setState(() {
+          _controller.stop();
+          _tiltAngle += details.delta.dx * 0.01;
+          _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
+        });
+      },
+      onPanEnd: (_) => _animateBackToCenter(),
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // APPMON LINKED CONTRAST IMAGE
+              Transform.translate(
+                offset: const Offset(100, -120),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.007)
+                    ..rotateY(_tiltAngle),
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return scanlineShader(bounds.size);
+                    },
+                    blendMode: BlendMode.srcATop,
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.white.withOpacity(0.8),
+                        BlendMode.srcATop,
+                      ),
+                      child: Image.asset(
+                        "assets/images/appmons/${widget.appmonLinked.id}.png",
+                        width: 250,
+                        height: 250,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            // APPMON CONTRAST IMAGE
-            Transform.translate(
-              offset: const Offset(-65, 5),
-              child: Container(
-                width: 300,
-                height: 300,
-                alignment: Alignment.center,
-                child: ImageFiltered(
-                  imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      Colors.white.withOpacity(0.8),
-                      BlendMode.srcATop,
+              // APPMON CONTRAST IMAGE
+              Transform.translate(
+                offset: const Offset(-65, 5),
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  alignment: Alignment.center,
+                  child: ImageFiltered(
+                    imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        Colors.white.withOpacity(0.8),
+                        BlendMode.srcATop,
+                      ),
+                      child: Image.asset(
+                        "assets/images/appmons/${widget.appmon.id}.png",
+                        width: 300,
+                        height: 300,
+                      ),
                     ),
-                    child: Image.asset(
+                  ),
+                ),
+              ),
+              // APPMON LINKED IMAGE
+              Transform.translate(
+                offset: const Offset(100, -120),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.007)
+                    ..rotateY(_tiltAngle),
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return scanlineShader(bounds.size);
+                    },
+                    blendMode: BlendMode.srcATop,
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        defineColor(widget.linkColor),
+                        BlendMode.modulate,
+                      ),
+                      child: Image.asset(
+                        "assets/images/appmons/${widget.appmonLinked.id}.png",
+                        width: 250,
+                        height: 250,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // APPMON IMAGE
+              Transform.translate(
+                offset: const Offset(-70, 0),
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.007)
+                    ..rotateY(_tiltAngle),
+                  child: Image.asset(
                     "assets/images/appmons/${widget.appmon.id}.png",
                     width: 300,
                     height: 300,
                   ),
-                  ),
                 ),
               ),
-            ),
-            // APPMON LINKED IMAGE
-            Transform.translate(
-              offset: const Offset(100, -120),
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.007)
-                  ..rotateY(-_tiltAngle),
-                child: ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return scanlineShader(bounds.size);
-                  },
-                  blendMode: BlendMode.srcATop,
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                      defineColor(widget.linkColor),
-                      BlendMode.modulate,
-                    ),
-                    child: Image.asset(
-                      "assets/images/appmons/${widget.appmonLinked.id}.png",
-                      width: 250,
-                      height: 250,
-                      fit: BoxFit.cover,
+            ],
+          ),
+          const SizedBox(height: 5),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextWithWhiteShadow(
+                      text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
+                      fontSize: 40,
+                      height: 1.0,
+                      align: "left",
                     ),
                   ),
-                ),
+                ],
               ),
-            ),
-            // APPMON IMAGE
-            Transform.translate(
-              offset: const Offset(-70, 0),
-              child: Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.007)
-                  ..rotateY(_tiltAngle),
-                child: Image.asset(
-                  "assets/images/appmons/${widget.appmon.id}.png",
-                  width: 300,
-                  height: 300,
-                ),
+              const TextWithWhiteShadow(
+                text: "PLUS",
+                fontSize: 30,
+                height: 1.0,
               ),
-            ),
-          ],
-        ),
-        // SPACING
-        const SizedBox(height: 5),
-        // APPMON NAME
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextWithWhiteShadow(
-                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-                    fontSize: 40,
-                    height: 1.0,
-                    align: "left",
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: TextWithWhiteShadow(
+                      text: AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked.name}"),
+                      fontSize: 40,
+                      height: 1.0,
+                      align: "right",
+                    ),
                   ),
-                ),
-              ]
-            ),
-            const TextWithWhiteShadow(
-              text: "PLUS",
-              fontSize: 30,
-              height: 1.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextWithWhiteShadow(
-                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked.name}"),
-                    fontSize: 40,
-                    height: 1.0,
-                    align: "right",
-                  ),
-                ),
-              ]
-            ),
-            
-          ],
-        ),
-      ],
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -187,7 +212,7 @@ class AppLinkImageState extends State<AppLinkImage> {
       case "blue":
         return const Color.fromARGB(255, 0, 162, 255).withOpacity(0.6);
       case "purple":
-        return const Color.fromARGB(255, 174, 0, 255).withOpacity(0.6);
+        return const Color.fromARGB(255, 188, 45, 255).withOpacity(0.6);
       case "yellow":
         return const Color.fromARGB(255, 255, 217, 0).withOpacity(0.6);
       case "red":
@@ -197,7 +222,7 @@ class AppLinkImageState extends State<AppLinkImage> {
       case "orange":
         return const Color.fromARGB(255, 255, 123, 0).withOpacity(0.6);
       case "green":
-        return const Color.fromARGB(255, 51, 255, 0).withOpacity(0.6);
+        return const Color.fromARGB(255, 44, 219, 0).withOpacity(0.6);
       case "grey":
       default:
         return const Color.fromARGB(255, 155, 155, 155).withOpacity(0.6);
@@ -222,9 +247,9 @@ class AppLinkImageState extends State<AppLinkImage> {
     ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
   }
 
-@override
+  @override
   void dispose() {
-    _accelSub?.cancel();
+    _controller.dispose();
     super.dispose();
   }
 }
