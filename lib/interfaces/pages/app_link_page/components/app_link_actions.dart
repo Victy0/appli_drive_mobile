@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_description.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -7,8 +8,14 @@ import 'package:flutter/material.dart';
 
 class AppLinkActions extends StatefulWidget {
   final Appmon appmon;
+  final Appmon appmonLinked;
   final Function(Locale) onLanguageChange;
-  const AppLinkActions({super.key, required this.appmon, required this.onLanguageChange});
+  const AppLinkActions({
+    super.key,
+    required this.appmon,
+    required this.appmonLinked,
+    required this.onLanguageChange,
+  });
 
   @override
   AppLinkActionsState createState() => AppLinkActionsState();
@@ -24,11 +31,38 @@ class AppLinkActionsState extends State<AppLinkActions> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          iconUnlink(context),
+          iconPowerDescription(context),
           const Spacer(),
           iconUnlink(context),
         ],
       ),
+    );
+  }
+
+  Widget iconPowerDescription(context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2),
+      ),
+      child: IconButton(
+        onPressed: () => {
+          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => DialogPowerDescription(
+              appmon: widget.appmon,
+              appmonLinked: widget.appmonLinked,
+            ),
+          ),
+        },
+        icon: Image.asset(
+          'assets/images/icons/explosion_box.png',
+          height: 45,
+        ),
+      )
     );
   }
 
@@ -107,7 +141,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
         },
         icon: Image.asset(
           'assets/images/icons/unlink_box.png',
-          height: 40,
+          height: 45,
         ),
       )
     );

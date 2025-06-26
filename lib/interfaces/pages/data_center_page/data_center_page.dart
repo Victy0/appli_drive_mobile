@@ -99,7 +99,7 @@ class DataCenterPageState extends State<DataCenterPage>{
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "blue"),
+          const BackgroundImage(color: "darkBlue"),
           Column(
             children: [
               Row(

@@ -51,16 +51,12 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getAppmons() async {
-    final db = await database;
-    return await db.query('appmon');
-  }
-
   Future<Appmon?> getAppmonByCode(String code) async {
     final db = await database;
     String sql = '''
       SELECT 
         appmon.inner_id AS id, appmon.code_text, appmon.name, appmon.app, appmon.power, appmon.color_1, appmon.color_2,
+        appmon.ability, appmon.attack, appmon.defense, appmon.energy, appmon.resistance,
         grade.id AS grade_id, grade.name AS grade_name, 
         type.id AS type_id, type.name AS type_name, 
         fusion.id AS fusion_id, fusion.appmon_base_1, fusion.appmon_base_2
@@ -68,7 +64,7 @@ class DatabaseHelper {
       INNER JOIN type ON appmon.type_id = type.id
       INNER JOIN grade ON appmon.grade_id = grade.id
       LEFT JOIN fusion ON appmon.fusion_id = fusion.id
-      WHERE appmon.code_text = ?;
+        WHERE appmon.code_text = ?;
     ''';
     List<Map<String, dynamic>> results = await db.rawQuery(sql, [code]);
 
