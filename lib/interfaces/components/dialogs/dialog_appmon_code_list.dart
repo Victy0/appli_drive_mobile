@@ -33,7 +33,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       backgroundColor: const Color.fromARGB(255, 241, 241, 241),
       insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: SizedBox.expand(
         child: Padding(
@@ -100,7 +100,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       final appmonQuantity = _getAppmonQuantityByGrade(gradeName);
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(vertical: 3),
         child: Theme(
           data: Theme.of(context).copyWith(
             dividerColor: Colors.transparent,

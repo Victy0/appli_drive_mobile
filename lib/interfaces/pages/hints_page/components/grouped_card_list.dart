@@ -101,7 +101,7 @@ class GroupedCardListState extends State<GroupedCardList> {
         final hasNumbers = numbers.isNotEmpty;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           child: Theme(
             data: Theme.of(context).copyWith(
               dividerColor: Colors.transparent,

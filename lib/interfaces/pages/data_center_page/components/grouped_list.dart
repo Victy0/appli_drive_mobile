@@ -36,7 +36,7 @@ class GroupedListState extends State<GroupedList> {
     groupedItems.forEach((gradeName, items) {
       codeWidgets.add(
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: TextWithWhiteShadow(
             text: AppLocalization.of(context).translate("appmons.grades.$gradeName"),
             fontSize: 22,

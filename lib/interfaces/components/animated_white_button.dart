@@ -41,43 +41,46 @@ class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> with SingleTic
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return ShaderMask(
-          shaderCallback: (Rect bounds) {
-            return LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Colors.transparent,
-                Colors.cyanAccent.withOpacity(0.6),
-                Colors.purpleAccent.withOpacity(0.8),
-                Colors.blueAccent.withOpacity(0.6),
-                Colors.transparent,
-              ],
-              stops: [
-                _animation.value - 0.6,
-                _animation.value - 0.4,
-                _animation.value,
-                _animation.value + 0.4,
-                _animation.value + 0.6
-              ],
-            ).createShader(bounds);
-          },
-          blendMode: BlendMode.lighten,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.black, width: 2),
-            ),
-            child: Text(
-              widget.text,
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: ShaderMask(
+            shaderCallback: (Rect bounds) {
+              return LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.transparent,
+                  Colors.cyanAccent.withOpacity(0.6),
+                  Colors.purpleAccent.withOpacity(0.8),
+                  Colors.blueAccent.withOpacity(0.6),
+                  Colors.transparent,
+                ],
+                stops: [
+                  _animation.value - 0.6,
+                  _animation.value - 0.4,
+                  _animation.value,
+                  _animation.value + 0.4,
+                  _animation.value + 0.6
+                ],
+              ).createShader(bounds);
+            },
+            blendMode: BlendMode.lighten,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.black, width: 2),
+              ),
+              child: Text(
+                widget.text,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ) 
+          ),
         );
       },
     );
