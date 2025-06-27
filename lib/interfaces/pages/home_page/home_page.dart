@@ -10,6 +10,7 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
@@ -30,12 +31,15 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
 
+  late AppliDriveManagementService _appliDriveManagementService;
+
   String _appmonPairingName = "";
   String _appmonColorPrimary = "";
   String _appmonColorSecondary = "";
   List<Map<String, String>> _appmonPairingEvolutionInfo = [];
   bool _tutorialFinished = false;
   bool _show7codeIcon = false;
+  int _appliDriveVersion = 0;
   bool _isLoading = true;
 
   _getInitialValues() async {
@@ -45,6 +49,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
     final bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
     final bool show7codeIcon = await _preferencesService.getBool(AppPreferenceKey.show7codeIcon);
+    final int appliDriveVersion = await _preferencesService.getInt(AppPreferenceKey.appliDriveVersion) ?? 0;
     
     setState(() {
       _appmonPairingName = appmonName;
@@ -53,6 +58,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _appmonPairingEvolutionInfo = appmonPairingEvolutionInfo;
       _tutorialFinished = tutorialFinished;
       _show7codeIcon = show7codeIcon;
+      _appliDriveVersion = appliDriveVersion;
       _isLoading = false;
     });
   }
@@ -63,6 +69,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if(widget.initSound) {
       _audioPlayerMomentary.play(AssetSource('sounds/start.mp3'));
     }
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
     _getInitialValues();
   }
 
@@ -104,10 +114,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               children: [
                 PairingMenu(
                   onLanguageChange: widget.onLanguageChange,
-                  databaseHelper: _databaseHelper,
+                  appliDriveManagementService: _appliDriveManagementService,
                   appmonPairingName: _appmonPairingName,
                   appmonEvolutionInfo: _appmonPairingEvolutionInfo,
                   tutorialFinished: _tutorialFinished,
+                  appliDriveVersion: _appliDriveVersion,
                 ),
                 ...(_tutorialFinished
                   ? tutorialFinishedWidgets()
@@ -159,7 +170,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) => DialogInsertCode(
-              databaseHelper: _databaseHelper,
+              appliDriveManagementService: _appliDriveManagementService,
+              appliDriveVersion: _appliDriveVersion,
             ),
           );
           if (appmon != null) {
@@ -167,6 +179,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               builder: (context) => AppliarisePage(
                 onLanguageChange: widget.onLanguageChange,
                 appmon: appmon,
+                appliDriveVersion: _appliDriveVersion,
               ),
             ));
           }

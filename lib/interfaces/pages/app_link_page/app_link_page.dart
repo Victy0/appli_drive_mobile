@@ -10,7 +10,14 @@ class AppLinkPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
   final Appmon appmonLinked;
-  const AppLinkPage({super.key, required this.onLanguageChange, required this.appmon, required this.appmonLinked});
+  final int appliDriveVersion;
+  const AppLinkPage({
+    super.key,
+    required this.onLanguageChange,
+    required this.appmon,
+    required this.appmonLinked,
+    required this.appliDriveVersion,
+  });
 
   @override
   AppLinkPageState createState() => AppLinkPageState();
@@ -63,7 +70,8 @@ class AppLinkPageState extends State<AppLinkPage> {
                 AppLinkActions(
                   appmon: widget.appmon,
                   appmonLinked: widget.appmonLinked,
-                  onLanguageChange: widget.onLanguageChange
+                  onLanguageChange: widget.onLanguageChange,
+                  appliDriveVersion: widget.appliDriveVersion,
                 ),
                 const SizedBox(height: 10),
               ],

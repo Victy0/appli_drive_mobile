@@ -1,18 +1,19 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/models/fusion_info.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DialogInsertCode extends StatefulWidget {
-  final DatabaseHelper databaseHelper;
+  final AppliDriveManagementService appliDriveManagementService;
+  final int appliDriveVersion;
   final Appmon? currentAppmon;
   const DialogInsertCode({
     super.key,
-    required this.databaseHelper,
+    required this.appliDriveManagementService,
+    required this.appliDriveVersion,
     this.currentAppmon,
   });
 
@@ -25,11 +26,6 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
   final TextEditingController _controller = TextEditingController();
 
   String _errorCode = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,28 +104,15 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   setState(() { _errorCode = "components.dialogs.insertCode.codeIsRequired"; });
                   return;
                 }
-                Appmon? appmon;
-                if(widget.currentAppmon != null) {
-                  FusionInfo? fusion = widget.currentAppmon?.fusionInfo;
-                  if(widget.currentAppmon?.code == code.toUpperCase()) {
-                    appmon = widget.currentAppmon;
-                    appmon?.fusioned = null;
-                  } else {
-                    if(fusion != null && (fusion.appmonBase1 == code.toUpperCase() || fusion.appmonBase2 == code.toUpperCase())) {
-                      appmon = await widget.databaseHelper.getAppmonByCode(fusion.id);
-                      if(appmon != null) {
-                        appmon.fusioned = true;
-                      }
-                    }
-                  }
-                }
+                final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
+                  code.toUpperCase(),
+                  widget.currentAppmon,
+                  widget.appliDriveVersion,
+                );
                 if(appmon == null) {
-                    appmon = await widget.databaseHelper.getAppmonByCode(code.toUpperCase());
-                    if(appmon == null) {
-                    _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
-                    setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
-                    return;
-                  }
+                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
+                  setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
+                  return;
                 }
                 navigator.pop(appmon);
               },

@@ -51,7 +51,7 @@ class DatabaseHelper {
     );
   }
 
-  Future<Appmon?> getAppmonByCode(String code) async {
+  Future<Appmon?> getAppmonByCode(String code, {bool ignoreRevealedField = false}) async {
     final db = await database;
     String sql = '''
       SELECT 

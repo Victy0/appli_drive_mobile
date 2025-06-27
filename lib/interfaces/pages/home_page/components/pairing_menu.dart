@@ -1,22 +1,24 @@
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:flutter/material.dart';
 
 class PairingMenu extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  final DatabaseHelper databaseHelper;
+  final AppliDriveManagementService appliDriveManagementService;
   final String appmonPairingName;
   final List<Map<String, String>> appmonEvolutionInfo;
   final bool tutorialFinished;
+  final int appliDriveVersion;
   const PairingMenu({
     super.key,
     required this.onLanguageChange,
-    required this.databaseHelper,
+    required this.appliDriveManagementService,
     required this.appmonPairingName,
     required this.appmonEvolutionInfo,
     required this.tutorialFinished,
+    required this.appliDriveVersion,
   });
 
   @override
@@ -106,6 +108,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,
                       appmon: appmon,
+                      appliDriveVersion: widget.appliDriveVersion,
                       tutorialFinished: widget.tutorialFinished,
                     ),
                   ));
@@ -171,7 +174,11 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             ),
             InkWell(
               onTap: () async {
-                final appmon = await widget.databaseHelper.getAppmonByCode(widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "");
+                final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
+                  widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "",
+                  null,
+                  widget.appliDriveVersion,
+                );
                 if (appmon != null) {
                   _showConfirmationDialog(appmon);
                 }
