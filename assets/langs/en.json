@@ -286,7 +286,7 @@
         "hintsPage": {
             "hints": "HINTS",
             "texts": {
-                "appliDrive1": "The standard version of Appli drive is the first version available on the device. It allows you to perform Appliarise and App link of standard grade appmons.\n\nTo upgrade to the next version, it is necessary to make an App link that generates an App gatai.",
+                "appliDrive1": "The basic version of Appli drive is the first version available on the device. It allows you to perform Appliarise and App link of standard grade appmons.\n\nTo upgrade to the next version, it is necessary to make an App link that generates an App gatai.",
                 "appmon1": "Appmon, short for Appli Monster , are a type of digital lifeforms based on smartphone apps that inherited the lineage of Digimon. Possessing artificial intelligence, being able to think and act independently, they are “app lifeforms” that were born within the boundary between the Real World and digital space, lurking within the Net Ocean.",
                 "appmon2": "Appliarise, a play on the words “app/application”, “arise” and “realize”, is the process in which an Appmon materializes from its Appmon Chip; this can be done through the use of a device such as the Appli Drive.\n\nWhile a Standard Grade Appmon materializing from its Appmon Chip is merely called “Appliarising”, for higher Grades, the name of the Grade is put before the term itself.",
                 "appmon3": "An App link is a process in which two Appmon (one in the form of an Appmon Chip) are linked together into a conglomerate entity by an Appli Drive user.\n\nSometimes, the subordinate Appmon forms weapons, armor or new abilities for the lead Appmon. Other times, the subordinate Appmon appears in a ghostly form floating behind the lead Appmon.",
@@ -295,7 +295,7 @@
                 "appmon6": "A Buddy Appmon is an Appmon who has paired themselves with an person.\n\nUpon forming a partnership, the Appli Drive of the person,  takes characteristics of the Buddy Appmon. If said Appli Drive is destroyed, the Buddy Appmon will disappear and lose all memories of their bond."
             },
             "titles": {
-                "appliDrive1": "01 - STANDART",
+                "appliDrive1": "01 - BASIC",
                 "appmon1": "01 - APPMON",
                 "appmon2": "02 - APPLIARISE",
                 "appmon3": "03 - APP LINK",
@@ -311,6 +311,10 @@
         },
         "homePage": {
             "appliDriveVersion": "APPLI DRIVE VERSION",
+            "appliDriveVersionNames": {
+                "basic": "BASIC",
+                "standart": "STANDART"
+            },
             "confirmAppliarise": "Appliarise to ",
             "informationDialog": {
                 "context": "Appli Drive Mobile is an application inspired by the animated series Digimon Universe Appli Monsters, which aims to portray and expand the Appli Drive functionalities used by humans during the series. \n\nCreated by Victor Marques as a way of studying the Flutter framework."

@@ -76,6 +76,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     _getInitialValues();
   }
 
+  String _translateAppliDriveVersionName(int versionValue) {
+    final versionName = [
+      "pages.homePage.appliDriveVersionNames.basic",
+      "pages.homePage.appliDriveVersionNames.standart",
+    ];
+    return versionName[versionValue - 1];
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -139,7 +147,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - STANDART",
+                      "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - ${AppLocalization.of(context).translate(_translateAppliDriveVersionName(_appliDriveVersion))}",
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
