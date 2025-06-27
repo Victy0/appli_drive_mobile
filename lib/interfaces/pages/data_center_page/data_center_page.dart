@@ -29,7 +29,7 @@ class DataCenterPageState extends State<DataCenterPage>{
   int _appmonReveleadedListSize = 0;
   bool _isLoading = true;
   
-  _getAppmonRevealedList() async {
+  void _getAppmonRevealedList() async {
     List<String> appmonRevealedIdsUser = await _preferencesService.getStringList(
       AppPreferenceKey.appmonRevealedIds,
     );
@@ -99,7 +99,7 @@ class DataCenterPageState extends State<DataCenterPage>{
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "darkBlue"),
+          const BackgroundImage(color: "darkBlue", animateColor: true),
           Column(
             children: [
               Row(

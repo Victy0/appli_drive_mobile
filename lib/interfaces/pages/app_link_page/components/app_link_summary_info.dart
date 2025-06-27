@@ -29,7 +29,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         blurRadius: 8,
                         spreadRadius: 2,
                         offset: const Offset(1, 1),
@@ -74,7 +74,7 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         blurRadius: 8,
                         spreadRadius: 2,
                         offset: const Offset(1, 1),

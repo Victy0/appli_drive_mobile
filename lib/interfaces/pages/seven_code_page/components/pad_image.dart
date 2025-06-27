@@ -91,7 +91,7 @@ class PadImageState extends State<PadImage> with SingleTickerProviderStateMixin 
             imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8),
+                Colors.white.withValues(alpha: 0.8),
                 BlendMode.srcATop,
               ),
               child: Image.asset(

@@ -25,7 +25,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
   
   late List<Map<String, dynamic>> appmonCodeList;
   
-  _getAppmonCodeList() async {
+  void _getAppmonCodeList() async {
     appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.grade.id);
   }
 
@@ -52,7 +52,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
     );
   }
 
-  Widget iconPairing(context) {
+  Widget iconPairing(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -122,7 +122,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
     );
   }
 
-  Widget iconAppmonListCode(context) {
+  Widget iconAppmonListCode(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

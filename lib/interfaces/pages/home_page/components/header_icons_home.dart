@@ -26,7 +26,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
   
   late List<Map<String, dynamic>> appmonCodeList;
   
-  _getAppmonCodeList() async {
+  void _getAppmonCodeList() async {
     appmonCodeList = await widget.databaseHelper.getAppmonCodeList(1);
   }
 
@@ -54,7 +54,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconInformation(context) {
+  Widget iconInformation(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -146,7 +146,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconLanguage(context, onLanguageChange) {
+  Widget iconLanguage(BuildContext context, onLanguageChange) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -170,7 +170,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconAppmonListCode(context) {
+  Widget iconAppmonListCode(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

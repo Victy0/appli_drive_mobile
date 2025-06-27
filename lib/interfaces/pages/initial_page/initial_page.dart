@@ -201,8 +201,11 @@ class NeonLinesPainter extends CustomPainter {
       double angle = (2 * pi / progressValues.length) * i;
       double animatedProgress = progressValues[i] * maxLength;
 
+      double opacityFactor = (1.0 - progressValues[i] * 0.8).clamp(0.0, 1.0);
+      double newAlpha = 225 * opacityFactor;
+
       Paint paint = Paint()
-        ..color = const Color.fromARGB(225, 31, 241, 237).withOpacity((1.0 - progressValues[i] * 0.8).clamp(0.0, 1.0))
+        ..color = const Color.fromARGB(225, 31, 241, 237).withValues(alpha: newAlpha)
         ..strokeWidth = 4
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4);

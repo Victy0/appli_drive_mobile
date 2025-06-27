@@ -81,7 +81,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
                     blendMode: BlendMode.srcATop,
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        Colors.white.withOpacity(0.8),
+                        Colors.white.withValues(alpha: 0.8),
                         BlendMode.srcATop,
                       ),
                       child: Image.asset(
@@ -105,7 +105,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
                     imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        Colors.white.withOpacity(0.8),
+                        Colors.white.withValues(alpha: 0.8),
                         BlendMode.srcATop,
                       ),
                       child: Image.asset(
@@ -207,25 +207,25 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
     );
   }
 
-  Color defineColor(color) {
+  Color defineColor(String color) {
     switch (color) {
       case "blue":
-        return const Color.fromARGB(255, 0, 162, 255).withOpacity(0.6);
+        return const Color.fromARGB(255, 0, 162, 255).withValues(alpha: 0.6);
       case "purple":
-        return const Color.fromARGB(255, 188, 45, 255).withOpacity(0.6);
+        return const Color.fromARGB(255, 188, 45, 255).withValues(alpha: 0.6);
       case "yellow":
-        return const Color.fromARGB(255, 255, 217, 0).withOpacity(0.6);
+        return const Color.fromARGB(255, 255, 217, 0).withValues(alpha: 0.6);
       case "red":
-        return const Color.fromARGB(255, 255, 11, 11).withOpacity(0.6);
+        return const Color.fromARGB(255, 255, 11, 11).withValues(alpha: 0.6);
       case "pink":
-        return const Color.fromARGB(255, 255, 43, 244).withOpacity(0.6);
+        return const Color.fromARGB(255, 255, 43, 244).withValues(alpha: 0.6);
       case "orange":
-        return const Color.fromARGB(255, 255, 123, 0).withOpacity(0.6);
+        return const Color.fromARGB(255, 255, 123, 0).withValues(alpha: 0.6);
       case "green":
-        return const Color.fromARGB(255, 44, 219, 0).withOpacity(0.6);
+        return const Color.fromARGB(255, 44, 219, 0).withValues(alpha: 0.6);
       case "grey":
       default:
-        return const Color.fromARGB(255, 155, 155, 155).withOpacity(0.6);
+        return const Color.fromARGB(255, 155, 155, 155).withValues(alpha: 0.6);
     }
   }
 
@@ -236,7 +236,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
       colors: List.generate(
         (size.height / 2).floor(),
         (i) => i.isEven
-          ? Colors.white.withOpacity(0.5)
+          ? Colors.white.withValues(alpha: 0.5)
           : Colors.transparent,
       ),
       stops: List.generate(

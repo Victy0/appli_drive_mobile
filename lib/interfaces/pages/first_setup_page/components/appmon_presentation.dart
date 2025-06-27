@@ -115,7 +115,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
       colors: List.generate(
         (size.height / 2).floor(),
         (i) => i.isEven
-          ? Colors.white.withOpacity(0.5)
+          ? Colors.white.withValues(alpha: 0.5)
           : Colors.transparent,
       ),
       stops: List.generate(
@@ -141,6 +141,6 @@ class AppmonPresentationState extends State<AppmonPresentation> {
       case "white":
         return Colors.grey[300];
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 }

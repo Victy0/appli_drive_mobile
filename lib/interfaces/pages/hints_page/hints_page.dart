@@ -21,7 +21,7 @@ class HintsPagePageState extends State<HintsPage> {
   List<Map<String, dynamic>> _hintList = [];
   bool _isLoading = true;
 
-  _getHintList() async {
+  void _getHintList() async {
     List<Map<String, dynamic>> result = await _preferencesService.getHintRevealedList();
 
     setState(() {
@@ -44,7 +44,7 @@ class HintsPagePageState extends State<HintsPage> {
         pageBuilder: (context, animation, secondaryAnimation) =>
           HomePage(onLanguageChange: widget.onLanguageChange, initSound: false),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(-10.0, 0.0);
+          const begin = Offset(-1.0, 0.0);
           const end = Offset(0.0, 0.0);
           const curve = Curves.easeInOut;
 
@@ -78,7 +78,7 @@ class HintsPagePageState extends State<HintsPage> {
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "yellow"),
+          const BackgroundImage(color: "yellow", animateColor: true),
           Column(
             children: [
               const SizedBox(height: 20),

@@ -41,7 +41,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
     );
   }
 
-  Widget iconPowerDescription(context) {
+  Widget iconPowerDescription(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -68,7 +68,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
     );
   }
 
-  Widget iconUnlink(context) {
+  Widget iconUnlink(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
