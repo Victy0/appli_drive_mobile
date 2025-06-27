@@ -42,7 +42,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _appliDriveVersion = 0;
   bool _isLoading = true;
 
-  _getInitialValues() async {
+  void _getInitialValues() async {
     final String appmonName = await _preferencesService.getString(AppPreferenceKey.appmonPairingName) ?? "";
     final String appmonColorPrimary = await _preferencesService.getString(AppPreferenceKey.primaryColor) ?? "";
     final String appmonColorSecondary = await _preferencesService.getString(AppPreferenceKey.secondaryColor) ?? "";
@@ -265,7 +265,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       colors: List.generate(
         (size.height / 2).floor(),
         (i) => i.isEven
-          ? Colors.white.withOpacity(0.5)
+          ? Colors.white.withValues(alpha: 0.5)
           : Colors.transparent,
       ),
       stops: List.generate(

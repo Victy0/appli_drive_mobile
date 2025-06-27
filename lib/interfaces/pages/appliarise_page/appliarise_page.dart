@@ -34,7 +34,7 @@ class AppliarisePageState extends State<AppliarisePage> {
 
   late AppliDriveManagementService _appliDriveManagementService;
   
-  _getColorByAppmonType(String? appmonType) {
+  String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
         return "red";
@@ -53,9 +53,10 @@ class AppliarisePageState extends State<AppliarisePage> {
       case "tool":
         return "purple";
     }
+    return "";
   }
 
-  _setAppmonReveleadedId() async {
+  void _setAppmonReveleadedId() async {
     _preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
       widget.appmon.id,

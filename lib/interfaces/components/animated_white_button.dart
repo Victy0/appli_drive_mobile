@@ -50,9 +50,9 @@ class AnimatedWhiteButtonState extends State<AnimatedWhiteButton> with SingleTic
                 end: Alignment.centerRight,
                 colors: [
                   Colors.transparent,
-                  Colors.cyanAccent.withOpacity(0.6),
-                  Colors.purpleAccent.withOpacity(0.8),
-                  Colors.blueAccent.withOpacity(0.6),
+                  Colors.cyanAccent.withValues(alpha: 0.6),
+                  Colors.purpleAccent.withValues(alpha: 0.8),
+                  Colors.blueAccent.withValues(alpha: 0.6),
                   Colors.transparent,
                 ],
                 stops: [

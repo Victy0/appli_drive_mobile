@@ -110,7 +110,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconDataCenter(context) {
+  Widget iconDataCenter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -133,7 +133,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconSevenCode(context) {
+  Widget iconSevenCode(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -156,7 +156,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconHints(context) {
+  Widget iconHints(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(

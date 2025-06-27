@@ -14,7 +14,7 @@ class DialogAppmonCodeList extends StatefulWidget {
 class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
   final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
 
-  _getAppmonQuantityByGrade(String grade) {
+  int _getAppmonQuantityByGrade(String grade) {
     switch(grade) {
       case "standard":
         return 74;
@@ -25,6 +25,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       case "god":
         return 6;
     }
+    return 0;
   }
   
   @override

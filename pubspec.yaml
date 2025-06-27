@@ -17,13 +17,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   audioplayers: ^6.1.0
-  screen_state: ^3.0.0
+  screen_state: ^4.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter_launcher_icons:
   image_path: "assets/images/icon_app.jpg"

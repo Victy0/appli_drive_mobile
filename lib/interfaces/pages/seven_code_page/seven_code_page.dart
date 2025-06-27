@@ -32,7 +32,7 @@ class SevenCodePageState extends State<SevenCodePage>{
   Appmon? _dantemonInfo;
   bool _isLoading = true;
 
-  _get7codeRevealed() async {
+  void _get7codeRevealed() async {
     List<String> sevenCodeRevealedIdsUser = await _preferencesService.getStringList(
       AppPreferenceKey.sevencodeRevealedIds,
     );
@@ -102,7 +102,7 @@ class SevenCodePageState extends State<SevenCodePage>{
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "purple"),
+          const BackgroundImage(color: "purple", animateColor: true),
           Column(
             children: [
               const SizedBox(height: 8),

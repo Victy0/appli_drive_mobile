@@ -60,7 +60,7 @@ class Square7CodeState extends State<Square7Code> {
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                   blurRadius: 15,
                   spreadRadius: 3,
                 ),

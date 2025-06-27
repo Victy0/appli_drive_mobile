@@ -50,19 +50,19 @@ class TextWithBackgroundColor extends StatelessWidget {
   Color _colorBackground(String color) {
     switch (color) {
       case "blue":
-        return Colors.blue.withOpacity(0.35);
+        return Colors.blue.withValues(alpha: 0.35);
       case "green":
-        return Colors.green.withOpacity(0.4);
+        return Colors.green.withValues(alpha: 0.4);
       case "orange":
-        return Colors.orange.withOpacity(0.35);
+        return Colors.orange.withValues(alpha: 0.35);
       case "purple":
-        return Colors.purple.withOpacity(0.35);
+        return Colors.purple.withValues(alpha: 0.35);
       case "red":
-        return Colors.red.withOpacity(0.4);
+        return Colors.red.withValues(alpha: 0.4);
       case "yellow":
-        return Colors.yellow.withOpacity(0.4);
+        return Colors.yellow.withValues(alpha: 0.4);
       default:
-        return Colors.grey.withOpacity(0.3);
+        return Colors.grey.withValues(alpha: 0.3);
     }
   }
 }

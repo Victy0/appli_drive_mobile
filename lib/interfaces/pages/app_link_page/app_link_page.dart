@@ -24,7 +24,7 @@ class AppLinkPage extends StatefulWidget {
 }
 
 class AppLinkPageState extends State<AppLinkPage> {
-  _getColorByAppmonType(String? appmonType) {
+  String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
         return "red";
@@ -43,6 +43,7 @@ class AppLinkPageState extends State<AppLinkPage> {
       case "tool":
         return "purple";
     }
+    return "grey";
   }
 
   @override
