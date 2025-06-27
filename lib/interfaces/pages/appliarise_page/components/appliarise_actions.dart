@@ -5,22 +5,24 @@ import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_de
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseActions extends StatefulWidget {
-  final DatabaseHelper databaseHelper;
+  final AppliDriveManagementService appliDriveManagementService;
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
   final bool tutorialFinished;
+  final int appliDriveVersion;
   const AppliariseActions({
     super.key,
-    required this.databaseHelper,
+    required this.appliDriveManagementService,
     required this.appmon,
     required this.onLanguageChange,
     required this.tutorialFinished,
+    required this.appliDriveVersion,
   });
 
   @override
@@ -104,7 +106,8 @@ class AppliariseActionsState extends State<AppliariseActions> {
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) => DialogInsertCode(
-            databaseHelper: widget.databaseHelper,
+            appliDriveManagementService: widget.appliDriveManagementService,
+            appliDriveVersion: widget.appliDriveVersion,
             currentAppmon: widget.appmon,
           ),
         );
@@ -114,6 +117,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
               builder: (context) => AppliarisePage(
                 onLanguageChange: widget.onLanguageChange,
                 appmon: appmonLinked,
+                appliDriveVersion: widget.appliDriveVersion,
               ),
             ));
             return;
@@ -123,6 +127,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
               onLanguageChange: widget.onLanguageChange,
               appmon: widget.appmon,
               appmonLinked: appmonLinked,
+              appliDriveVersion: widget.appliDriveVersion,
             ),
           ));
         }

@@ -6,6 +6,7 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/a
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,13 @@ import 'package:flutter/material.dart';
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
+  final int appliDriveVersion;
   final bool tutorialFinished;
   const AppliarisePage({
     super.key,
     required this.onLanguageChange,
     required this.appmon,
+    required this.appliDriveVersion,
     this.tutorialFinished = true,
   });
 
@@ -28,6 +31,8 @@ class AppliarisePage extends StatefulWidget {
 class AppliarisePageState extends State<AppliarisePage> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
+
+  late AppliDriveManagementService _appliDriveManagementService;
   
   _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -51,7 +56,6 @@ class AppliarisePageState extends State<AppliarisePage> {
   }
 
   _setAppmonReveleadedId() async {
-    
     _preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
       widget.appmon.id,
@@ -71,6 +75,10 @@ class AppliarisePageState extends State<AppliarisePage> {
   @override
   void initState() {
     super.initState();
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
     _setAppmonReveleadedId();
   }
 
@@ -105,10 +113,11 @@ class AppliarisePageState extends State<AppliarisePage> {
                 AppliariseImage(appmon: widget.appmon),
                 const SizedBox(height: 40),
                 AppliariseActions(
-                  databaseHelper: _databaseHelper,
+                  appliDriveManagementService: _appliDriveManagementService,
                   appmon: widget.appmon,
                   onLanguageChange: widget.onLanguageChange,
                   tutorialFinished: widget.tutorialFinished,
+                  appliDriveVersion: widget.appliDriveVersion,
                 ),
               ],
             ),

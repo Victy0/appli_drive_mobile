@@ -1,16 +1,17 @@
-import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/preferences_service.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:flutter/material.dart';
 
 class QuestionAppliDrive extends StatefulWidget {
   final Function(Map<String, String>) onQuestionAnswered;
   final int selectedOption;
+  final AppliDriveManagementService appliDriveManagementService;
 
   const QuestionAppliDrive({
     super.key,
     required this.selectedOption,
     required this.onQuestionAnswered,
+    required this.appliDriveManagementService,
   });
 
   @override
@@ -18,7 +19,6 @@ class QuestionAppliDrive extends StatefulWidget {
 }
 
 class QuestionAppliDriveState extends State<QuestionAppliDrive> {
-  final PreferencesService _preferencesService = PreferencesService();
   final List<String> _questions = [
     "areYouAProtagonist",
     "doYouWantToMakeSomeoneSmile",
@@ -94,10 +94,13 @@ class QuestionAppliDriveState extends State<QuestionAppliDrive> {
         secondaryColor = "red";
         break;
     }
-    _preferencesService.setString(AppPreferenceKey.appmonPairingName, name);
-    _preferencesService.setAppmonPairingEvolutionInfo(info);
-    _preferencesService.setString(AppPreferenceKey.primaryColor, primaryColor);
-    _preferencesService.setString(AppPreferenceKey.secondaryColor, secondaryColor);
+    widget.appliDriveManagementService.pairBuddyAppmon(
+      name,
+      info,
+      primaryColor,
+      secondaryColor,
+      isFirstBuddy: true,
+    );
     info.addAll({"name": name, "color": primaryColor});
     return info;
   }

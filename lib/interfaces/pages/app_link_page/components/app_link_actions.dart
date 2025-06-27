@@ -10,11 +10,13 @@ class AppLinkActions extends StatefulWidget {
   final Appmon appmon;
   final Appmon appmonLinked;
   final Function(Locale) onLanguageChange;
+  final int appliDriveVersion;
   const AppLinkActions({
     super.key,
     required this.appmon,
     required this.appmonLinked,
     required this.onLanguageChange,
+    required this.appliDriveVersion,
   });
 
   @override
@@ -124,6 +126,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
                           builder: (context) => AppliarisePage(
                             onLanguageChange: widget.onLanguageChange,
                             appmon: widget.appmon,
+                            appliDriveVersion: widget.appliDriveVersion,
                           ),
                         ))
                       },
