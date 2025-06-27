@@ -28,78 +28,96 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: _getColorDialogBackground(),
       insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: SizedBox.expand(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              nameContainer(),
-              const SizedBox(height: 8),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      divider(),
-                      appContainer(),
-                      divider(),
-                      gradeContainer(),
-                      divider(),
-                      typeContainer(),
-                      divider(),
-                      powerContainer(),
-                      divider(),
-                      profileContainer(),
-                      if (widget.showChipContainer) ...[
+      backgroundColor: Colors.transparent, // Remove o fundo padrão para mostrar o gradiente
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          gradient: _getDialogGradientBackground(),
+        ),
+        child: SizedBox.expand(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                nameContainer(),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
                         divider(),
-                        chipContainer(),
+                        appContainer(),
+                        divider(),
+                        gradeContainer(),
+                        divider(),
+                        typeContainer(),
+                        divider(),
+                        powerContainer(),
+                        divider(),
+                        profileContainer(),
+                        if (widget.showChipContainer) ...[
+                          divider(),
+                          chipContainer(),
+                        ],
+                        divider(),
                       ],
-                      divider(),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.center,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: const CircleBorder(),
-                  ),
-                  onPressed: () {
-                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.check,
-                    size: 40.0,
-                    color: Colors.green,
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: const CircleBorder(),
+                    ),
+                    onPressed: () {
+                      _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.check,
+                      size: 40.0,
+                      color: Colors.green,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Color _getColorDialogBackground() {
-    switch (widget.interface){
-      case "appliArise":
-        return const Color.fromARGB(255, 122, 122, 122);
-      case "7code":
-        return const Color.fromARGB(255, 189, 145, 190);
-      case "dataCenter":
-      default:
-        return const Color.fromARGB(255, 1, 97, 207);
-    }
+  Gradient _getDialogGradientBackground() {
+  switch (widget.interface) {
+    case "appliArise":
+      return const LinearGradient(
+        colors: [Color.fromARGB(255, 92, 92, 92), Color.fromARGB(255, 211, 211, 211), Color.fromARGB(255, 255, 255, 255)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case "7code":
+      return const LinearGradient(
+        colors: [Color.fromARGB(255, 124, 82, 126), Color.fromARGB(255, 180, 136, 180), Color.fromARGB(255, 240, 212, 240)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    case "dataCenter":
+    default:
+      return const LinearGradient(
+        colors: [Color.fromARGB(255, 88, 160, 255), Color.fromARGB(255, 144, 193, 248), Color.fromARGB(255, 189, 219, 253)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
   }
+}
 
   Color _getColorBackground() {
     return const Color.fromARGB(255, 255, 255, 255);

@@ -25,81 +25,91 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: SizedBox.expand(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              nameContainer(),
-              const SizedBox(height: 8),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      divider(),
-                      descriptionContainer(
-                        "attack",
-                        "orange",
-                        widget.appmon?.attack ?? 0,
-                        widget.appmonLinked?.attack,
-                      ),
-                      divider(),
-                      descriptionContainer(
-                        "defense",
-                        "purple",
-                        widget.appmon?.defense ?? 0,
-                        widget.appmonLinked?.defense,
-                      ),
-                      divider(),
-                      descriptionContainer(
-                        "energy",
-                        "yellow",
-                        widget.appmon?.energy ?? 0,
-                        widget.appmonLinked?.energy,
-                      ),
-                      divider(),
-                      descriptionContainer(
-                        "resistance",
-                        "red",
-                        widget.appmon?.resistance ?? 0,
-                        widget.appmonLinked?.resistance,
-                      ),
-                      divider(),
-                      descriptionContainer(
-                        "ability",
-                        "blue",
-                        widget.appmon?.ability ?? 0,
-                        widget.appmonLinked?.ability,
-                      ),
-                      divider(),
-                      if(widget.appmonLinked == null)...[
-                        techniqueContainer(),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          gradient: const LinearGradient(
+              colors: [Color.fromARGB(255, 92, 92, 92), Color.fromARGB(255, 211, 211, 211), Color.fromARGB(255, 255, 255, 255)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+        ),
+        child: SizedBox.expand(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                nameContainer(),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         divider(),
-                      ]
-                    ],
+                        descriptionContainer(
+                          "attack",
+                          "orange",
+                          widget.appmon?.attack ?? 0,
+                          widget.appmonLinked?.attack,
+                        ),
+                        divider(),
+                        descriptionContainer(
+                          "defense",
+                          "purple",
+                          widget.appmon?.defense ?? 0,
+                          widget.appmonLinked?.defense,
+                        ),
+                        divider(),
+                        descriptionContainer(
+                          "energy",
+                          "yellow",
+                          widget.appmon?.energy ?? 0,
+                          widget.appmonLinked?.energy,
+                        ),
+                        divider(),
+                        descriptionContainer(
+                          "resistance",
+                          "red",
+                          widget.appmon?.resistance ?? 0,
+                          widget.appmonLinked?.resistance,
+                        ),
+                        divider(),
+                        descriptionContainer(
+                          "ability",
+                          "blue",
+                          widget.appmon?.ability ?? 0,
+                          widget.appmonLinked?.ability,
+                        ),
+                        divider(),
+                        if(widget.appmonLinked == null)...[
+                          techniqueContainer(),
+                          divider(),
+                        ]
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.center,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: const CircleBorder(),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.check,
-                    size: 40.0,
-                    color: Colors.green,
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: const CircleBorder(),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(
+                      Icons.check,
+                      size: 40.0,
+                      color: Colors.green,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
