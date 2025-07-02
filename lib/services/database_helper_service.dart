@@ -56,7 +56,7 @@ class DatabaseHelper {
     String sql = '''
       SELECT 
         appmon.inner_id AS id, appmon.code_text, appmon.name, appmon.app, appmon.power, appmon.color_1, appmon.color_2,
-        appmon.ability, appmon.attack, appmon.defense, appmon.energy, appmon.resistance,
+        appmon.ability, appmon.attack, appmon.defense, appmon.energy, appmon.resistance, appmon.image_size,
         grade.id AS grade_id, grade.name AS grade_name, 
         type.id AS type_id, type.name AS type_name, 
         fusion.id AS fusion_id, fusion.appmon_base_1, fusion.appmon_base_2
@@ -119,6 +119,7 @@ class DatabaseHelper {
     String sql = '''
       SELECT 
         seven_code.inner_id AS id, seven_code.inner_id AS code_text, seven_code.name, seven_code.app, seven_code.power, 
+        0 AS image_size,
         grade.id AS grade_id, grade.name AS grade_name, 
         type.id AS type_id, type.name AS type_name 
       FROM seven_code
