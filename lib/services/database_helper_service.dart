@@ -29,7 +29,7 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'appli_drive_database.db');
 
     int currentVersion = await _preferencesService.getInt(AppPreferenceKey.dbVersion) ?? -1;
-    int newVersion = 0;
+    int newVersion = 1;
 
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
