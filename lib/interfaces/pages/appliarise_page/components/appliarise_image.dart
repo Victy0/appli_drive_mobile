@@ -48,26 +48,29 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onPanUpdate: (details) {
-            setState(() {
-              _controller.stop();
-              _tiltAngle += details.delta.dx * 0.01;
-              _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
-            });
-          },
-          onPanEnd: (_) {
-            _animateBackToCenter();
-          },
+  return Stack(
+    children: [
+      GestureDetector(
+        onPanUpdate: (details) {
+          setState(() {
+            _controller.stop();
+            _tiltAngle += details.delta.dx * 0.01;
+            _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
+          });
+        },
+        onPanEnd: (_) {
+          _animateBackToCenter();
+        },
+        // APPMON CONTRAST IMAGE
+        child: SizedBox(
+          width: double.infinity,
+          height: 350,
           child: Stack(
+            alignment: Alignment.center,
             children: [
-              // APPMON CONTRAST IMAGE
-              Container(
-                width: 320,
-                height: 320,
-                alignment: Alignment.center,
+              OverflowBox(
+                maxWidth: 500,
+                maxHeight: 500,
                 child: ImageFiltered(
                   imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
                   child: ColorFiltered(
@@ -77,35 +80,51 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
                     ),
                     child: Image.asset(
                       "assets/images/appmons/${widget.appmon.id}.png",
-                      width: 315,
-                      height: 315,
+                      width: widget.appmon.imageSize + 10,
+                      height: widget.appmon.imageSize + 10,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
               ),
               // APPMON IMAGE
-              Transform(
-                alignment: Alignment.center,
-                transform: Matrix4.identity()
-                  ..setEntry(3, 2, 0.007)
-                  ..rotateY(_tiltAngle),
-                child: Image.asset(
-                  "assets/images/appmons/${widget.appmon.id}.png",
-                  width: 310,
-                  height: 310,
+              OverflowBox(
+                maxWidth: 500,
+                maxHeight: 500,
+                child: Transform(
+                  alignment: Alignment.center,
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.007)
+                    ..rotateY(_tiltAngle),
+                  child: Image.asset(
+                    "assets/images/appmons/${widget.appmon.id}.png",
+                    width: widget.appmon.imageSize.toDouble(),
+                    height: widget.appmon.imageSize.toDouble(),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 5),
-        TextWithWhiteShadow(
-          text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-          fontSize: 40,
+      ),
+      // APPMON NAME
+      Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 350),
+            TextWithWhiteShadow(
+              text: AppLocalization.of(context)
+                  .translate("appmons.names.${widget.appmon.name}"),
+              fontSize: 40,
+            ),
+          ],
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   @override
   void dispose() {

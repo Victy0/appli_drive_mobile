@@ -19,6 +19,7 @@ class Appmon {
   bool? fusioned;
   final String? primaryColor;
   final String? secondaryColor;
+  final int imageSize;
 
   Appmon({
     required this.id,
@@ -37,6 +38,7 @@ class Appmon {
     this.fusioned,
     this.primaryColor,
     this.secondaryColor,
+    required this.imageSize,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -57,6 +59,7 @@ class Appmon {
       fusioned: null,
       primaryColor: map['color_1'],
       secondaryColor: map['color_2'],
+      imageSize: map['image_size'],
     );
   }
 }
