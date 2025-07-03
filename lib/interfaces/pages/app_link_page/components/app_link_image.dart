@@ -50,160 +50,205 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
     _controller.forward(from: 0.0);
   }
 
+  double _getAppmonLinkedRatio(){
+    if(widget.appmon.grade.id > widget.appmonLinked.grade.id) {
+      return 50;
+    }
+    return 10;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanUpdate: (details) {
-        setState(() {
-          _controller.stop();
-          _tiltAngle += details.delta.dx * 0.01;
-          _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
-        });
-      },
-      onPanEnd: (_) => _animateBackToCenter(),
-      child: Column(
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              // APPMON LINKED CONTRAST IMAGE
-              Transform.translate(
-                offset: const Offset(100, -120),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.007)
-                    ..rotateY(_tiltAngle),
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) {
-                      return scanlineShader(bounds.size);
-                    },
-                    blendMode: BlendMode.srcATop,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        Colors.white.withValues(alpha: 0.8),
-                        BlendMode.srcATop,
-                      ),
-                      child: Image.asset(
-                        "assets/images/appmons/${widget.appmonLinked.id}.png",
-                        width: 250,
-                        height: 250,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              // APPMON CONTRAST IMAGE
-              Transform.translate(
-                offset: const Offset(-65, 5),
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  alignment: Alignment.center,
-                  child: ImageFiltered(
-                    imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        Colors.white.withValues(alpha: 0.8),
-                        BlendMode.srcATop,
-                      ),
-                      child: Image.asset(
-                        "assets/images/appmons/${widget.appmon.id}.png",
-                        width: 300,
-                        height: 300,
+    return Stack(
+      children: [
+        GestureDetector(
+          onPanUpdate: (details) {
+            setState(() {
+              _controller.stop();
+              _tiltAngle += details.delta.dx * 0.01;
+              _tiltAngle = _tiltAngle.clamp(-0.2, 0.2);
+            });
+          },
+          onPanEnd: (_) => _animateBackToCenter(),
+          child: SizedBox(
+            width: double.infinity,
+            height: 350,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // APPMON LINKED CONTRAST IMAGE
+                Transform.translate(
+                  offset: const Offset(100, -120),
+                  child: OverflowBox(
+                    maxWidth: 500,
+                    maxHeight: 500,
+                    child: SizedBox(
+                      width: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                      height: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.007)
+                          ..rotateY(_tiltAngle),
+                        child: ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return scanlineShader(bounds.size);
+                          },
+                          blendMode: BlendMode.srcATop,
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.white.withValues(alpha: 0.8),
+                              BlendMode.srcATop,
+                            ),
+                            child: Image.asset(
+                              "assets/images/appmons/${widget.appmonLinked.id}.png",
+                              width: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                              height: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // APPMON LINKED IMAGE
-              Transform.translate(
-                offset: const Offset(100, -120),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.007)
-                    ..rotateY(_tiltAngle),
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) {
-                      return scanlineShader(bounds.size);
-                    },
-                    blendMode: BlendMode.srcATop,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        defineColor(widget.linkColor),
-                        BlendMode.modulate,
-                      ),
-                      child: Image.asset(
-                        "assets/images/appmons/${widget.appmonLinked.id}.png",
-                        width: 250,
-                        height: 250,
-                        fit: BoxFit.cover,
+                // APPMON CONTRAST IMAGE
+                Transform.translate(
+                  offset: const Offset(-65, 5),
+                  child: OverflowBox(
+                    maxWidth: 500,
+                    maxHeight: 500,
+                    child: SizedBox(
+                      width: widget.appmon.imageSize + 10,
+                      height: widget.appmon.imageSize + 10,
+                      child: ImageFiltered(
+                        imageFilter: ImageFilter.blur(sigmaX: 1, sigmaY: 1),
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.white.withValues(alpha: 0.8),
+                            BlendMode.srcATop,
+                          ),
+                          child: Image.asset(
+                            "assets/images/appmons/${widget.appmon.id}.png",
+                            width: widget.appmon.imageSize + 10,
+                            height: widget.appmon.imageSize + 10,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              // APPMON IMAGE
-              Transform.translate(
-                offset: const Offset(-70, 0),
-                child: Transform(
-                  alignment: Alignment.center,
-                  transform: Matrix4.identity()
-                    ..setEntry(3, 2, 0.007)
-                    ..rotateY(_tiltAngle),
-                  child: Image.asset(
-                    "assets/images/appmons/${widget.appmon.id}.png",
-                    width: 300,
-                    height: 300,
+                // APPMON LINKED IMAGE
+                Transform.translate(
+                  offset: const Offset(100, -120),
+                  child: OverflowBox(
+                    maxWidth: 500,
+                    maxHeight: 500,
+                    child: SizedBox(
+                      width: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                      height: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.007)
+                          ..rotateY(_tiltAngle),
+                        child: ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return scanlineShader(bounds.size);
+                          },
+                          blendMode: BlendMode.srcATop,
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              defineColor(widget.linkColor),
+                              BlendMode.modulate,
+                            ),
+                            child: Image.asset(
+                              "assets/images/appmons/${widget.appmonLinked.id}.png",
+                              width: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                              height: widget.appmonLinked.imageSize - _getAppmonLinkedRatio(),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                // APPMON IMAGE
+                Transform.translate(
+                  offset: const Offset(-70, 0),
+                  child: OverflowBox(
+                    maxWidth: 500,
+                    maxHeight: 500,
+                    child: SizedBox(
+                      width: widget.appmon.imageSize.toDouble(),
+                      height: widget.appmon.imageSize.toDouble(),
+                      child: Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.007)
+                          ..rotateY(_tiltAngle),
+                        child: Image.asset(
+                          "assets/images/appmons/${widget.appmon.id}.png",
+                          width: widget.appmon.imageSize.toDouble(),
+                          height: widget.appmon.imageSize.toDouble(),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 5),
-          Column(
+        ),
+        // TEXTOS
+        Center(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const SizedBox(height: 350),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: TextWithWhiteShadow(
-                      text: AppLocalization.of(context).translate("appmons.names.${widget.appmon.name}"),
-                      fontSize: 40,
-                      height: 1.0,
-                      align: "left",
-                    ),
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context)
+                        .translate("appmons.names.${widget.appmon.name}"),
+                    fontSize: 40,
+                    height: 1.0,
+                    align: "left",
                   ),
-                ],
-              ),
-              const TextWithWhiteShadow(
-                text: "PLUS",
-                fontSize: 30,
-                height: 1.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: TextWithWhiteShadow(
-                      text: AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked.name}"),
-                      fontSize: 40,
-                      height: 1.0,
-                      align: "right",
-                    ),
+                ),
+              ],
+            ),
+            const TextWithWhiteShadow(
+              text: "PLUS",
+              fontSize: 30,
+              height: 1.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context)
+                        .translate("appmons.names.${widget.appmonLinked.name}"),
+                    fontSize: 40,
+                    height: 1.0,
+                    align: "right",
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -323,14 +323,14 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
         return Colors.orange[800];
       case "life":
         if(linked) {
-          return Colors.pink[400];
+          return const Color.fromARGB(255, 248, 66, 127);
         }
-        return Colors.pink[600];
+        return const Color.fromARGB(255, 219, 36, 103);
       case "navi":
         if(linked) {
-          return Colors.green;
+          return const Color.fromARGB(255, 76, 219, 80);
         }
-        return Colors.green[800];
+        return const Color.fromARGB(255, 45, 170, 52);
       case "social":
         if(linked) {
           return Colors.blue[600];
@@ -338,12 +338,12 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
         return Colors.blue[800];
       case "system":
         if(linked) {
-          return Colors.yellow[600];
+          return const Color.fromARGB(255, 255, 234, 40);
         }
-        return Colors.yellow[800];
+        return const Color.fromARGB(255, 230, 207, 0);
       case "tool":
         if(linked) {
-          return Colors.purple;
+          return const Color.fromARGB(255, 137, 39, 176);
         }
         return Colors.purple[800];
     }
