@@ -73,6 +73,7 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
   @override
   void initState() {
     super.initState();
+    _databaseHelper.resetRevealedToZero();
     _appliDriveManagementService = AppliDriveManagementService(
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
