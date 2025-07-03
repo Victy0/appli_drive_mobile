@@ -1,4 +1,3 @@
-import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
@@ -56,23 +55,6 @@ class AppliarisePageState extends State<AppliarisePage> {
     return "";
   }
 
-  void _setAppmonReveleadedId() async {
-    _preferencesService.setStringInStringList(
-      AppPreferenceKey.appmonRevealedIds,
-      widget.appmon.id,
-    );
-    if(!widget.tutorialFinished) {
-      _preferencesService.setBool(
-      AppPreferenceKey.tutorialFinished,
-      true
-    );
-      _preferencesService.setHintInHintRevealedList("appmon", "1");
-      _preferencesService.setHintInHintRevealedList("appmon", "2");
-      _preferencesService.setHintInHintRevealedList("appliDrive", "1");
-      _preferencesService.setHintInHintRevealedList("7code");
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -80,7 +62,10 @@ class AppliarisePageState extends State<AppliarisePage> {
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
     );
-    _setAppmonReveleadedId();
+    _appliDriveManagementService.setAppmonReveleadedId(
+      widget.appmon.id,
+      widget.tutorialFinished,
+    );
   }
 
   @override

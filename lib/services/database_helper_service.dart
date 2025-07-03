@@ -52,6 +52,10 @@ class DatabaseHelper {
   }
 
   Future<Appmon?> getAppmonByCode(String code, {bool ignoreRevealedField = false}) async {
+    String revealedCondiction = '';
+    if(!ignoreRevealedField) {
+      revealedCondiction = 'AND appmon.revealed = 1';
+    }
     final db = await database;
     String sql = '''
       SELECT 
@@ -64,7 +68,7 @@ class DatabaseHelper {
       INNER JOIN type ON appmon.type_id = type.id
       INNER JOIN grade ON appmon.grade_id = grade.id
       LEFT JOIN fusion ON appmon.fusion_id = fusion.id
-        WHERE appmon.code_text = ?;
+        WHERE appmon.code_text = ? $revealedCondiction;
     ''';
     List<Map<String, dynamic>> results = await db.rawQuery(sql, [code]);
 
@@ -83,7 +87,7 @@ class DatabaseHelper {
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
-        WHERE grade.id <= ?
+        WHERE appmon.revealed = 1 AND grade.id <= ?
       ORDER BY grade.id, appmon.code_text;
     ''';
     return await db.rawQuery(sql, [gradeLevelId]);
@@ -97,7 +101,7 @@ class DatabaseHelper {
 
     if (filterByIds && ids != null && ids.isNotEmpty) {
       final placeholders = List.filled(ids.length, '?').join(', ');
-      whereClause = 'WHERE appmon.inner_id IN ($placeholders)';
+      whereClause = 'AND appmon.inner_id IN ($placeholders)';
       whereArgs = ids;
     }
 
@@ -107,7 +111,7 @@ class DatabaseHelper {
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
-        $whereClause
+        WHERE appmon.revealed = 1 $whereClause
       ORDER BY grade.id, appmon.name;
     ''';
 
@@ -130,5 +134,24 @@ class DatabaseHelper {
     List<Map<String, dynamic>> result = await db.rawQuery(sql, [code]);
 
     return Appmon.fromMap(result.first);
+  }
+
+  Future<void> resetRevealedToZero() async {
+    final db = await database;
+    await db.update(
+      'appmon',
+      {'revealed': 0},
+    );
+  }
+
+  Future<void> setRevealedAppmonsForIds(List<String> ids) async {
+    if (ids.isEmpty) return;
+
+    final db = await database;
+    final idsString = ids.map((_) => '?').join(', ');
+    await db.rawUpdate(
+      'UPDATE appmon SET revealed = 1 WHERE inner_id IN ($idsString)',
+      ids,
+    );
   }
 }
