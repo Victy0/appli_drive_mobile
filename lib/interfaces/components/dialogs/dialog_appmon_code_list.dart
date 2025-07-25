@@ -1,6 +1,5 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:flutter/material.dart';
 
 class DialogAppmonCodeList extends StatefulWidget {
@@ -12,8 +11,8 @@ class DialogAppmonCodeList extends StatefulWidget {
 }
 
 class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  
   int _getAppmonQuantityByGrade(String grade) {
     switch(grade) {
       case "standard":
@@ -69,7 +68,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
                     shape: const CircleBorder(),
                   ),
                   onPressed: () {
-                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                    _instantAudioPlayer.play("click");
                     Navigator.pop(context);
                   },
                   child: const Icon(

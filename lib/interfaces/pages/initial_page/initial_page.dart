@@ -1,12 +1,9 @@
 import 'dart:math';
 
-import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
-import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_state/screen_state.dart';
@@ -20,9 +17,7 @@ class InitialPage extends StatefulWidget {
 }
 
 class InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
-  final PreferencesService _preferencesService = PreferencesService();
   final AudioPlayer _audioPlayerContinuous = AudioServiceContinuous.instance.player;
-
   final Screen _screen = Screen();
   Stream<ScreenStateEvent>? _screenStream;
 
@@ -31,6 +26,11 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
 
   late AnimationController _controllerText;
   late Animation<double> _opacityAnimationText;
+
+  Future<void> _startAudio() async {
+    await _audioPlayerContinuous.setSource(AssetSource('sounds/background/initial_page.mp3'));
+    await _audioPlayerContinuous.resume();
+  }
 
   void _startMonitoring() {
     _screenStream = _screen.screenStateStream;
@@ -43,28 +43,10 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
     });
   }
 
-  Future<void> _checkIfLanguageHasBeenChosen() async {
-    String? languageCode = await _preferencesService.getString(
-      AppPreferenceKey.selectLanguage,
-    );
-
-    if (languageCode == null) {
-      _showLanguageDialog();
-    }
-  }
-
-  Future<void> _showLanguageDialog() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: widget.onLanguageChange),
-    );
-  }
-
   @override
   void initState() {
     super.initState();
-    _audioPlayerContinuous.play(AssetSource('sounds/initial_page.mp3'));
+    _startAudio();
     _startMonitoring();
 
     _controllers = List.generate(12, (index) {
@@ -82,8 +64,6 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
     _opacityAnimationText = Tween<double>(begin: 0.0, end: 1.0).animate(_controllerText);
-
-    _checkIfLanguageHasBeenChosen();
   }
 
   void _navigateToHomePage(BuildContext context) async {
@@ -180,6 +160,7 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
 
   @override
   void dispose() {
+    _audioPlayerContinuous.stop();
     for (var controller in _controllers) {
       controller.dispose();
     }

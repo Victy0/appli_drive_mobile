@@ -11,10 +11,9 @@ import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_ic
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,7 +28,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
 
   late AppliDriveManagementService _appliDriveManagementService;
 
@@ -67,7 +66,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     if(widget.initSound) {
-      _audioPlayerMomentary.play(AssetSource('sounds/start.mp3'));
+      _instantAudioPlayer.play("start");
     }
     _appliDriveManagementService = AppliDriveManagementService(
       databaseHelper: _databaseHelper,
@@ -173,6 +172,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       const SizedBox(height: 70),
       GestureDetector(
         onTap: () async {
+          _instantAudioPlayer.play("appliarise");
           final navigator = Navigator.of(context);
           Appmon? appmon = await showDialog<Appmon>(
             context: context,

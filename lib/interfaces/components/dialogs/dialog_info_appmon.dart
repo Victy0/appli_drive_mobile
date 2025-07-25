@@ -1,8 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:flutter/material.dart';
 
 class DialogInfoAppmon extends StatefulWidget {
@@ -23,7 +22,7 @@ class DialogInfoAppmon extends StatefulWidget {
 }
 
 class DialogInfoAppmonState extends State<DialogInfoAppmon> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                       shape: const CircleBorder(),
                     ),
                     onPressed: () {
-                      _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                      _instantAudioPlayer.play("click");
                       Navigator.pop(context);
                     },
                     child: const Icon(

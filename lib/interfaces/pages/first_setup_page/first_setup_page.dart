@@ -8,6 +8,7 @@ import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class FirstSetupPage extends StatefulWidget {
 class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderStateMixin {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
 
   late AppliDriveManagementService _appliDriveManagementService;
 
@@ -127,6 +129,7 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
                   selectedOption: _selectedOption ?? 0,
                   appliDriveManagementService: _appliDriveManagementService,
                   onQuestionAnswered: (value) {
+                    _instantAudioPlayer.play("continue_fs");
                     setState(() {
                       _appmonName = value["name"];
                       _appmonId = value["id"];
@@ -166,6 +169,7 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
                     if (_stepSetup == 4) {
                       _navigateToHomePage(context);
                     } else {
+                      _instantAudioPlayer.play("continue_fs");
                       setState(() {
                         _stepSetup++;
                       });
