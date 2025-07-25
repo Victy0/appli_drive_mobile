@@ -1,8 +1,7 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +21,7 @@ class DialogInsertCode extends StatefulWidget {
 }
 
 class DialogInsertCodeState extends State<DialogInsertCode> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
   final TextEditingController _controller = TextEditingController();
 
   String _errorCode = "";
@@ -86,7 +85,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           children: [
             TextButton(
               onPressed: () {
-                _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                _instantAudioPlayer.play("back");
                 Navigator.of(context).pop();
               },
               child: const Icon(
@@ -100,7 +99,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                 final navigator = Navigator.of(context);
                 String code = _controller.text;
                 if( code == "") {
-                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
+                  _instantAudioPlayer.play("error");
                   setState(() { _errorCode = "components.dialogs.insertCode.codeIsRequired"; });
                   return;
                 }
@@ -110,10 +109,11 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   widget.appliDriveVersion,
                 );
                 if(appmon == null) {
-                  _audioPlayerMomentary.play(AssetSource('sounds/error.mp3'));
+                  _instantAudioPlayer.play("error");
                   setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
                   return;
                 }
+                _instantAudioPlayer.play("click");
                 navigator.pop(appmon);
               },
               child: const Icon(

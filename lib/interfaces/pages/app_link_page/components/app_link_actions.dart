@@ -2,8 +2,7 @@ import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_de
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppLinkActions extends StatefulWidget {
@@ -24,8 +23,8 @@ class AppLinkActions extends StatefulWidget {
 }
 
 class AppLinkActionsState extends State<AppLinkActions> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +49,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -77,7 +76,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -110,7 +109,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                        _instantAudioPlayer.play("back");
                         Navigator.of(context).pop();
                       },
                       child: const Icon(
@@ -121,7 +120,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
                     ),
                     TextButton(
                       onPressed: () => {
-                        _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+                        _instantAudioPlayer.play("click"),
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => AppliarisePage(
                             onLanguageChange: widget.onLanguageChange,

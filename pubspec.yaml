@@ -42,4 +42,5 @@ flutter:
     - assets/images/icons/
     - assets/images/types/
     - assets/sounds/
+    - assets/sounds/background/
     - assets/langs/

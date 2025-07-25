@@ -1,9 +1,8 @@
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIconsHome extends StatefulWidget {
@@ -22,8 +21,8 @@ class HeaderIconsHome extends StatefulWidget {
 }
 
 class HeaderIconsHomeState extends State<HeaderIconsHome> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-  
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+
   late List<Map<String, dynamic>> appmonCodeList;
   
   void _getAppmonCodeList() async {
@@ -63,7 +62,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -121,7 +120,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
                             shape: const CircleBorder(),
                           ),
                           onPressed: () {
-                            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                            _instantAudioPlayer.play("click");
                             Navigator.pop(context);
                           },
                           child: const Icon(
@@ -155,7 +154,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -179,7 +178,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,

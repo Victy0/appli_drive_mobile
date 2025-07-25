@@ -6,8 +6,7 @@ import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseActions extends StatefulWidget {
@@ -30,8 +29,8 @@ class AppliariseActions extends StatefulWidget {
 }
 
 class AppliariseActionsState extends State<AppliariseActions> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-  
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,7 +58,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -83,7 +82,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _instantAudioPlayer.play("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,

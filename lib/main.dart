@@ -2,6 +2,7 @@ import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/first_setup_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
+import 'package:appli_drive_mobile/services/instant_audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatefulWidget  {
 
 class MyAppState extends State<MyApp> {
   final PreferencesService _preferencesService = PreferencesService();
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
 
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
   bool _appmonPairing = false;
@@ -73,6 +75,14 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _getSetUp();
+    _instantAudioPlayer.preloadAudios({
+      "start": "sounds/start.mp3",
+      "continue_fs": "sounds/continue_first_step.mp3",
+      "click": "sounds/click.mp3",
+      "back": "sounds/back.mp3",
+      "appliarise": "sounds/appliarise_init.mp3",
+      "error": "sounds/error.mp3",
+    });
     WakelockPlus.enable();
   }
 

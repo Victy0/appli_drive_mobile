@@ -1,10 +1,9 @@
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/audio_service_momentary.dart';
+import '../../services/instant_audio_service.dart';
 
 class ClosePageButton extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -16,10 +15,9 @@ class ClosePageButton extends StatefulWidget {
 }
 
 class ClosePageButtonState extends State<ClosePageButton> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  final InstantAudioService _instantAudioPlayer = InstantAudioService();
 
   void _defaultOnTap(BuildContext context) {
-    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => HomePage(
@@ -38,6 +36,7 @@ class ClosePageButtonState extends State<ClosePageButton> {
         padding: const EdgeInsets.all(30),
         child: GestureDetector(
           onTap: () {
+            _instantAudioPlayer.play("back");
             if (widget.onTap != null) {
               widget.onTap!(context);
             } else {
