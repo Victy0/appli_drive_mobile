@@ -6,6 +6,7 @@ import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.
 import 'package:appli_drive_mobile/interfaces/pages/data_center_page/components/grouped_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class DataCenterPage extends StatefulWidget {
 class DataCenterPageState extends State<DataCenterPage>{
   final PreferencesService _preferencesService = PreferencesService();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final AudioService _audioService = AudioService();
 
   List<Map<String, dynamic>> _appmonReveleadedList = [];
   int _appmonInBdSize = 0;
@@ -54,6 +56,7 @@ class DataCenterPageState extends State<DataCenterPage>{
   @override
   void initState() {
     super.initState();
+    _audioService.playBackground("common");
     _getAppmonRevealedList();
   }
   

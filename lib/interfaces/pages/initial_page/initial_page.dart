@@ -1,12 +1,9 @@
 import 'dart:math';
-
 import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
-import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:screen_state/screen_state.dart';
 
 class InitialPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -17,38 +14,16 @@ class InitialPage extends StatefulWidget {
 }
 
 class InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
-  final AudioPlayer _audioPlayerContinuous = AudioServiceContinuous.instance.player;
-  final Screen _screen = Screen();
-  Stream<ScreenStateEvent>? _screenStream;
+  final AudioService _audioService = AudioService();
 
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
-
   late AnimationController _controllerText;
   late Animation<double> _opacityAnimationText;
-
-  Future<void> _startAudio() async {
-    await _audioPlayerContinuous.setSource(AssetSource('sounds/background/initial_page.mp3'));
-    await _audioPlayerContinuous.resume();
-  }
-
-  void _startMonitoring() {
-    _screenStream = _screen.screenStateStream;
-    _screenStream?.listen((event) {
-      if (event == ScreenStateEvent.SCREEN_OFF) {
-        _audioPlayerContinuous.pause();
-      } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
-        _audioPlayerContinuous.resume();
-      }
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _startAudio();
-    _startMonitoring();
-
     _controllers = List.generate(12, (index) {
       return AnimationController(
         vsync: this,
@@ -64,11 +39,12 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
     _opacityAnimationText = Tween<double>(begin: 0.0, end: 1.0).animate(_controllerText);
+    _audioService.playBackground("initial_page");
   }
 
   void _navigateToHomePage(BuildContext context) async {
     final navigator = Navigator.of(context);
-    await _audioPlayerContinuous.stop();
+    _audioService.stopBackground();
     navigator.pushReplacement(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 800),
@@ -160,7 +136,6 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
 
   @override
   void dispose() {
-    _audioPlayerContinuous.stop();
     for (var controller in _controllers) {
       controller.dispose();
     }

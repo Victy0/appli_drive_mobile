@@ -4,6 +4,7 @@ import 'package:appli_drive_mobile/interfaces/components/custom_app_bar.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/components/grouped_card_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class HintsPage extends StatefulWidget {
 
 class HintsPagePageState extends State<HintsPage> {
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
   
   List<Map<String, dynamic>> _hintList = [];
   bool _isLoading = true;
@@ -33,6 +35,7 @@ class HintsPagePageState extends State<HintsPage> {
   @override
   void initState() {
     super.initState();
+    _audioService.playBackground("common");
     _getHintList();
   }
   

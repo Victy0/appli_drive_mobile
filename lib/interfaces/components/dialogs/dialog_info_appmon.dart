@@ -1,7 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class DialogInfoAppmon extends StatefulWidget {
@@ -22,7 +22,7 @@ class DialogInfoAppmon extends StatefulWidget {
 }
 
 class DialogInfoAppmonState extends State<DialogInfoAppmon> {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                       shape: const CircleBorder(),
                     ),
                     onPressed: () {
-                      _instantAudioPlayer.play("click");
+                      _audioService.playEffect("click");
                       Navigator.pop(context);
                     },
                     child: const Icon(
