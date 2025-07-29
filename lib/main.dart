@@ -96,6 +96,7 @@ class MyAppState extends State<MyApp> {
       "back": "sounds/back.mp3",
       "appliarise": "sounds/appliarise_init.mp3",
       "error": "sounds/error.mp3",
+      "": "sounds/back.mp3",
     });
     _startMonitoring();
     WakelockPlus.enable();
