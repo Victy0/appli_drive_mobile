@@ -2,11 +2,12 @@ import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/first_setup_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:screen_state/screen_state.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
@@ -42,8 +43,10 @@ class MyApp extends StatefulWidget  {
 
 class MyAppState extends State<MyApp> {
   final PreferencesService _preferencesService = PreferencesService();
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
+  final Screen _screen = Screen();
 
+  Stream<ScreenStateEvent>? _screenStream;
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
   bool _appmonPairing = false;
   bool _isLoading = true;
@@ -71,11 +74,22 @@ class MyAppState extends State<MyApp> {
     });
   }
 
+  void _startMonitoring() {
+    _screenStream = _screen.screenStateStream;
+    _screenStream?.listen((event) {
+      if (event == ScreenStateEvent.SCREEN_OFF) {
+        _audioService.pauseBackground();
+      } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
+        _audioService.resumeBackground();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _getSetUp();
-    _instantAudioPlayer.preloadAudios({
+    _audioService.preloadAudiosEffects({
       "start": "sounds/start.mp3",
       "continue_fs": "sounds/continue_first_step.mp3",
       "click": "sounds/click.mp3",
@@ -83,6 +97,7 @@ class MyAppState extends State<MyApp> {
       "appliarise": "sounds/appliarise_init.mp3",
       "error": "sounds/error.mp3",
     });
+    _startMonitoring();
     WakelockPlus.enable();
   }
 

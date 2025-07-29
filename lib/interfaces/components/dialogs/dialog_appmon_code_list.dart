@@ -1,5 +1,5 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class DialogAppmonCodeList extends StatefulWidget {
@@ -11,7 +11,7 @@ class DialogAppmonCodeList extends StatefulWidget {
 }
 
 class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
   
   int _getAppmonQuantityByGrade(String grade) {
     switch(grade) {
@@ -68,7 +68,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
                     shape: const CircleBorder(),
                   ),
                   onPressed: () {
-                    _instantAudioPlayer.play("click");
+                    _audioService.playEffect("click");
                     Navigator.pop(context);
                   },
                   child: const Icon(

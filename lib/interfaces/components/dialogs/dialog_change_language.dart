@@ -1,6 +1,6 @@
 import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class DialogChangeLanguage extends StatefulWidget {
 
 class DialogChangeLanguageState extends State<DialogChangeLanguage> {
   final PreferencesService _preferencesService = PreferencesService();
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
   final List<Map<String, dynamic>> _languages = [
     {'label': 'Português', 'locale': const Locale('pt', 'BR'), 'flag': 'assets/images/flags/br.png'},
     {'label': 'English', 'locale': const Locale('en', 'US'), 'flag': 'assets/images/flags/us.png'},
@@ -101,7 +101,7 @@ class DialogChangeLanguageState extends State<DialogChangeLanguage> {
         TextButton(
           onPressed: () async {
             final navigator = Navigator.of(context);
-            _instantAudioPlayer.play("click");
+            _audioService.playEffect("click");
             _preferencesService.setString(AppPreferenceKey.selectLanguage, _selectedLocale.languageCode);
             _preferencesService.setString(AppPreferenceKey.selectCountry, _selectedLocale.countryCode ?? '');
 

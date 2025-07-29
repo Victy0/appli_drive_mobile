@@ -16,7 +16,7 @@ dependencies:
   path: ^1.9.0
   flutter_localizations:
     sdk: flutter
-  audioplayers: ^6.1.0
+  audioplayers: ^6.2.0
   screen_state: ^4.1.1
 
 dev_dependencies:

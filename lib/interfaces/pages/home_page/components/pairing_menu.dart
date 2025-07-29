@@ -2,7 +2,7 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_p
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class PairingMenu extends StatefulWidget {
@@ -27,7 +27,7 @@ class PairingMenu extends StatefulWidget {
 }
 
 class PairingMenuState extends State<PairingMenu> with SingleTickerProviderStateMixin {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
   
   late AnimationController _controllerRotation;
   late Animation<double> _rotationAnimation;
@@ -97,7 +97,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             children: [
               TextButton(
                 onPressed: () {
-                  _instantAudioPlayer.play("back");
+                  _audioService.playEffect("back");
                   Navigator.of(context).pop();
                 },
                 child: const Icon(
@@ -178,7 +178,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             ),
             InkWell(
               onTap: () async {
-                _instantAudioPlayer.play("appliarise");
+                _audioService.playEffect("appliarise");
                 final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
                   widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "",
                   null,

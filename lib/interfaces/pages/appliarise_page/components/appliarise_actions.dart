@@ -6,7 +6,7 @@ import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseActions extends StatefulWidget {
@@ -29,7 +29,7 @@ class AppliariseActions extends StatefulWidget {
 }
 
 class AppliariseActionsState extends State<AppliariseActions> {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _instantAudioPlayer.play("click"),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -82,7 +82,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _instantAudioPlayer.play("click"),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,

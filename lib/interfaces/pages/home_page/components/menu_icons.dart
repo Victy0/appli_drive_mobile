@@ -1,7 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/pages/data_center_page/data_center_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/hints_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/seven_code_page.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class MenuIcons extends StatefulWidget {
@@ -18,7 +18,7 @@ class MenuIcons extends StatefulWidget {
 }
 
 class MenuIconsState extends State<MenuIcons> {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
 
   void _navigateToDataCenterPage(BuildContext context) async {
     Navigator.pushReplacement(
@@ -120,7 +120,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _instantAudioPlayer.play("click"),
+            _audioService.playEffect("click"),
             _navigateToDataCenterPage(context),
           },
           icon: Image.asset(
@@ -143,7 +143,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _instantAudioPlayer.play("click"),
+            _audioService.playEffect("click"),
             _navigateToSevenCodePage(context),
           },
           icon: Image.asset(
@@ -166,7 +166,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _instantAudioPlayer.play("click"),
+            _audioService.playEffect("click"),
             _navigateToHintsPage(context),
           },
           icon: Image.asset(

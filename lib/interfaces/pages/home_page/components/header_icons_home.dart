@@ -1,7 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/instant_audio_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class HeaderIconsHome extends StatefulWidget {
 }
 
 class HeaderIconsHomeState extends State<HeaderIconsHome> {
-  final InstantAudioService _instantAudioPlayer = InstantAudioService();
+  final AudioService _audioService = AudioService();
 
   late List<Map<String, dynamic>> appmonCodeList;
   
@@ -62,7 +62,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _instantAudioPlayer.play("click"),
+          _audioService.playEffect("click"),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -120,7 +120,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
                             shape: const CircleBorder(),
                           ),
                           onPressed: () {
-                            _instantAudioPlayer.play("click");
+                            _audioService.playEffect("click");
                             Navigator.pop(context);
                           },
                           child: const Icon(
@@ -154,7 +154,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _instantAudioPlayer.play("click"),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -178,7 +178,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _instantAudioPlayer.play("click"),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
