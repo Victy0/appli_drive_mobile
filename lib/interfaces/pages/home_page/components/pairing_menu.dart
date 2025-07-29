@@ -108,6 +108,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
               ),
               TextButton(
                 onPressed: () async {
+                  _audioService.stopBackground();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,

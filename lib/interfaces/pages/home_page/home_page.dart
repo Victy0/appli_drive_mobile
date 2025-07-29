@@ -184,6 +184,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           );
           if (appmon != null) {
+            _audioService.stopBackground();
             navigator.pushReplacement(MaterialPageRoute(
               builder: (context) => AppliarisePage(
                 onLanguageChange: widget.onLanguageChange,
