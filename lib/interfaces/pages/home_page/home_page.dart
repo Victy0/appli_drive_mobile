@@ -72,8 +72,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
     );
-    _getInitialValues();
     _audioService.playBackground("home_page");
+    _getInitialValues();
   }
 
   String _translateAppliDriveVersionName(int versionValue) {
