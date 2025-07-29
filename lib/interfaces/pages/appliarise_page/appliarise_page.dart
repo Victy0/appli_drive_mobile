@@ -2,6 +2,7 @@ import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_init.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -15,12 +16,14 @@ class AppliarisePage extends StatefulWidget {
   final Appmon appmon;
   final int appliDriveVersion;
   final bool tutorialFinished;
+  final bool startAnimation;
   const AppliarisePage({
     super.key,
     required this.onLanguageChange,
     required this.appmon,
     required this.appliDriveVersion,
     this.tutorialFinished = true,
+    this.startAnimation = true,
   });
 
   @override
@@ -32,6 +35,8 @@ class AppliarisePageState extends State<AppliarisePage> {
   final PreferencesService _preferencesService = PreferencesService();
 
   late AppliDriveManagementService _appliDriveManagementService;
+
+  bool appliariseAnimation = true;
   
   String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -55,6 +60,13 @@ class AppliarisePageState extends State<AppliarisePage> {
     return "";
   }
 
+  void _startAppliariseAnimation() async {
+    await Future.delayed(const Duration(seconds: 7));
+    setState(() {
+      appliariseAnimation = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -66,6 +78,9 @@ class AppliarisePageState extends State<AppliarisePage> {
       widget.appmon.id,
       widget.tutorialFinished,
     );
+    if(widget.startAnimation) {
+      _startAppliariseAnimation();
+    }
   }
 
   @override
@@ -74,42 +89,44 @@ class AppliarisePageState extends State<AppliarisePage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
-          Positioned(
-            top: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                AppliariseHeader(
-                  databaseHelper: _databaseHelper,
-                  grade: widget.appmon.grade,
-                  tutorialFinished: widget.tutorialFinished,
-                ),
-              ]
+          if (appliariseAnimation && widget.startAnimation)
+            AppliariseInit(appmon: widget.appmon)
+          else ...[
+            BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
+            Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  AppliariseHeader(
+                    databaseHelper: _databaseHelper,
+                    grade: widget.appmon.grade,
+                    tutorialFinished: widget.tutorialFinished,
+                  ),
+                ]
+              ),
             ),
-          ),
-
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppliariseSummaryInfo(appmon: widget.appmon),
-                const SizedBox(height: 20),
-                AppliariseImage(appmon: widget.appmon),
-                const SizedBox(height: 40),
-                AppliariseActions(
-                  appliDriveManagementService: _appliDriveManagementService,
-                  appmon: widget.appmon,
-                  onLanguageChange: widget.onLanguageChange,
-                  tutorialFinished: widget.tutorialFinished,
-                  appliDriveVersion: widget.appliDriveVersion,
-                ),
-              ],
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppliariseSummaryInfo(appmon: widget.appmon),
+                  const SizedBox(height: 20),
+                  AppliariseImage(appmon: widget.appmon),
+                  const SizedBox(height: 40),
+                  AppliariseActions(
+                    appliDriveManagementService: _appliDriveManagementService,
+                    appmon: widget.appmon,
+                    onLanguageChange: widget.onLanguageChange,
+                    tutorialFinished: widget.tutorialFinished,
+                    appliDriveVersion: widget.appliDriveVersion,
+                  ),
+                ],
+              ),
             ),
-          ),
-          
-          ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            ClosePageButton(onLanguageChange: widget.onLanguageChange),
+          ],
         ],
       )
     );
