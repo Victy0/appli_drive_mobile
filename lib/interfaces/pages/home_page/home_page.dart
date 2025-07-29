@@ -181,6 +181,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             builder: (BuildContext context) => DialogInsertCode(
               appliDriveManagementService: _appliDriveManagementService,
               appliDriveVersion: _appliDriveVersion,
+              databaseHelper: _databaseHelper,
             ),
           );
           if (appmon != null) {

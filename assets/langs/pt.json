@@ -371,6 +371,7 @@
         },
         "dialogs": {
             "appmonCodeList": {
+                "availableAppmons": "Appmons disponíveis",
                 "codeList": "Lista de códigos"
             },
             "changeLanguage": {

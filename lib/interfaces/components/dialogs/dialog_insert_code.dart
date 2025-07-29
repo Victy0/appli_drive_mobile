@@ -1,18 +1,22 @@
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class DialogInsertCode extends StatefulWidget {
   final AppliDriveManagementService appliDriveManagementService;
   final int appliDriveVersion;
+  final DatabaseHelper databaseHelper;
   final Appmon? currentAppmon;
   const DialogInsertCode({
     super.key,
     required this.appliDriveManagementService,
     required this.appliDriveVersion,
+    required this.databaseHelper,
     this.currentAppmon,
   });
 
@@ -24,7 +28,19 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
   final AudioService _audioService = AudioService();
   final TextEditingController _controller = TextEditingController();
 
+  late List<Map<String, dynamic>> appmonCodeList;
+
   String _errorCode = "";
+
+  void _getAppmonCodeList() async {
+    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getAppmonCodeList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +64,29 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                    ),
+                    controller: _controller,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 25),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                      LengthLimitingTextInputFormatter(3),
+                      UpperCaseTextFormatter(),
+                    ],
+                    keyboardType: TextInputType.text,
+                  ),
                 ),
-              ),
-              controller: _controller,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 25),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                LengthLimitingTextInputFormatter(3),
-                UpperCaseTextFormatter(),
+                const SizedBox(width: 8),
+                iconAppmonListCode(context),
               ],
-              keyboardType: TextInputType.text,
             ),
             if (_errorCode != "") 
               Padding(
@@ -125,6 +149,30 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget iconAppmonListCode(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black, width: 2),
+      ),
+      child: IconButton(
+        onPressed: () => {
+          _audioService.playEffect("click"),
+          showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
+          ),
+        },
+        icon: Image.asset(
+          'assets/images/icons/list_box.png',
+          height: 40,
+        ),
+      ),
     );
   }
 }

@@ -83,7 +83,7 @@ class DatabaseHelper {
     final db = await database;
     String sql = '''
       SELECT 
-        appmon.inner_id AS id, appmon.code_text AS code, 
+        appmon.inner_id AS id, appmon.code_text AS code, appmon.name AS name, 
         grade.name AS gradeName 
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
