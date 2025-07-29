@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 
 class DialogAppmonCodeList extends StatefulWidget {
   final List<Map<String, dynamic>> appmonCodeList;
-  const DialogAppmonCodeList({super.key, required this.appmonCodeList});
+  final bool homePage;
+  const DialogAppmonCodeList({
+    super.key,
+    required this.appmonCodeList,
+    this.homePage = false,
+  });
 
   @override
   DialogAppmonCodeListState createState() => DialogAppmonCodeListState();
@@ -42,7 +47,9 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
             children: [
               Center(
                 child: Text(
-                  AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
+                  widget.homePage 
+                    ? AppLocalization.of(context).translate("components.dialogs.appmonCodeList.availableAppmons")
+                    : AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -161,7 +168,9 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
                       const SizedBox(width: 16),
                       Expanded(
                         child: Text(
-                          item['code'],
+                          widget.homePage
+                            ? AppLocalization.of(context).translate("appmons.names.${item['name']}")
+                            : item['code'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,

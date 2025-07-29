@@ -1,17 +1,14 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
-import 'package:appli_drive_mobile/models/grade_appmon.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
+import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseHeader extends StatefulWidget {
-  final DatabaseHelper databaseHelper;
-  final GradeAppmon grade;
+  final Appmon appmon;
   final bool tutorialFinished;
   const AppliariseHeader({
     super.key,
-    required this.databaseHelper,
-    required this.grade,
+    required this.appmon,
     required this.tutorialFinished
   });
 
@@ -22,16 +19,9 @@ class AppliariseHeader extends StatefulWidget {
 class AppliariseHeaderState extends State<AppliariseHeader> {
   final AudioService _audioService = AudioService();
 
-  late List<Map<String, dynamic>> appmonCodeList;
-  
-  void _getAppmonCodeList() async {
-    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.grade.id);
-  }
-
   @override
   void initState() {
     super.initState();
-    _getAppmonCodeList();
   }
 
   @override
@@ -41,11 +31,10 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //if(widget.grade.name == "standard")
+          //if(widget.appmon.grade.name == "standard")
           //  iconPairing(context),
           const Spacer(),
-          if(widget.tutorialFinished)
-            iconAppmonListCode(context)
+          infoButton(),
         ],
       ),
     );
@@ -121,7 +110,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
     );
   }
 
-  Widget iconAppmonListCode(BuildContext context) {
+  Widget infoButton() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -134,12 +123,12 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
+            builder: (BuildContext context) => DialogInfoAppmon(appmon: widget.appmon, interface: "appliArise"),
           ),
         },
         icon: Image.asset(
-          'assets/images/icons/list_box.png',
-          height: 40,
+          'assets/images/icons/magnifying_glass_box.png',
+          height: 45,
         ),
       ),
     );

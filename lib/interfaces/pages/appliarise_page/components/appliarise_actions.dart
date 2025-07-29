@@ -1,5 +1,4 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_description.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
@@ -7,12 +6,14 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_p
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseActions extends StatefulWidget {
   final AppliDriveManagementService appliDriveManagementService;
   final Appmon appmon;
   final Function(Locale) onLanguageChange;
+  final DatabaseHelper databaseHelper;
   final bool tutorialFinished;
   final int appliDriveVersion;
   const AppliariseActions({
@@ -20,6 +21,7 @@ class AppliariseActions extends StatefulWidget {
     required this.appliDriveManagementService,
     required this.appmon,
     required this.onLanguageChange,
+    required this.databaseHelper,
     required this.tutorialFinished,
     required this.appliDriveVersion,
   });
@@ -37,38 +39,12 @@ class AppliariseActionsState extends State<AppliariseActions> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
-          infoButton(),
-          const Spacer(),
           if(widget.tutorialFinished) ...[
             powerDescriptionButton(),
             const Spacer(),
             appLinkButton(),
           ]
         ],
-      ),
-    );
-  }
-
-  Widget infoButton() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: IconButton(
-        onPressed: () => {
-          _audioService.playEffect("click"),
-          showDialog<String>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => DialogInfoAppmon(appmon: widget.appmon, interface: "appliArise"),
-          ),
-        },
-        icon: Image.asset(
-          'assets/images/icons/magnifying_glass_box.png',
-          height: 45,
-        ),
       ),
     );
   }
@@ -108,6 +84,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
             appliDriveManagementService: widget.appliDriveManagementService,
             appliDriveVersion: widget.appliDriveVersion,
             currentAppmon: widget.appmon,
+            databaseHelper: widget.databaseHelper,
           ),
         );
         if(appmonLinked != null) {
@@ -117,6 +94,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
                 onLanguageChange: widget.onLanguageChange,
                 appmon: appmonLinked,
                 appliDriveVersion: widget.appliDriveVersion,
+                startAnimation: false,
               ),
             ));
             return;

@@ -138,12 +138,16 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
                                 (1 - _contentController.value),
                         child: Opacity(
                           opacity: 1 - _contentController.value,
-                          child: Text(
-                            words[i],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          child: Transform.translate(
+                            offset: const Offset(-70, 0),
+                            child: Text(
+                              words[i],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

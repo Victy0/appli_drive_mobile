@@ -26,7 +26,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
   late List<Map<String, dynamic>> appmonCodeList;
   
   void _getAppmonCodeList() async {
-    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(1);
+    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(4);
   }
 
   @override
@@ -182,7 +182,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
+            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList, homePage: true),
           ),
         },
         icon: Image.asset(

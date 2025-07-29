@@ -100,8 +100,7 @@ class AppliarisePageState extends State<AppliarisePage> {
               child: Column(
                 children: [
                   AppliariseHeader(
-                    databaseHelper: _databaseHelper,
-                    grade: widget.appmon.grade,
+                    appmon: widget.appmon,
                     tutorialFinished: widget.tutorialFinished,
                   ),
                 ]
@@ -119,6 +118,7 @@ class AppliarisePageState extends State<AppliarisePage> {
                     appliDriveManagementService: _appliDriveManagementService,
                     appmon: widget.appmon,
                     onLanguageChange: widget.onLanguageChange,
+                    databaseHelper: _databaseHelper,
                     tutorialFinished: widget.tutorialFinished,
                     appliDriveVersion: widget.appliDriveVersion,
                   ),
