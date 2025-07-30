@@ -42,5 +42,8 @@ flutter:
     - assets/images/icons/
     - assets/images/types/
     - assets/sounds/
+    - assets/sounds/appliarise/
+    - assets/sounds/appliarise/appmon_name/
+    - assets/sounds/appliarise/appmon_start/
     - assets/sounds/background/
     - assets/langs/

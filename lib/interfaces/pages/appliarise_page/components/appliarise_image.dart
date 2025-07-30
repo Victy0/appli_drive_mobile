@@ -14,9 +14,18 @@ class AppliariseImage extends StatefulWidget {
 }
 
 class AppliariseImageState extends State<AppliariseImage> with SingleTickerProviderStateMixin {
-  double _tiltAngle = 0.0;
   late AnimationController _controller;
   late Animation<double> _animation;
+
+  double _tiltAngle = 0.0;
+  bool _showName = false;
+
+  int _getDelayAnimation(int grade) {
+    if (grade == 2) {
+      return 1;
+    }
+    return 0;
+  }
 
   @override
   void initState() {
@@ -32,6 +41,12 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
           _tiltAngle = _animation.value;
         });
       });
+    
+    Future.delayed(Duration(seconds: 2 + _getDelayAnimation(widget.appmon.grade.id)), () {
+      setState(() {
+        _showName = true;
+      });
+    });
   }
 
   void _animateBackToCenter() {
@@ -109,17 +124,21 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
           ),
         ),
         // APPMON NAME
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 350),
-              TextWithWhiteShadow(
-                text: AppLocalization.of(context)
-                    .translate("appmons.names.${widget.appmon.name}"),
-                fontSize: 40,
-              ),
-            ],
+        AnimatedOpacity(
+          opacity: _showName ? 1.0 : 0.0,
+          duration: const Duration(seconds: 1),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 350),
+                TextWithWhiteShadow(
+                  text: AppLocalization.of(context)
+                      .translate("appmons.names.${widget.appmon.name}"),
+                  fontSize: 40,
+                ),
+              ],
+            ),
           ),
         ),
       ],

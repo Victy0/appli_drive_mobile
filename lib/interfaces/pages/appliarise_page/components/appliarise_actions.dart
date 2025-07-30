@@ -36,7 +36,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
           if(widget.tutorialFinished) ...[

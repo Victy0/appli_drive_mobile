@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 
 class AppliariseInit extends StatefulWidget {
   final Appmon appmon;
-  const AppliariseInit({super.key, required this.appmon});
+  const AppliariseInit({
+    super.key,
+    required this.appmon,
+  });
 
   @override
   State<AppliariseInit> createState() => AppliariseInitState();
@@ -17,6 +20,7 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
 
   late final AnimationController _textController;
   late final AnimationController _contentController;
+  late final Animation<double> _moveCurve;
   late final Animation<double> _opacityAnimation;
 
   bool showWords = false;
@@ -34,20 +38,40 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
     }
   }
 
+  int _getDelayAnimationText(int grade) {
+    if (grade == 2) {
+      return 1;
+    }
+    return 0;
+  }
+
+  int _getDelayAnimationContent(int grade) {
+    if (grade == 2) {
+      return 3;
+    }
+    return 0;
+  }
+
   @override
   void initState() {
     super.initState();
     words = [
-      widget.appmon.name, "APPMON", widget.appmon.grade.name, "DIGITAL", widget.appmon.type.name, "DIGIMON", widget.appmon.app, "APP",
+      widget.appmon.name.toUpperCase(), "APPMON", widget.appmon.grade.name.toUpperCase(), "DIGITAL",
+      widget.appmon.type.name.toUpperCase(), "DIGIMON", widget.appmon.app.toUpperCase(), "APP",
       "アプモン", "アプリモンスター", "NET", "CODE", "アプリアライズ", "人工知能", "MONSTER", "デジモン",
-      widget.appmon.name, "APPMON", widget.appmon.grade.name, "DIGITAL", widget.appmon.type.name, "CONNECT", widget.appmon.app, "APP",
+      widget.appmon.name.toUpperCase(), "APPMON", widget.appmon.grade.name.toUpperCase(), "DIGITAL",
+      widget.appmon.type.name.toUpperCase(), "DIGIMON", widget.appmon.app.toUpperCase(), "APP",
       "アプモン", "アプリモンスター", "NET", "CODE", "アプリアライズ", "人工知能", "MONSTER", "デジモン",
-      widget.appmon.name, "APPMON", widget.appmon.grade.name, "DIGITAL", widget.appmon.type.name, "DIGIMON", widget.appmon.app, "APP",
+      widget.appmon.name.toUpperCase(), "APPMON", widget.appmon.grade.name.toUpperCase(), "DIGITAL",
+      widget.appmon.type.name.toUpperCase(), "DIGIMON", widget.appmon.app.toUpperCase(), "APP",
+      "アプモン", "アプリモンスター", "NET", "CODE", "アプリアライズ", "人工知能", "MONSTER", "デジモン",
+      widget.appmon.name.toUpperCase(), "APPMON", widget.appmon.grade.name.toUpperCase(), "DIGITAL",
+      widget.appmon.type.name.toUpperCase(), "DIGIMON", widget.appmon.app.toUpperCase(), "APP",
       "アプモン", "アプリモンスター", "NET", "CODE", "アプリアライズ", "人工知能", "MONSTER", "デジモン",
     ];
     _textController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 3 + _getDelayAnimationText(widget.appmon.grade.id)),
     );
 
     _opacityAnimation = Tween<double>(begin: 1, end: 0).animate(
@@ -59,14 +83,17 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
 
     _contentController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 3),
+      duration: Duration(seconds: 8 + _getDelayAnimationContent(widget.appmon.grade.id)),
+    );
+    _moveCurve = CurvedAnimation(
+      parent: _contentController,
+      curve: Curves.fastOutSlowIn,
     );
 
-    Future.delayed(const Duration(seconds: 1), () {
-      _textController.forward().whenComplete(() {
-        setState(() => showWords = true);
-        _contentController.forward();
-      });
+    Future.delayed(Duration(seconds: 4 + _getDelayAnimationText(widget.appmon.grade.id)), () {
+      _textController.forward();
+      setState(() => showWords = true);
+      _contentController.forward();
     });
 
     final random = Random();
@@ -131,11 +158,11 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
                         left: size.width / 2 +
                             initialPositions[i].dx *
                                 size.width *
-                                (1 - _contentController.value),
+                                (1 - _moveCurve.value),
                         top: size.height / 2 +
                             initialPositions[i].dy *
                                 size.height *
-                                (1 - _contentController.value),
+                                (1 - _moveCurve.value),
                         child: Opacity(
                           opacity: 1 - _contentController.value,
                           child: Transform.translate(

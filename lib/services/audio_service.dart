@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioService {
@@ -64,7 +66,6 @@ class AudioService {
   }
 
   Future<void> playBackground(String key) async {
-    _backgroundPlayer.stop();
     await _backgroundPlayer.play(AssetSource("sounds/background/$key.mp3"));
   }
 
@@ -87,6 +88,25 @@ class AudioService {
 
   Future<void> pauseBackground() async {
     await _backgroundPlayer.pause();
+  }
+
+  Future<void> playAudioSequence(List<String> audioList) async {
+    for (final audioPath in audioList) {
+      await _effectPlayer.play(AssetSource(audioPath));
+      await _waitForAudioEnd();
+    }
+  }
+
+  Future<void> _waitForAudioEnd() async {
+    final completer = Completer<void>();
+    void listener(PlayerState state) {
+      if (state == PlayerState.completed) {
+        _effectPlayer.onPlayerStateChanged.listen(null);
+        completer.complete();
+      }
+    }
+    _effectPlayer.onPlayerStateChanged.listen(listener);
+    return completer.future;
   }
 
   Future<void> dispose() async {
