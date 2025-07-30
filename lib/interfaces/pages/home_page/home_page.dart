@@ -67,12 +67,17 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     if(widget.initSound) {
       _audioService.playEffect("start");
+      Future.delayed(const Duration(seconds: 2), () {
+        _audioService.playBackground("home_page");
+      });
+    }
+    else {
+      _audioService.playBackground("home_page");
     }
     _appliDriveManagementService = AppliDriveManagementService(
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
     );
-    _audioService.playBackground("home_page");
     _getInitialValues();
   }
 

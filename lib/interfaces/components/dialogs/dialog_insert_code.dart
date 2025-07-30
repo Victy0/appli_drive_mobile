@@ -137,7 +137,6 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
                   return;
                 }
-                _audioService.playEffect("click");
                 navigator.pop(appmon);
               },
               child: const Icon(
@@ -161,7 +160,6 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -170,7 +168,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
         },
         icon: Image.asset(
           'assets/images/icons/list_box.png',
-          height: 40,
+          height: 45,
         ),
       ),
     );

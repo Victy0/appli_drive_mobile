@@ -7,6 +7,7 @@ import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/a
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +34,11 @@ class AppliarisePage extends StatefulWidget {
 class AppliarisePageState extends State<AppliarisePage> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
 
   late AppliDriveManagementService _appliDriveManagementService;
 
-  bool appliariseAnimation = true;
+  bool _appliariseAnimation = true;
   
   String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -60,10 +62,24 @@ class AppliarisePageState extends State<AppliarisePage> {
     return "";
   }
 
+  int _getDelayAnimation(int grade) {
+    if (grade == 2) {
+      return 4;
+    }
+    return 0;
+  }
+
   void _startAppliariseAnimation() async {
-    await Future.delayed(const Duration(seconds: 7));
+    String id = "D9B2"; //widget.appmon.id
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appliarise_${widget.appmon.grade.name}.mp3",
+      "sounds/appliarise/appmon_name/$id.mp3",
+      "sounds/appliarise/appliarise_end.mp3",
+      "sounds/appliarise/appmon_start/$id.mp3",
+    ]);
+    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id)));
     setState(() {
-      appliariseAnimation = false;
+      _appliariseAnimation = false;
     });
   }
 
@@ -89,7 +105,7 @@ class AppliarisePageState extends State<AppliarisePage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          if (appliariseAnimation && widget.startAnimation)
+          if (_appliariseAnimation && widget.startAnimation)
             AppliariseInit(appmon: widget.appmon)
           else ...[
             BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
