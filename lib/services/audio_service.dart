@@ -7,6 +7,7 @@ class AudioService {
   factory AudioService() => _instance;
 
   final AudioPlayer _backgroundPlayer = AudioPlayer();
+  bool _backgroundStopped = true;
 
   final AudioPlayer _effectPlayer = AudioPlayer();
   final Map<String, Source> _sourcesEffect = {};
@@ -66,6 +67,7 @@ class AudioService {
   }
 
   Future<void> playBackground(String key) async {
+    _backgroundStopped = false;
     await _backgroundPlayer.play(AssetSource("sounds/background/$key.mp3"));
   }
 
@@ -79,15 +81,21 @@ class AudioService {
   }
 
   Future<void> stopBackground() async {
+    _backgroundStopped = true;
     await _backgroundPlayer.stop();
   }
 
   Future<void> resumeBackground() async {
+    if (_backgroundStopped) return;
     await _backgroundPlayer.resume();
   }
 
   Future<void> pauseBackground() async {
     await _backgroundPlayer.pause();
+  }
+
+  Future<void> stopEffect() async {
+    await _effectPlayer.stop();
   }
 
   Future<void> playAudioSequence(List<String> audioList) async {

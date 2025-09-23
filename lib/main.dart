@@ -41,7 +41,7 @@ class MyApp extends StatefulWidget  {
   MyAppState createState() => MyAppState();
 }
 
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
   final Screen _screen = Screen();
@@ -79,6 +79,7 @@ class MyAppState extends State<MyApp> {
     _screenStream?.listen((event) {
       if (event == ScreenStateEvent.SCREEN_OFF) {
         _audioService.pauseBackground();
+        _audioService.stopEffect();
       } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
         _audioService.resumeBackground();
       }
@@ -99,7 +100,24 @@ class MyAppState extends State<MyApp> {
       "": "sounds/back.mp3",
     });
     _startMonitoring();
+    WidgetsBinding.instance.addObserver(this);
     WakelockPlus.enable();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _audioService.pauseBackground();
+      _audioService.stopEffect();
+    } else if (state == AppLifecycleState.resumed) {
+      _audioService.resumeBackground();
+    }
   }
 
   @override
