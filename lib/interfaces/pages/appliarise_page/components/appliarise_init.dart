@@ -15,7 +15,6 @@ class AppliariseInit extends StatefulWidget {
 }
 
 class AppliariseInitState extends State<AppliariseInit> with TickerProviderStateMixin {
-  List<String> words = [];
   final List<Offset> initialPositions = [];
 
   late final AnimationController _textController;
@@ -23,6 +22,8 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
   late final Animation<double> _moveCurve;
   late final Animation<double> _opacityAnimation;
 
+  List<String> words = [];
+  List<double> fontSizes = [];
   bool showWords = false;
 
   String _getAppliariseText(){
@@ -35,6 +36,15 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
         return "GOSH\nAPPLIARISE";
       default:
         return "APPLIARISE";
+    }
+  }
+
+  void _generateFontSizes() {
+    if (fontSizes.length != words.length) {
+      fontSizes.clear();
+      for (int i = 0; i < words.length; i++) {
+        fontSizes.add(Random().nextInt(16) + 15);
+      }
     }
   }
 
@@ -69,6 +79,7 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
       widget.appmon.type.name.toUpperCase(), "DIGIMON", widget.appmon.app.toUpperCase(), "APP",
       "アプモン", "アプリモンスター", "NET", "CODE", "アプリアライズ", "人工知能", "MONSTER", "デジモン",
     ];
+    _generateFontSizes();
     _textController = AnimationController(
       vsync: this,
       duration: Duration(seconds: 3 + _getDelayAnimationText(widget.appmon.grade.id)),
@@ -170,9 +181,9 @@ class AppliariseInitState extends State<AppliariseInit> with TickerProviderState
                             child: Text(
                               words[i],
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: fontSizes[i],
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

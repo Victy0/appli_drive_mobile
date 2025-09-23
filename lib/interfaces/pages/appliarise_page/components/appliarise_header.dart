@@ -20,11 +20,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
   final AudioService _audioService = AudioService();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 16, bottom: 16, left: 16),
@@ -49,7 +44,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioService.playEffect("click"),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -119,7 +113,9 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioService.playEffect("click"),
+          _audioService.playAudioSequence([
+            "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+          ]),
           showDialog<String>(
             context: context,
             barrierDismissible: false,

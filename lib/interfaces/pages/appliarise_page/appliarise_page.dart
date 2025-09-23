@@ -62,22 +62,21 @@ class AppliarisePageState extends State<AppliarisePage> {
     return "";
   }
 
-  int _getDelayAnimation(int grade) {
+  int _getDelayAnimation(int grade, bool isForAnimation) {
     if (grade == 2) {
-      return 4;
+      return isForAnimation ? 4 : 18;
     }
-    return 0;
+    return isForAnimation ? 0 : 13;
   }
 
   void _startAppliariseAnimation() async {
-    String id = "D9B2"; //widget.appmon.id
     _audioService.playAudioSequence([
       "sounds/appliarise/appliarise_${widget.appmon.grade.name}.mp3",
-      "sounds/appliarise/appmon_name/$id.mp3",
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
       "sounds/appliarise/appliarise_end.mp3",
-      "sounds/appliarise/appmon_start/$id.mp3",
+      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
     ]);
-    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id)));
+    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id, true)));
     setState(() {
       _appliariseAnimation = false;
     });
@@ -97,6 +96,9 @@ class AppliarisePageState extends State<AppliarisePage> {
     if(widget.startAnimation) {
       _startAppliariseAnimation();
     }
+    Future.delayed(Duration(seconds: 15 + _getDelayAnimation(widget.appmon.grade.id, false)), () {
+      _audioService.playBackground("stage1");
+    });
   }
 
   @override
