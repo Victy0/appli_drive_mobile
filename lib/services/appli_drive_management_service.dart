@@ -54,6 +54,8 @@ class AppliDriveManagementService {
           }
           revealAppmons(idsToSetRevealed);
           fusionAppmon.fusioned = true;
+          fusionAppmon.appmonLinked1 = currentAppmonAppliare;
+          fusionAppmon.appmonLinked2 = await databaseHelper.getAppmonByCode(code);
           return fusionAppmon;
         }
       }

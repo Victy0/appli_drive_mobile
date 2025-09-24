@@ -20,6 +20,8 @@ class Appmon {
   final String? primaryColor;
   final String? secondaryColor;
   final int imageSize;
+  Appmon? appmonLinked1;
+  Appmon? appmonLinked2;
 
   Appmon({
     required this.id,
@@ -39,6 +41,8 @@ class Appmon {
     this.primaryColor,
     this.secondaryColor,
     required this.imageSize,
+    this.appmonLinked1,
+    this.appmonLinked2,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -60,6 +64,8 @@ class Appmon {
       primaryColor: map['color_1'],
       secondaryColor: map['color_2'],
       imageSize: map['image_size'],
+      appmonLinked1: null,
+      appmonLinked2: null,
     );
   }
 }

@@ -97,6 +97,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       "back": "sounds/back.mp3",
       "appliarise": "sounds/appliarise_init.mp3",
       "error": "sounds/error.mp3",
+      "applink": "sounds/applink.mp3",
       "": "sounds/back.mp3",
     });
     _startMonitoring();

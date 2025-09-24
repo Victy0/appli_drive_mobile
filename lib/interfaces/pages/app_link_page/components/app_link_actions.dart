@@ -126,6 +126,7 @@ class AppLinkActionsState extends State<AppLinkActions> {
                             onLanguageChange: widget.onLanguageChange,
                             appmon: widget.appmon,
                             appliDriveVersion: widget.appliDriveVersion,
+                            startAnimation: false,
                           ),
                         ))
                       },
