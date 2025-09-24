@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/app_link_init.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
@@ -18,6 +19,8 @@ class AppliarisePage extends StatefulWidget {
   final int appliDriveVersion;
   final bool tutorialFinished;
   final bool startAnimation;
+  final Appmon? appmonLinked1;
+  final Appmon? appmonLinked2;
   const AppliarisePage({
     super.key,
     required this.onLanguageChange,
@@ -25,6 +28,8 @@ class AppliarisePage extends StatefulWidget {
     required this.appliDriveVersion,
     this.tutorialFinished = true,
     this.startAnimation = true,
+    this.appmonLinked1,
+    this.appmonLinked2,
   });
 
   @override
@@ -39,6 +44,7 @@ class AppliarisePageState extends State<AppliarisePage> {
   late AppliDriveManagementService _appliDriveManagementService;
 
   bool _appliariseAnimation = true;
+  bool _appGataiAnimation = true;
   
   String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -69,6 +75,18 @@ class AppliarisePageState extends State<AppliarisePage> {
     return isForAnimation ? 0 : 13;
   }
 
+  void _startAppGataiAnimation() async {
+    _audioService.playAudioSequence([
+      "sounds/applink.mp3",
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
+    ]);
+    await Future.delayed(Duration(seconds: 10));
+    setState(() {
+      _appGataiAnimation = false;
+    });
+  }
+
   void _startAppliariseAnimation() async {
     _audioService.playAudioSequence([
       "sounds/appliarise/appliarise_${widget.appmon.grade.name}.mp3",
@@ -93,11 +111,17 @@ class AppliarisePageState extends State<AppliarisePage> {
       widget.appmon.id,
       widget.tutorialFinished,
     );
+    if(widget.appmonLinked1 != null) {
+      _appliariseAnimation = false;
+      _startAppGataiAnimation();
+    }
     if(widget.startAnimation) {
+      _appGataiAnimation = false;
       _startAppliariseAnimation();
     }
+    
     Future.delayed(Duration(seconds: 15 + _getDelayAnimation(widget.appmon.grade.id, false)), () {
-      _audioService.playBackground("stage1");
+      _audioService.playBackground("stage2");
     });
   }
 
@@ -107,9 +131,15 @@ class AppliarisePageState extends State<AppliarisePage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          if (_appliariseAnimation && widget.startAnimation)
+          if(_appGataiAnimation && widget.appmonLinked1 != null) ...[
+            AppLinkInit(
+              appmon: widget.appmonLinked1 ?? widget.appmon,
+              appmonLinked: widget.appmonLinked2 ?? widget.appmon,
+              appmonFusioned: widget.appmon,
+            )
+          ] else if (_appliariseAnimation && widget.startAnimation) ...[
             AppliariseInit(appmon: widget.appmon)
-          else ...[
+          ] else ...[
             BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
             Positioned(
               top: 30,
@@ -128,9 +158,15 @@ class AppliarisePageState extends State<AppliarisePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AppliariseSummaryInfo(appmon: widget.appmon),
+                  AppliariseSummaryInfo(
+                    appmon: widget.appmon,
+                    startAnimation: widget.startAnimation,
+                  ),
                   const SizedBox(height: 20),
-                  AppliariseImage(appmon: widget.appmon),
+                  AppliariseImage(
+                    appmon: widget.appmon,
+                    startAnimation: widget.startAnimation,
+                  ),
                   const SizedBox(height: 40),
                   AppliariseActions(
                     appliDriveManagementService: _appliDriveManagementService,
@@ -144,9 +180,9 @@ class AppliarisePageState extends State<AppliarisePage> {
               ),
             ),
             ClosePageButton(onLanguageChange: widget.onLanguageChange),
-          ],
-        ],
-      )
+          ]
+        ]
+      ),
     );
   }
 }

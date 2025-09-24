@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 
 class AppliariseSummaryInfo extends StatefulWidget {
   final Appmon appmon;
-  const AppliariseSummaryInfo({super.key, required this.appmon});
+  final bool startAnimation;
+  const AppliariseSummaryInfo({
+    super.key,
+    required this.appmon,
+    required this.startAnimation,
+  });
 
   @override
   AppliariseSummaryInfoState createState() => AppliariseSummaryInfoState();
@@ -37,7 +42,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
       children: [
         // APP
         AnimatedOpacity(
-          opacity: _showSummary ? 1.0 : 0.0,
+          opacity: (!widget.startAnimation || _showSummary) ? 1.0 : 0.0,
           duration: const Duration(seconds: 1),
           child: Container(
             margin: const EdgeInsets.only(left: 0, right: 10),
@@ -79,7 +84,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
         const SizedBox(height: 5),
         // TYPE
         AnimatedOpacity(
-          opacity: _showSummary ? 1.0 : 0.0,
+          opacity: (!widget.startAnimation || _showSummary) ? 1.0 : 0.0,
           duration: const Duration(seconds: 1),
           child: Container(
             margin: const EdgeInsets.only(left: 10, right: 0),

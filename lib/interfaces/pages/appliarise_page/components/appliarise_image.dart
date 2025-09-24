@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 
 class AppliariseImage extends StatefulWidget {
   final Appmon appmon;
-  const AppliariseImage({super.key, required this.appmon});
+  final bool startAnimation;
+  const AppliariseImage({
+    super.key,
+    required this.appmon,
+    required this.startAnimation,
+  });
 
   @override
   AppliariseImageState createState() => AppliariseImageState();
@@ -125,7 +130,7 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
         ),
         // APPMON NAME
         AnimatedOpacity(
-          opacity: _showName ? 1.0 : 0.0,
+          opacity: (!widget.startAnimation || _showName) ? 1.0 : 0.0,
           duration: const Duration(seconds: 1),
           child: Center(
             child: Column(

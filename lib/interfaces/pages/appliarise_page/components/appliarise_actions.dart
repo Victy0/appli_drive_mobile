@@ -76,6 +76,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
   Widget appLinkButton() {
     return GestureDetector(
       onTap: () async {
+        _audioService.playEffect("applink");
         final navigator = Navigator.of(context);
         Appmon? appmonLinked = await showDialog<Appmon>(
           context: context,
@@ -95,6 +96,8 @@ class AppliariseActionsState extends State<AppliariseActions> {
                 appmon: appmonLinked,
                 appliDriveVersion: widget.appliDriveVersion,
                 startAnimation: false,
+                appmonLinked1: appmonLinked.appmonLinked1,
+                appmonLinked2: appmonLinked.appmonLinked2,
               ),
             ));
             return;
