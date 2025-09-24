@@ -77,14 +77,32 @@ class AppliarisePageState extends State<AppliarisePage> {
 
   void _startAppGataiAnimation() async {
     _audioService.playAudioSequence([
-      "sounds/applink.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
+      "sounds/applink/appgatai_final.mp3",
       "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/applink/end.mp3",
       "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
     ]);
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 17));
     setState(() {
       _appGataiAnimation = false;
     });
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/applink/end.mp3",
+      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
+    ]);
   }
 
   void _startAppliariseAnimation() async {
@@ -119,10 +137,6 @@ class AppliarisePageState extends State<AppliarisePage> {
       _appGataiAnimation = false;
       _startAppliariseAnimation();
     }
-    
-    Future.delayed(Duration(seconds: 15 + _getDelayAnimation(widget.appmon.grade.id, false)), () {
-      _audioService.playBackground("stage2");
-    });
   }
 
   @override

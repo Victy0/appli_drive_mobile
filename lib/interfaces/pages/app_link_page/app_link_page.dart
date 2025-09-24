@@ -52,25 +52,44 @@ class AppLinkPageState extends State<AppLinkPage> {
     return "grey";
   }
 
-  void _startAppliariseAnimation() async {
+  void _startApplinkAnimation() async {
     _audioService.playAudioSequence([
-      "sounds/applink.mp3",
-      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
-      "sounds/appliarise/appmon_name/${widget.appmonLinked.id}.mp3",
+      "sounds/applink/names/${widget.appmon.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}.mp3",
+      "sounds/applink/names/${widget.appmon.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_2.mp3",
+      "sounds/applink/names/${widget.appmon.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_2.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/applink_final.mp3",
     ]);
-    await Future.delayed(Duration(seconds: 12));
+    await Future.delayed(Duration(seconds: 16));
     setState(() {
       _appLinkAnimation = false;
     });
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/applink/plus.mp3",
+      "sounds/appliarise/appmon_name/${widget.appmonLinked.id}.mp3",
+      "sounds/applink/end.mp3",
+    ]);
   }
 
   @override
   void initState() {
     super.initState();
-    _startAppliariseAnimation();
-    Future.delayed(Duration(seconds: 15), () {
-      _audioService.playBackground("stage2");
-    });
+    _startApplinkAnimation();
   }
 
   @override

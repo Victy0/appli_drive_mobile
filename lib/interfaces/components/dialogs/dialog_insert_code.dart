@@ -109,7 +109,9 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           children: [
             TextButton(
               onPressed: () {
+                _audioService.stopAppLinkWait();
                 _audioService.playEffect("back");
+                _audioService.resumeBackground();
                 Navigator.of(context).pop();
               },
               child: const Icon(
@@ -137,6 +139,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
                   return;
                 }
+                _audioService.stopAppLinkWait();
                 navigator.pop(appmon);
               },
               child: const Icon(
