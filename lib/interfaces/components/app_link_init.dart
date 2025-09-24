@@ -56,7 +56,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
     );
     _cornerController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 7),
+      duration: Duration(seconds: 13),
     );
     _cornerController.forward().whenComplete(() {
       _contentController.forward();
@@ -90,7 +90,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
                       final t = _cornerController.value;
                       final imgSize = lerpDouble(200, 150, t) ?? 150;
                       final start = Offset(imgSize / 2, imgSize / 2);
-                      final pos = _spiralPosition(start, center, size, t, turns: 6);
+                      final pos = _spiralPosition(start, center, size, t, turns: 14);
                       return Positioned(
                         left: pos.dx - imgSize / 2,
                         top: pos.dy - imgSize / 2,
@@ -117,7 +117,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
                       final t = _cornerController.value;
                       final imgSize = lerpDouble(200, 150, t) ?? 150;
                       final start = Offset(size.width - imgSize / 2, size.height - imgSize / 2);
-                      final pos = _spiralPosition(start, center, size, t, turns: 6);
+                      final pos = _spiralPosition(start, center, size, t, turns: 14);
                       return Positioned(
                         left: pos.dx - imgSize / 2,
                         top: pos.dy - imgSize / 2,

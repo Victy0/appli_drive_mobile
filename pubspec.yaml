@@ -45,5 +45,7 @@ flutter:
     - assets/sounds/appliarise/
     - assets/sounds/appliarise/appmon_name/
     - assets/sounds/appliarise/appmon_start/
+    - assets/sounds/applink/
+    - assets/sounds/applink/names/
     - assets/sounds/background/
     - assets/langs/
