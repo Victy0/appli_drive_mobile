@@ -41,6 +41,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _appliDriveVersion = 0;
   bool _isLoading = true;
 
+  late AnimationController _detailController;
+  late Animation<Offset> _leftOffsetAnim;
+  late Animation<Offset> _rightOffsetAnim;
+
+  late AnimationController _contentController;
+  late Animation<double> _contentOpacityAnim;
+  late Animation<Offset> _contentOffsetAnim;
+
   void _getInitialValues() async {
     final String appmonName = await _preferencesService.getString(AppPreferenceKey.appmonPairingName) ?? "";
     final String appmonColorPrimary = await _preferencesService.getString(AppPreferenceKey.primaryColor) ?? "";
@@ -60,6 +68,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _appliDriveVersion = appliDriveVersion;
       _isLoading = false;
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _detailController.forward();
+    });
   }
 
   @override
@@ -78,7 +90,45 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
     );
+
+    _detailController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+
+    _leftOffsetAnim = Tween<Offset>(
+      begin: const Offset(-1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _detailController, curve: Curves.easeOut));
+
+    _rightOffsetAnim = Tween<Offset>(
+      begin: const Offset(1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _detailController, curve: Curves.easeOut));
+
+    _contentController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: (widget.initSound ? 600 : 100)),
+    );
+
+    _contentOpacityAnim = CurvedAnimation(parent: _contentController, curve: Curves.easeIn);
+    _contentOffsetAnim = Tween<Offset>(begin: const Offset(0.0, 0.05), end: Offset.zero)
+        .animate(CurvedAnimation(parent: _contentController, curve: Curves.easeOut));
+
+    _detailController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _contentController.forward();
+      }
+    });
+
     _getInitialValues();
+  }
+
+  @override
+  void dispose() {
+    _detailController.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 
   String _translateAppliDriveVersionName(int versionValue) {
@@ -100,71 +150,107 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Stack(
         children: [
           const BackgroundImage(color: "grey"),
-          // detail top
+          // DETAIL TOP
           Positioned(
             top: 30,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                HeaderIconsHome(
-                  onLanguageChange: widget.onLanguageChange,
-                  databaseHelper: _databaseHelper,
-                  tutorialFinished: _tutorialFinished,
+                FadeTransition(
+                  opacity: _contentOpacityAnim,
+                  child: SlideTransition(
+                    position: _contentOffsetAnim,
+                    child: HeaderIconsHome(
+                      onLanguageChange: widget.onLanguageChange,
+                      databaseHelper: _databaseHelper,
+                      tutorialFinished: _tutorialFinished,
+                    ),
+                  ),
                 ),
-                DetailRectangle(
-                  position: 'left',
-                  primaryColor: _appmonColorPrimary,
-                  secondaryColor: _appmonColorSecondary,
-                ),
+                widget.initSound
+                  ? SlideTransition(
+                      position: _leftOffsetAnim,
+                      child: DetailRectangle(
+                        position: 'left',
+                        primaryColor: _appmonColorPrimary,
+                        secondaryColor: _appmonColorSecondary,
+                      ),
+                    )
+                  : DetailRectangle(
+                      position: 'left',
+                      primaryColor: _appmonColorPrimary,
+                      secondaryColor: _appmonColorSecondary,
+                    ),
               ]
             ),
           ),
-          // content
+          // CONTENT
           Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PairingMenu(
-                  onLanguageChange: widget.onLanguageChange,
-                  appliDriveManagementService: _appliDriveManagementService,
-                  appmonPairingName: _appmonPairingName,
-                  appmonEvolutionInfo: _appmonPairingEvolutionInfo,
-                  tutorialFinished: _tutorialFinished,
-                  appliDriveVersion: _appliDriveVersion,
+            child: FadeTransition(
+              opacity: _contentOpacityAnim,
+              child: SlideTransition(
+                position: _contentOffsetAnim,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PairingMenu(
+                      onLanguageChange: widget.onLanguageChange,
+                      appliDriveManagementService: _appliDriveManagementService,
+                      appmonPairingName: _appmonPairingName,
+                      appmonEvolutionInfo: _appmonPairingEvolutionInfo,
+                      tutorialFinished: _tutorialFinished,
+                      appliDriveVersion: _appliDriveVersion,
+                    ),
+                    ...(_tutorialFinished
+                      ? tutorialFinishedWidgets()
+                      : tutorialUnfinishedWidgets()
+                    ),
+                  ],
                 ),
-                ...(_tutorialFinished
-                  ? tutorialFinishedWidgets()
-                  : tutorialUnfinishedWidgets()
-                ),
-              ],
+              ),
             ),
           ),
-          // detail bottom
+          // DETAIL BOTTOM
           Positioned(
             bottom: 30,
             left: 0,
             right: 0,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - ${AppLocalization.of(context).translate(_translateAppliDriveVersionName(_appliDriveVersion))}",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                FadeTransition(
+                  opacity: _contentOpacityAnim,
+                  child: SlideTransition(
+                    position: _contentOffsetAnim,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - ${AppLocalization.of(context).translate(_translateAppliDriveVersionName(_appliDriveVersion))}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                DetailRectangle(
-                  position: 'right',
-                  primaryColor: _appmonColorPrimary,
-                  secondaryColor: _appmonColorSecondary,
-                ),
+                widget.initSound
+                  ? SlideTransition(
+                      position: _rightOffsetAnim,
+                      child: DetailRectangle(
+                        position: 'right',
+                        primaryColor: _appmonColorPrimary,
+                        secondaryColor: _appmonColorSecondary,
+                      ),
+                    )
+                  : DetailRectangle(
+                      position: 'right',
+                      primaryColor: _appmonColorPrimary,
+                      secondaryColor: _appmonColorSecondary,
+                    ),
               ]
             ),
           ),
