@@ -19,6 +19,7 @@ class AudioService {
 
   AudioService._internal() {
     configurePlayers();
+    _backgroundPlayer.setReleaseMode(ReleaseMode.loop);
   }
 
   Future<void> configurePlayers() async {

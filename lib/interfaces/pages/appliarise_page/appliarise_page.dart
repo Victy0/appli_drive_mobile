@@ -90,9 +90,6 @@ class AppliarisePageState extends State<AppliarisePage> {
       "sounds/applink/names/${widget.appmonLinked1?.id}_3.mp3",
       "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
       "sounds/applink/appgatai_final.mp3",
-      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
-      "sounds/applink/end.mp3",
-      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
     ]);
     await Future.delayed(Duration(seconds: 17));
     setState(() {
