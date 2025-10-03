@@ -10,16 +10,19 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:screen_state/screen_state.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+void hideSystemUI() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.light,
+    systemNavigationBarDividerColor: Colors.transparent,
+  ));
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  void hideSystemUI() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ));
-  }
 
   hideSystemUI();
   
@@ -29,7 +32,11 @@ void main() {
   ]).then((_) {
     runApp(const MyApp());
     WidgetsBinding.instance.addObserver(
-      LifecycleEventHandler(resumeCallBack: () async => hideSystemUI()),
+      LifecycleEventHandler(resumeCallBack: () async {
+        hideSystemUI();
+        await Future.delayed(const Duration(milliseconds: 250));
+        hideSystemUI();
+      }),
     );
   });
 }
