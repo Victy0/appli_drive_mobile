@@ -87,6 +87,21 @@ class PreferencesService {
     );
   }
 
+  Future<String?> getLastAppmonEvolutionBuddyCode() async {
+    final prefs = await sharedPrefs;
+    final jsonString = prefs.getString(AppPreferenceKey.appmonPairingEvolution.value);
+
+    if (jsonString == null) return null;
+
+    final decoded = jsonDecode(jsonString);
+
+    final list = List<Map<String, String>>.from(
+      decoded.map((item) => Map<String, String>.from(item)),
+    );
+
+    return list.isNotEmpty ? list.last['code'] : null;
+  }
+
   Future<void> setHintInHintRevealedList(String type, [String? number]) async {
     final prefs = await sharedPrefs;
     final list = await getHintRevealedList();

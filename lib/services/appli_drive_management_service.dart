@@ -23,6 +23,7 @@ class AppliDriveManagementService {
     String code,
     Appmon? currentAppmonAppliare,
     int appliDriveVersion,
+    String? codeLastEvolution,
   ) async {
     // APPLINK
     if (currentAppmonAppliare != null) {
@@ -53,6 +54,10 @@ class AppliDriveManagementService {
             ];
           }
           revealAppmons(idsToSetRevealed);
+          if(codeLastEvolution != null && (fusion.appmonBase1 == codeLastEvolution || fusion.appmonBase2 == codeLastEvolution)) {
+            Map<String, String> appmonEvolutionInfo = {"id": fusionAppmon.id, "code": fusionAppmon.code};
+            preferencesService.setAppmonPairingEvolutionInfo(appmonEvolutionInfo);
+          }
           fusionAppmon.fusioned = true;
           fusionAppmon.appmonLinked1 = currentAppmonAppliare;
           fusionAppmon.appmonLinked2 = await databaseHelper.getAppmonByCode(code);

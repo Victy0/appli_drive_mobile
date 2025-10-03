@@ -4,6 +4,7 @@ import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,21 +26,28 @@ class DialogInsertCode extends StatefulWidget {
 }
 
 class DialogInsertCodeState extends State<DialogInsertCode> {
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
   final TextEditingController _controller = TextEditingController();
 
-  late List<Map<String, dynamic>> appmonCodeList;
+  late List<Map<String, dynamic>> _appmonCodeList;
+  late String? _lastAppmonBuddyEvolutionCode;
 
   String _errorCode = "";
 
   void _getAppmonCodeList() async {
-    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
+    _appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
+  }
+
+  void _getLastAppmonBuddyEvolutionCode() async {
+    _lastAppmonBuddyEvolutionCode = await _preferencesService.getLastAppmonEvolutionBuddyCode();
   }
 
   @override
   void initState() {
     super.initState();
     _getAppmonCodeList();
+    _getLastAppmonBuddyEvolutionCode();
   }
 
   @override
@@ -133,6 +141,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                   code.toUpperCase(),
                   widget.currentAppmon,
                   widget.appliDriveVersion,
+                  _lastAppmonBuddyEvolutionCode,
                 );
                 if(appmon == null) {
                   _audioService.playEffect("error");
@@ -166,7 +175,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
+            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: _appmonCodeList),
           ),
         },
         icon: Image.asset(
