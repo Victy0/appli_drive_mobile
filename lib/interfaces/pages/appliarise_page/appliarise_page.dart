@@ -151,7 +151,10 @@ class AppliarisePageState extends State<AppliarisePage> {
           ] else if (_appliariseAnimation && widget.startAnimation) ...[
             AppliariseInit(appmon: widget.appmon)
           ] else ...[
-            BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
+            BackgroundImage(
+              color: _getColorByAppmonType(widget.appmon.type.name),
+              scope: "appliarise${_getColorByAppmonType(widget.appmon.type.name)}",
+            ),
             Positioned(
               top: 30,
               left: 0,
