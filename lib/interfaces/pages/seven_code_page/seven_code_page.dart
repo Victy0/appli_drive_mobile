@@ -102,7 +102,11 @@ class SevenCodePageState extends State<SevenCodePage>{
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "purple", animateColor: true),
+          const BackgroundImage(
+            color: "purple",
+            scope: "common",
+            animateColor: true,
+          ),
           Column(
             children: [
               const SizedBox(height: 8),

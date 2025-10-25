@@ -145,7 +145,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
-            const BackgroundImage(color: "grey"),
+            const BackgroundImage(
+              color: "grey",
+              scope: "common",
+            ),
             // DETAIL TOP
             Positioned(
               top: 30,

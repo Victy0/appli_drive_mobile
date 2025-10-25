@@ -105,7 +105,10 @@ class AppLinkPageState extends State<AppLinkPage> {
               appmonFusioned: null,
             )
           else ...[
-            BackgroundImage(color: _getColorByAppmonType("")),
+            BackgroundImage(
+              color: _getColorByAppmonType(""),
+              scope: "common",
+            ),
             Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

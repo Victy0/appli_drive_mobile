@@ -81,7 +81,11 @@ class HintsPagePageState extends State<HintsPage> {
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "yellow", animateColor: true),
+          const BackgroundImage(
+            color: "yellow",
+            scope: "common",
+            animateColor: true,
+          ),
           Column(
             children: [
               const SizedBox(height: 20),

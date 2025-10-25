@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class BackgroundImage extends StatefulWidget {
   final String color;
+  final String scope;
   final bool animateColor;
-  const BackgroundImage({super.key, required this.color, this.animateColor = false});
+  const BackgroundImage({super.key, required this.color, required this.scope, this.animateColor = false});
 
   @override
   BackgroundImageState createState() => BackgroundImageState();
@@ -61,15 +62,16 @@ class BackgroundImageState extends State<BackgroundImage> with SingleTickerProvi
         children: [
           Positioned.fill(
             child: Opacity(
-              opacity: 0.6,
+              opacity: 0.7,
               child: Image.asset(
-                'assets/images/white_background.jpg',
+                'assets/images/background/${widget.scope}.jpg',
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          Positioned.fill(
-            child: widget.animateColor
+          if (widget.scope == "common")...[
+            Positioned.fill(
+              child: widget.animateColor
                 ? FadeTransition(
                     opacity: _fadeAnimation,
                     child: Container(
@@ -79,7 +81,8 @@ class BackgroundImageState extends State<BackgroundImage> with SingleTickerProvi
                 : Container(
                     color: _defineColor(widget.color),
                   ),
-          ),
+            ),
+          ],
         ],
       ),
     );
