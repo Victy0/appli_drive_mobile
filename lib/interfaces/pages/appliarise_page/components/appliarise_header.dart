@@ -22,7 +22,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 16, bottom: 16, left: 16),
+      padding: const EdgeInsets.only(top: 20, right: 25, bottom: 16, left: 25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
