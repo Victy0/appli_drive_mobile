@@ -107,7 +107,7 @@ class AppLinkPageState extends State<AppLinkPage> {
           else ...[
             BackgroundImage(
               color: _getColorByAppmonType(""),
-              scope: "common",
+              scope: "applink",
             ),
             Center(
               child: Column(
