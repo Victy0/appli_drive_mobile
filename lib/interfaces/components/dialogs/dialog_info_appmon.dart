@@ -1,4 +1,5 @@
 import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
@@ -51,13 +52,27 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                         divider(),
                         appContainer(),
                         divider(),
-                        gradeContainer(),
-                        divider(),
                         typeContainer(),
+                        divider(),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: gradeContainer(),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              flex: 1,
+                              child: serieContainer(),
+                            ),
+                          ],
+                        ),
                         divider(),
                         powerContainer(),
                         divider(),
                         profileContainer(),
+                        divider(),
+                        techniqueContainer(),
                         if (widget.showChipContainer) ...[
                           divider(),
                           chipContainer(),
@@ -128,43 +143,20 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
 
   Widget nameContainer() {
     return Container(
-      decoration: BoxDecoration(
-        color: _getColorBackground(),
-        border: Border.all(color: _getColorBorderAndText(), width: 2),
-        borderRadius: BorderRadius.circular(5),
-      ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.name"),
-              fontSize: 24,
-              color: "grey",
-              align: "center",
-            ),
-            Divider(
-              color: _getColorBorderAndText(),
-              thickness: 2,
-              height: 0,
-            ),
             Row(
               children: [
-                Expanded(
-                  child: Text(
-                    AppLocalization.of(context)
-                        .translate("appmons.names.${widget.appmon?.name}"),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: _getColorBorderAndText(),
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  ),
+                TextWithWhiteShadow(
+                  text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
+                  fontSize: 30,
+                  align: "left",
+                  height: 1.0,
+                  applySoftWrap: true
                 ),
               ],
             ),
@@ -192,49 +184,60 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         border: Border.all(color: _getColorBorderAndText(), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
-              fontSize: 24,
-              color: "grey",
-              align: "left",
-            ),
-            Divider(
-              color: _getColorBorderAndText(),
-              thickness: 2,
-              height: 0,
-            ),
-            Row(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (widget.appmon?.app != "open")
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWithBackgroundColor(
+                        text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.app"),
+                        fontSize: 24,
+                        color: "grey",
+                        align: "right",
+                      ),
+                      Divider(
+                        color: _getColorBorderAndText(),
+                        thickness: 2,
+                        height: 4,
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(
+                          AppLocalization.of(context).translate("appmons.apps.${widget.appmon?.app}"),
+                          style: TextStyle(
+                            color: _getColorBorderAndText(),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (widget.appmon?.app != "open") ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Image.asset(
                       "assets/images/${widget.imageDirectory}/${widget.appmon?.id}.png",
-                      width: 45,
-                      height: 45,
+                      width: 65,
+                      height: 65,
                     ),
                   ),
-                Expanded(
-                  child: Text(
-                    AppLocalization.of(context).translate("appmons.apps.${widget.appmon?.app}"),
-                    style: TextStyle(
-                      color: _getColorBorderAndText(),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
+                ],
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -243,7 +246,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
     return Container(
       decoration: BoxDecoration(
         color: _getColorBackground(),
-        border: Border.all(color: _getColorBorderAndText(), width: 2),
+        border: Border.all(color: _getColorBorderAndText(), width: 0.5),
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -263,11 +266,54 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               height: 0,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   AppLocalization.of(context).translate("appmons.grades.${widget.appmon?.grade.name}"),
-                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget serieContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _getColorBackground(),
+        border: Border.all(color: _getColorBorderAndText(), width: 0.5),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.serie"),
+              fontSize: 24,
+              color: "grey",
+              align: "right",
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  widget.appmon?.serie ?? "",
                   style: TextStyle(
                     color: _getColorBorderAndText(),
                     fontSize: 24,
@@ -291,49 +337,60 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         border: Border.all(color: _getColorBorderAndText(), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
-              fontSize: 24,
-              color: "grey",
-              align: "left",
-            ),
-            Divider(
-              color: _getColorBorderAndText(),
-              thickness: 2,
-              height: 0,
-            ),
-            Row(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (widget.appmon?.type.name != "none")
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWithBackgroundColor(
+                        text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.type"),
+                        fontSize: 24,
+                        color: "grey",
+                        align: "right",
+                      ),
+                      Divider(
+                        color: _getColorBorderAndText(),
+                        thickness: 2,
+                        height: 4,
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(
+                          AppLocalization.of(context).translate("appmons.types.${widget.appmon?.type.name}"),
+                          style: TextStyle(
+                            color: _getColorBorderAndText(),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (widget.appmon?.app != "open") ...[
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: Image.asset(
                       "assets/images/types/${widget.appmon!.type.name}.png",
-                      width: 45,
-                      height: 45,
+                      width: 65,
+                      height: 65,
                     ),
                   ),
-                Expanded(
-                  child: Text(
-                    AppLocalization.of(context).translate("appmons.types.${widget.appmon?.type.name}"),
-                    style: TextStyle(
-                      color: _getColorBorderAndText(),
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
+                ],
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -345,40 +402,60 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         border: Border.all(color: _getColorBorderAndText(), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
-              fontSize: 24,
-              color: "grey",
-              align: "right",
-            ),
-            Divider(
-              color: _getColorBorderAndText(),
-              thickness: 2,
-              height: 0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  widget.appmon?.power.toString() ?? "",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextWithBackgroundColor(
+                        text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.power"),
+                        fontSize: 24,
+                        color: "grey",
+                        align: "right",
+                      ),
+                      Divider(
+                        color: _getColorBorderAndText(),
+                        thickness: 2,
+                        height: 4,
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(
+                          widget.appmon?.power.toString() ?? "",
+                          style: TextStyle(
+                            color: _getColorBorderAndText(),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                        ),
+                      ),
+                    ],
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
                 ),
+                if (widget.appmon?.app != "open") ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Image.asset(
+                      'assets/images/icons/explosion_box.png',
+                      width: 55,
+                      height: 55,
+                    ),
+                  ),
+                ],
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -399,7 +476,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.profile"),
               fontSize: 24,
               color: "grey",
-              align: "center",
+              align: "right",
             ),
             Divider(
               color: _getColorBorderAndText(),
@@ -423,6 +500,50 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                       overflow: TextOverflow.visible,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget techniqueContainer() {
+    return Container(
+      decoration: BoxDecoration(
+        color: _getColorBackground(),
+        border: Border.all(color: _getColorBorderAndText(), width: 2),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Column(
+          children: [
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.technique"),
+              fontSize: 24,
+              color: "grey",
+              align: "right",
+            ),
+            Divider(
+              color: _getColorBorderAndText(),
+              thickness: 2,
+              height: 0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.id}"),
+                  style: TextStyle(
+                    color: _getColorBorderAndText(),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  softWrap: true,
+                  overflow: TextOverflow.visible,
                 ),
               ],
             ),
