@@ -205,7 +205,11 @@ class SevenCodePageState extends State<SevenCodePage>{
                     showDialog<String>(
                       context: context,
                       barrierDismissible: false,
-                      builder: (BuildContext context) => DialogInfoAppmon(appmon: _dantemonInfo, interface: "appliArise"),
+                      builder: (BuildContext context) => DialogInfoAppmon(
+                        appmon: _dantemonInfo,
+                        interface: "appliArise",
+                        showChipContainer: false,
+                      ),
                     ),
                   },
                   icon: Image.asset(

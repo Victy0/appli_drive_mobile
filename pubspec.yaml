@@ -39,6 +39,7 @@ flutter:
     - assets/images/appmons/
     - assets/images/apps/
     - assets/images/background/
+    - assets/images/chips/
     - assets/images/flags/
     - assets/images/icons/
     - assets/images/types/
