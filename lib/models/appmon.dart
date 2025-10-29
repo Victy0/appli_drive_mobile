@@ -22,6 +22,7 @@ class Appmon {
   final int imageSize;
   Appmon? appmonLinked1;
   Appmon? appmonLinked2;
+  final String serie;
 
   Appmon({
     required this.id,
@@ -43,6 +44,7 @@ class Appmon {
     required this.imageSize,
     this.appmonLinked1,
     this.appmonLinked2,
+    required this.serie,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -66,6 +68,7 @@ class Appmon {
       imageSize: map['image_size'],
       appmonLinked1: null,
       appmonLinked2: null,
+      serie: map['serie'],
     );
   }
 }

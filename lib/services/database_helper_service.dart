@@ -29,7 +29,7 @@ class DatabaseHelper {
     String path = join(await getDatabasesPath(), 'appli_drive_database.db');
 
     int currentVersion = await _preferencesService.getInt(AppPreferenceKey.dbVersion) ?? -1;
-    int newVersion = 1;
+    int newVersion = 2;
 
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
@@ -42,6 +42,12 @@ class DatabaseHelper {
       ByteData data = await rootBundle.load("assets/appli_drive_database.db");
       List<int> bytes = data.buffer.asUint8List();
       await File(path).writeAsBytes(bytes);
+      List<String> appmonRevealedIdsUser = await _preferencesService.getStringList(
+        AppPreferenceKey.appmonRevealedIds,
+      );
+      if(appmonRevealedIdsUser.isNotEmpty) {
+        setRevealedAppmonsForIds(appmonRevealedIdsUser);
+      }
     }
 
     return await openDatabase(
@@ -60,7 +66,7 @@ class DatabaseHelper {
     String sql = '''
       SELECT 
         appmon.inner_id AS id, appmon.code_text, appmon.name, appmon.app, appmon.power, appmon.color_1, appmon.color_2,
-        appmon.ability, appmon.attack, appmon.defense, appmon.energy, appmon.resistance, appmon.image_size,
+        appmon.ability, appmon.attack, appmon.defense, appmon.energy, appmon.resistance, appmon.image_size, appmon.serie,
         grade.id AS grade_id, grade.name AS grade_name, 
         type.id AS type_id, type.name AS type_name, 
         fusion.id AS fusion_id, fusion.appmon_base_1, fusion.appmon_base_2
