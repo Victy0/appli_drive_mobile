@@ -32,7 +32,6 @@ class Square7CodeState extends State<Square7Code> {
         appmon: appmon7Code,
         interface: "7code",
         imageDirectory: "7code",
-        showChipContainer: true,
       ),
     );
   }

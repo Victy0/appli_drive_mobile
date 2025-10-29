@@ -15,7 +15,7 @@ class DialogInfoAppmon extends StatefulWidget {
     required this.appmon,
     required this.interface,
     this.imageDirectory = "apps",
-    this.showChipContainer = false,
+    this.showChipContainer = true,
   });
 
   @override
@@ -139,6 +139,13 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
 
   Color _getColorBorderAndText() {
     return const Color.fromARGB(255, 0, 0, 0);
+  }
+
+  String _getChipDirectory() {
+    if(widget.imageDirectory == "apps") {
+      return "chips";
+    }
+    return widget.imageDirectory;
   }
 
   Widget nameContainer() {
@@ -536,7 +543,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.id}"),
+                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.code.toLowerCase()}"),
                   style: TextStyle(
                     color: _getColorBorderAndText(),
                     fontSize: 24,
@@ -565,34 +572,29 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  AppLocalization.of(context).translate("components.dialogs.infoAppmon.chip"),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-              ],
+            TextWithBackgroundColor(
+              text: AppLocalization.of(context).translate("components.dialogs.infoAppmon.chip"),
+              fontSize: 24,
+              color: "grey",
+              align: "right",
             ),
             Divider(
               color: _getColorBorderAndText(),
               thickness: 2,
               height: 0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "assets/images/${widget.imageDirectory}/${widget.appmon?.id}.png",
-                  width: 200,
-                  height: 200,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/${_getChipDirectory()}/${widget.appmon?.id}.png",
+                    width: 200,
+                    height: 200,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
