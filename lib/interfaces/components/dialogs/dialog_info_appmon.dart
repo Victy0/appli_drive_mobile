@@ -32,11 +32,18 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      backgroundColor: Colors.transparent, // Remove o fundo padrão para mostrar o gradiente
+      backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          gradient: _getDialogGradientBackground(),
+          image: DecorationImage(
+            image: AssetImage('assets/images/background/infoAppmon.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+            _getDialogColorBackground(),
+              BlendMode.srcATop,
+            ),
+          ),
         ),
         child: SizedBox.expand(
           child: Padding(
@@ -109,27 +116,15 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
     );
   }
 
-  Gradient _getDialogGradientBackground() {
+  Color _getDialogColorBackground() {
   switch (widget.interface) {
     case "appliArise":
-      return const LinearGradient(
-        colors: [Color.fromARGB(255, 92, 92, 92), Color.fromARGB(255, 211, 211, 211), Color.fromARGB(255, 255, 255, 255)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
+      return Colors.grey.withValues(alpha: 0.2);
     case "7code":
-      return const LinearGradient(
-        colors: [Color.fromARGB(255, 124, 82, 126), Color.fromARGB(255, 180, 136, 180), Color.fromARGB(255, 240, 212, 240)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
+      return Colors.purple.withValues(alpha: 0.4);
     case "dataCenter":
     default:
-      return const LinearGradient(
-        colors: [Color.fromARGB(255, 88, 160, 255), Color.fromARGB(255, 144, 193, 248), Color.fromARGB(255, 189, 219, 253)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      );
+      return Colors.blue.withValues(alpha: 0.4);
   }
 }
 
@@ -151,19 +146,30 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   Widget nameContainer() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 100,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Stack(
           children: [
+            Positioned(
+              right: 20,
+              top: -5,
+              child: Image.asset(
+                "assets/images/traces/${widget.appmon?.id}.png",
+                width: 200,
+                fit: BoxFit.contain,
+              ),
+            ),
             Row(
               children: [
-                TextWithWhiteShadow(
-                  text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
-                  fontSize: 30,
-                  align: "left",
-                  height: 1.0,
-                  applySoftWrap: true
+                Expanded(
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
+                    fontSize: 30,
+                    align: "left",
+                    height: 1.0,
+                    applySoftWrap: true,
+                  ),
                 ),
               ],
             ),
@@ -253,7 +259,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
     return Container(
       decoration: BoxDecoration(
         color: _getColorBackground(),
-        border: Border.all(color: _getColorBorderAndText(), width: 0.5),
+        border: Border.all(color: _getColorBorderAndText(), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -297,7 +303,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
     return Container(
       decoration: BoxDecoration(
         color: _getColorBackground(),
-        border: Border.all(color: _getColorBorderAndText(), width: 0.5),
+        border: Border.all(color: _getColorBorderAndText(), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -543,7 +549,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.code.toLowerCase()}"),
+                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.code.toLowerCase()}").toUpperCase(),
                   style: TextStyle(
                     color: _getColorBorderAndText(),
                     fontSize: 24,

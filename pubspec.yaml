@@ -43,6 +43,7 @@ flutter:
     - assets/images/flags/
     - assets/images/icons/
     - assets/images/types/
+    - assets/images/traces/
     - assets/sounds/
     - assets/sounds/appliarise/
     - assets/sounds/appliarise/appmon_name/
