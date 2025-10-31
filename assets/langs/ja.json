@@ -511,6 +511,7 @@
             "powerDescription": {
                 "ability": "能力",
                 "attack": "攻撃",
+                "data": "データ",
                 "defense": "防御",
                 "energy": "エネルギー",
                 "name": "名前",

@@ -118,16 +118,16 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   }
 
   Color _getDialogColorBackground() {
-  switch (widget.interface) {
-    case "appliArise":
-      return Colors.grey.withValues(alpha: 0.2);
-    case "7code":
-      return Colors.purple.withValues(alpha: 0.4);
-    case "dataCenter":
-    default:
-      return Colors.blue.withValues(alpha: 0.4);
+    switch (widget.interface) {
+      case "appliArise":
+        return Colors.grey.withValues(alpha: 0.2);
+      case "7code":
+        return Colors.purple.withValues(alpha: 0.4);
+      case "dataCenter":
+      default:
+        return Colors.blue.withValues(alpha: 0.4);
+    }
   }
-}
 
   Color _getColorBackground() {
     return const Color.fromARGB(255, 255, 255, 255);
