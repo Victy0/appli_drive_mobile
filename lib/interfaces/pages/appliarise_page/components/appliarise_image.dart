@@ -26,9 +26,6 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
   bool _showName = false;
 
   int _getDelayAnimation(int grade) {
-    if (grade == 2) {
-      return 1;
-    }
     return 0;
   }
 
