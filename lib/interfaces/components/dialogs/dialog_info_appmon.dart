@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_description.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
@@ -456,19 +457,35 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
                   ),
                 ),
                 if (widget.appmon?.app != "open") ...[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Image.asset(
-                      'assets/images/icons/explosion_box.png',
-                      width: 55,
-                      height: 55,
-                    ),
-                  ),
+                  powerDescriptionButton(),
                 ],
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget powerDescriptionButton() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: IconButton(
+        onPressed: () => {
+          _audioService.playEffect("click"),
+          showDialog<String>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => DialogPowerDescription(appmon: widget.appmon),
+          ),
+        },
+        icon: Image.asset(
+          'assets/images/icons/explosion_box.png',
+          height: 55,
+        ),
       ),
     );
   }
@@ -548,15 +565,18 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.code.toLowerCase()}").toUpperCase(),
-                  style: TextStyle(
-                    color: _getColorBorderAndText(),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Text(
+                    AppLocalization.of(context).translate("appmons.techniques.${widget.appmon?.code.toLowerCase()}").toUpperCase(),
+                    style: TextStyle(
+                      color: _getColorBorderAndText(),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
                   ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
                 ),
               ],
             ),

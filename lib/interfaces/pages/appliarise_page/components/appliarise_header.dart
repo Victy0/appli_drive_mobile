@@ -1,4 +1,3 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
           //if(widget.appmon.grade.name == "standard")
           //  iconPairing(context),
           const Spacer(),
-          infoButton(),
         ],
       ),
     );
@@ -101,32 +99,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
           height: 40,
         ),
       )
-    );
-  }
-
-  Widget infoButton() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: IconButton(
-        onPressed: () => {
-          _audioService.playAudioSequence([
-            "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
-          ]),
-          showDialog<String>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => DialogInfoAppmon(appmon: widget.appmon, interface: "appliArise"),
-          ),
-        },
-        icon: Image.asset(
-          'assets/images/icons/magnifying_glass_box.png',
-          height: 45,
-        ),
-      ),
     );
   }
 }
