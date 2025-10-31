@@ -29,6 +29,7 @@ class AppLinkPageState extends State<AppLinkPage> {
   final AudioService _audioService = AudioService();
 
   bool _appLinkAnimation = true;
+  bool _showCloseButton = false;
 
   String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -90,6 +91,11 @@ class AppLinkPageState extends State<AppLinkPage> {
   void initState() {
     super.initState();
     _startApplinkAnimation();
+    Future.delayed(Duration(seconds: 21), () {
+      setState(() {
+        _showCloseButton = true;
+      });
+    });
   }
 
   @override
@@ -134,8 +140,11 @@ class AppLinkPageState extends State<AppLinkPage> {
                 ],
               ),
             ),
-            
-            ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            AnimatedOpacity(
+              opacity: _showCloseButton ? 1.0 : 0.0,
+              duration: const Duration(seconds: 1),
+              child: ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            ),
           ],
         ],
       )
