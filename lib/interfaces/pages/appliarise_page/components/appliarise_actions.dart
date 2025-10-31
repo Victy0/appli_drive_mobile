@@ -1,6 +1,6 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_power_description.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -40,7 +40,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
       child: Row(
         children: [
           if(widget.tutorialFinished) ...[
-            powerDescriptionButton(),
+            infoButton(),
             const Spacer(),
             appLinkButton(),
           ]
@@ -49,7 +49,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
     );
   }
 
-  Widget powerDescriptionButton() {
+  Widget infoButton() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -58,15 +58,17 @@ class AppliariseActionsState extends State<AppliariseActions> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioService.playEffect("click"),
+          _audioService.playAudioSequence([
+            "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+          ]),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogPowerDescription(appmon: widget.appmon),
+            builder: (BuildContext context) => DialogInfoAppmon(appmon: widget.appmon, interface: "appliArise"),
           ),
         },
         icon: Image.asset(
-          'assets/images/icons/explosion_box.png',
+          'assets/images/icons/magnifying_glass_box.png',
           height: 45,
         ),
       ),
