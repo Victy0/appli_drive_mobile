@@ -1,4 +1,5 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppmonPresentation extends StatefulWidget {
@@ -18,11 +19,21 @@ class AppmonPresentation extends StatefulWidget {
 }
 
 class AppmonPresentationState extends State<AppmonPresentation> {
+  final AudioService _audioService = AudioService();
+  
   String _getAppmonIntroduction() {
     String appmonIntro = AppLocalization.of(context).translate("pages.firstSetupPage.forEveryApplicationTherIsAnAppmon");
     String appmonPartner = AppLocalization.of(context).translate("pages.firstSetupPage.iAmYourPartnerAppmon");
     String appmonmNane = AppLocalization.of(context).translate("appmons.names.${widget.appmonName ?? ""}");
     return "$appmonIntro $appmonPartner$appmonmNane.";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmonId}.mp3",
+    ]);
   }
 
   @override
