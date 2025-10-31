@@ -30,9 +30,12 @@ class DatabaseHelper {
 
     int currentVersion = await _preferencesService.getInt(AppPreferenceKey.dbVersion) ?? -1;
     int newVersion = 2;
+    List<String> idsToReveal = [];
 
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
+        List<Map<String, dynamic>> appmonsRevealed = await getAppmonCodeList(4);
+        idsToReveal = appmonsRevealed.map((item) => item['id'].toString()).toList();
         await deleteDatabase(path);
       }
       await _preferencesService.setInt(AppPreferenceKey.dbVersion, newVersion);
@@ -42,11 +45,8 @@ class DatabaseHelper {
       ByteData data = await rootBundle.load("assets/appli_drive_database.db");
       List<int> bytes = data.buffer.asUint8List();
       await File(path).writeAsBytes(bytes);
-      List<String> appmonRevealedIdsUser = await _preferencesService.getStringList(
-        AppPreferenceKey.appmonRevealedIds,
-      );
-      if(appmonRevealedIdsUser.isNotEmpty) {
-        setRevealedAppmonsForIds(appmonRevealedIdsUser);
+      if(idsToReveal.isNotEmpty) {
+        setRevealedAppmonsForIds(idsToReveal);
       }
     }
 
