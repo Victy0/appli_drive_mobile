@@ -24,18 +24,34 @@ class AppLinkActions extends StatefulWidget {
 
 class AppLinkActionsState extends State<AppLinkActions> {
   final AudioService _audioService = AudioService();
+
+  bool _showIcons = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 4), () {
+      setState(() {
+        _showIcons = true;
+      });
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20, right: 16, bottom: 16, left: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          iconPowerDescription(context),
-          const Spacer(),
-          iconUnlink(context),
-        ],
+      child: AnimatedOpacity(
+        opacity: _showIcons ? 1.0 : 0.0,
+        duration: const Duration(seconds: 1),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            iconPowerDescription(context),
+            const Spacer(),
+            iconUnlink(context),
+          ],
+        ),
       ),
     );
   }
