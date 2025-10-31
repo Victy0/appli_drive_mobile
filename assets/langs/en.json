@@ -511,6 +511,7 @@
             "powerDescription": {
                 "ability": "ABILITY",
                 "attack": "ATTACK",
+                "data": "DATA",
                 "defense": "DEFENSE",
                 "energy": "ENERGY",
                 "name": "NAME",

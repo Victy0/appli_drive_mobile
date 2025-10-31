@@ -16,6 +16,7 @@ class Appmon {
   final int defense;
   final int energy;
   final int resistance;
+  final int data;
   bool? fusioned;
   final String? primaryColor;
   final String? secondaryColor;
@@ -38,6 +39,7 @@ class Appmon {
     required this.defense,
     required this.energy,
     required this.resistance,
+    required this.data,
     this.fusioned,
     this.primaryColor,
     this.secondaryColor,
@@ -62,6 +64,7 @@ class Appmon {
       defense: map['defense'],
       energy: map['energy'],
       resistance: map['resistance'],
+      data: map['data'],
       fusioned: null,
       primaryColor: map['color_1'],
       secondaryColor: map['color_2'],

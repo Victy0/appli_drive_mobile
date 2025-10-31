@@ -1,4 +1,5 @@
 import 'package:appli_drive_mobile/interfaces/components/text_with_background_color.dart';
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:flutter/material.dart';
@@ -20,19 +21,22 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: const Color.fromARGB(255, 122, 122, 122),
       insetPadding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
+      backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          gradient: const LinearGradient(
-              colors: [Color.fromARGB(255, 92, 92, 92), Color.fromARGB(255, 211, 211, 211), Color.fromARGB(255, 255, 255, 255)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+          image: DecorationImage(
+            image: AssetImage('assets/images/background/powerDescription.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+            Colors.grey.withValues(alpha: 0.2),
+              BlendMode.srcATop,
             ),
+          ),
         ),
         child: SizedBox.expand(
           child: Padding(
@@ -47,45 +51,82 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         divider(),
-                        descriptionContainer(
-                          "attack",
-                          "orange",
-                          widget.appmon?.attack ?? 0,
-                          widget.appmonLinked?.attack,
+                        rowInfo(
+                          descriptionContainer(
+                            "attack",
+                            "orange",
+                            widget.appmon?.attack ?? 0,
+                            widget.appmonLinked?.attack,
+                          ),
+                          descriptionContainer(
+                            "defense",
+                            "purple",
+                            widget.appmon?.defense ?? 0,
+                            widget.appmonLinked?.defense,
+                          )
                         ),
                         divider(),
-                        descriptionContainer(
-                          "defense",
-                          "purple",
-                          widget.appmon?.defense ?? 0,
-                          widget.appmonLinked?.defense,
+                        rowInfo(
+                          descriptionContainer(
+                            "energy",
+                            "yellow",
+                            widget.appmon?.energy ?? 0,
+                            widget.appmonLinked?.energy,
+                          ),
+                          descriptionContainer(
+                            "resistance",
+                            "red",
+                            widget.appmon?.resistance ?? 0,
+                            widget.appmonLinked?.resistance,
+                          )
                         ),
                         divider(),
-                        descriptionContainer(
-                          "energy",
-                          "yellow",
-                          widget.appmon?.energy ?? 0,
-                          widget.appmonLinked?.energy,
+                        rowInfo(
+                          descriptionContainer(
+                            "ability",
+                            "blue",
+                            widget.appmon?.ability ?? 0,
+                            widget.appmonLinked?.ability,
+                          ),
+                          descriptionContainer(
+                            "data",
+                            "grey",
+                            widget.appmon?.data ?? 0,
+                            widget.appmonLinked?.data,
+                          )
                         ),
                         divider(),
-                        descriptionContainer(
-                          "resistance",
-                          "red",
-                          widget.appmon?.resistance ?? 0,
-                          widget.appmonLinked?.resistance,
-                        ),
                         divider(),
-                        descriptionContainer(
-                          "ability",
-                          "blue",
-                          widget.appmon?.ability ?? 0,
-                          widget.appmonLinked?.ability,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/traces/${widget.appmon?.id}.png",
+                              width: 185,
+                              fit: BoxFit.contain,
+                            ),
+                            if(widget.appmonLinked != null)...[
+                              const SizedBox(width: 1),
+                              ShaderMask(
+                                shaderCallback: (Rect bounds) {
+                                  return scanlineShader(bounds.size);
+                                },
+                                blendMode: BlendMode.srcATop,
+                                child: ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                    defineColor(widget.appmonLinked?.type.name ?? ""),
+                                    BlendMode.modulate,
+                                  ),
+                                  child: Image.asset(
+                                    "assets/images/traces/${widget.appmonLinked?.id}.png",
+                                    width: 185,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
-                        divider(),
-                        if(widget.appmonLinked == null)...[
-                          techniqueContainer(),
-                          divider(),
-                        ]
                       ],
                     ),
                   ),
@@ -116,101 +157,78 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
     );
   }
 
+  Widget rowInfo(Widget element1, Widget element2) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: element1,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 1,
+          child: element2,
+        ),
+      ],
+    );
+  }
+
   Widget nameContainer() {
     return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        border: Border.all(color: const Color.fromARGB(255, 0, 0, 0), width: 2),
-        borderRadius: BorderRadius.circular(5),
-      ),
       padding: const EdgeInsets.symmetric(horizontal: 10),
+      height: 90,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Row(
           children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.powerDescription.name"),
-              fontSize: 24,
-              color: "grey",
-              align: "center",
-            ),
-            const Divider(
-              color: Color.fromARGB(255, 0, 0, 0),
-              thickness: 2,
-              height: 0,
-            ),
-            Row(
-              children: [
-                if (widget.appmonLinked == null) ...[
-                  Expanded(
-                    child: Text(
-                      AppLocalization.of(context)
-                          .translate("appmons.names.${widget.appmon?.name}"),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+            if (widget.appmonLinked == null) ...[
+              Expanded(
+                child: TextWithWhiteShadow(
+                  text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
+                  fontSize: 30,
+                  height: 1.0,
+                  align: "center",
+                  applySoftWrap: true,
+                ),
+              ),
+            ] else ...[
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: TextWithWhiteShadow(
+                          text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
+                          fontSize: 30,
+                          height: 1.0,
+                          align: "center",
+                          applySoftWrap: true,
+                        ),
                       ),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
-                    ),
-                  ),
-                ] else ...[
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Text(
-                              AppLocalization.of(context)
-                                  .translate("appmons.names.${widget.appmon?.name}"),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: colorAppmonGrade(widget.appmon?.type.name, false),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.visible,
-                            ),
-                          ),
-                          const Text(
-                            "PLUS",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 23,
-                            ),
-                            softWrap: true,
-                            overflow: TextOverflow.visible,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Text(
-                              AppLocalization.of(context)
-                                  .translate("appmons.names.${widget.appmonLinked?.name}"),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: colorAppmonGrade(widget.appmonLinked?.type.name, true),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.visible,
-                            ),
-                          ),
-                        ],
+                      TextWithWhiteShadow(
+                        text: "PLUS",
+                        fontSize: 24,
+                        height: 1.0,
+                        align: "center",
+                        applySoftWrap: true,
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: TextWithWhiteShadow(
+                          text: AppLocalization.of(context).translate("appmons.names.${widget.appmonLinked?.name}"),
+                          fontSize: 30,
+                          height: 1.0,
+                          align: "center",
+                          applySoftWrap: true,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ],
-            ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -235,16 +253,16 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
         border: Border.all(color: const Color.fromARGB(255, 0, 0, 0), width: 2),
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 2),
         child: Column(
           children: [
             TextWithBackgroundColor(
               text: AppLocalization.of(context).translate("components.dialogs.powerDescription.$name"),
-              fontSize: 24,
+              fontSize: 22,
               color: color,
-              align: "right",
+              align: "left",
             ),
             const Divider(
               color: Color.fromARGB(255, 0, 0, 0),
@@ -252,7 +270,7 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
               height: 0,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 getColoredValueText(valueAppmon, valueAppmonLinked)
               ],
@@ -264,41 +282,14 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
   }
 
   Widget getColoredValueText(int valueAppmon, int? valueAppmonLinked) {
+    int totalValue = valueAppmon;
     if (valueAppmonLinked != null) {
-      int total = valueAppmon + valueAppmonLinked;
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5), child: RichText(
-          text: TextSpan(
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            children: [
-              TextSpan(
-                text: '$valueAppmon',
-                style: TextStyle(
-                  color: colorAppmonGrade(widget.appmon?.type.name, false)
-                ),
-              ),
-              const TextSpan(text: ' + '),
-              TextSpan(
-                text: '$valueAppmonLinked',
-                style: TextStyle(
-                  color: colorAppmonGrade(widget.appmonLinked?.type.name, true)
-                ),
-              ),
-              const TextSpan(text: ' = '),
-              TextSpan(text: '$total'),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return Padding(
+      totalValue = totalValue + valueAppmonLinked;
+    }
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15), 
         child: Text(
-          valueAppmon.toString(),
+          totalValue.toString(),
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -306,99 +297,44 @@ class DialogPowerDescriptionState extends State<DialogPowerDescription> {
           ),
         ),
       );
-    }
   }
 
-  Color? colorAppmonGrade(String? type, bool linked) {
-    switch (type) {
-      case "entertainment":
-        if(linked) {
-          return Colors.red;
-        }
-        return Colors.red[800];
-      case "game":
-        if(linked) {
-          return Colors.orange;
-        }
-        return Colors.orange[800];
-      case "life":
-        if(linked) {
-          return const Color.fromARGB(255, 248, 66, 127);
-        }
-        return const Color.fromARGB(255, 219, 36, 103);
-      case "navi":
-        if(linked) {
-          return const Color.fromARGB(255, 76, 219, 80);
-        }
-        return const Color.fromARGB(255, 45, 170, 52);
+  Shader scanlineShader(Size size) {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: List.generate(
+        (size.height / 2).floor(),
+        (i) => i.isEven
+          ? Colors.white.withValues(alpha: 0.5)
+          : Colors.transparent,
+      ),
+      stops: List.generate(
+        (size.height / 2).floor(),
+        (i) => i / (size.height / 2),
+      ),
+      tileMode: TileMode.repeated,
+    ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+  }
+
+  Color defineColor(String color) {
+    switch (color) {
       case "social":
-        if(linked) {
-          return Colors.blue[600];
-        }
-        return Colors.blue[800];
-      case "system":
-        if(linked) {
-          return const Color.fromARGB(255, 255, 234, 40);
-        }
-        return const Color.fromARGB(255, 230, 207, 0);
+        return const Color.fromARGB(255, 0, 162, 255).withValues(alpha: 0.6);
       case "tool":
-        if(linked) {
-          return const Color.fromARGB(255, 137, 39, 176);
-        }
-        return Colors.purple[800];
+        return const Color.fromARGB(255, 188, 45, 255).withValues(alpha: 0.6);
+      case "system":
+        return const Color.fromARGB(255, 255, 217, 0).withValues(alpha: 0.6);
+      case "entertainment":
+        return const Color.fromARGB(255, 255, 11, 11).withValues(alpha: 0.6);
+      case "life":
+        return const Color.fromARGB(255, 255, 43, 244).withValues(alpha: 0.6);
+      case "game":
+        return const Color.fromARGB(255, 255, 123, 0).withValues(alpha: 0.6);
+      case "navi":
+        return const Color.fromARGB(255, 44, 219, 0).withValues(alpha: 0.6);
+      default:
+        return const Color.fromARGB(255, 155, 155, 155).withValues(alpha: 0.6);
     }
-    return Colors.black;
-  }
-
-  Widget techniqueContainer() {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
-        border: Border.all(color: const Color.fromARGB(255, 0, 0, 0), width: 2),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Column(
-          children: [
-            TextWithBackgroundColor(
-              text: AppLocalization.of(context).translate("components.dialogs.powerDescription.technique"),
-              fontSize: 24,
-              color: "grey",
-              align: "left",
-            ),
-            const Divider(
-              color: Color.fromARGB(255, 0, 0, 0),
-              thickness: 2,
-              height: 0,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  // Ação ao clicar no botão
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 0, 60, 255),
-                  padding: const EdgeInsets.symmetric(vertical: 3),
-                ),
-                child: Text(
-                  AppLocalization.of(context).translate("components.dialogs.powerDescription.technique"),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  softWrap: true,
-                  overflow: TextOverflow.visible,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
