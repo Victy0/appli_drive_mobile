@@ -16,6 +16,8 @@ class AppliariseActions extends StatefulWidget {
   final DatabaseHelper databaseHelper;
   final bool tutorialFinished;
   final int appliDriveVersion;
+  final bool startAnimation;
+  final bool appGatai;
   const AppliariseActions({
     super.key,
     required this.appliDriveManagementService,
@@ -24,6 +26,8 @@ class AppliariseActions extends StatefulWidget {
     required this.databaseHelper,
     required this.tutorialFinished,
     required this.appliDriveVersion,
+    this.startAnimation = true,
+    this.appGatai = false,
   });
 
   @override
@@ -33,18 +37,41 @@ class AppliariseActions extends StatefulWidget {
 class AppliariseActionsState extends State<AppliariseActions> {
   final AudioService _audioService = AudioService();
 
+  bool _showIcons = false;
+
+  int _getDelayAnimation(int grade) {
+    if (grade == 2) {
+      return 2;
+    }
+    return 0;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+      Future.delayed(Duration(seconds: 13 + _getDelayAnimation(widget.appmon.grade.id) - (widget.appGatai ? 2 : 0)), () {
+      setState(() {
+        _showIcons = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Row(
-        children: [
-          if(widget.tutorialFinished) ...[
-            infoButton(),
-            const Spacer(),
-            appLinkButton(),
-          ]
-        ],
+      child: AnimatedOpacity(
+        opacity: (!widget.startAnimation || _showIcons) ? 1.0 : 0.0,
+        duration: const Duration(seconds: 1),
+        child: Row(
+          children: [
+            if(widget.tutorialFinished) ...[
+              infoButton(),
+              const Spacer(),
+              appLinkButton(),
+            ]
+          ],
+        ),
       ),
     );
   }
@@ -110,7 +137,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
                 onLanguageChange: widget.onLanguageChange,
                 appmon: appmonLinked,
                 appliDriveVersion: widget.appliDriveVersion,
-                startAnimation: false,
+                startAnimation: true,
                 appmonLinked1: appmonLinked.appmonLinked1,
                 appmonLinked2: appmonLinked.appmonLinked2,
               ),

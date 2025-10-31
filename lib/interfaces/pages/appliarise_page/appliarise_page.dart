@@ -45,6 +45,7 @@ class AppliarisePageState extends State<AppliarisePage> {
 
   bool _appliariseAnimation = true;
   bool _appGataiAnimation = true;
+  bool _showCloseButton = false;
   
   String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
@@ -68,11 +69,11 @@ class AppliarisePageState extends State<AppliarisePage> {
     return "";
   }
 
-  int _getDelayAnimation(int grade, bool isForAnimation) {
+  int _getDelayAnimation(int grade) {
     if (grade == 2) {
-      return isForAnimation ? 4 : 18;
+      return 4;
     }
-    return isForAnimation ? 0 : 13;
+    return 0;
   }
 
   void _startAppGataiAnimation() async {
@@ -91,7 +92,7 @@ class AppliarisePageState extends State<AppliarisePage> {
       "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
       "sounds/applink/appgatai_final.mp3",
     ]);
-    await Future.delayed(Duration(seconds: 17));
+    await Future.delayed(Duration(seconds: 18));
     setState(() {
       _appGataiAnimation = false;
     });
@@ -99,7 +100,13 @@ class AppliarisePageState extends State<AppliarisePage> {
       "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
       "sounds/applink/end.mp3",
       "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
+      "sounds/appliarise/appliarise_end.mp3",
     ]);
+    Future.delayed(Duration(seconds: 16), () {
+      setState(() {
+        _showCloseButton = true;
+      });
+    });
   }
 
   void _startAppliariseAnimation() async {
@@ -110,9 +117,14 @@ class AppliarisePageState extends State<AppliarisePage> {
       "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
       "sounds/appliarise/appliarise_end.mp3",
     ]);
-    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id, true)));
+    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id)));
     setState(() {
       _appliariseAnimation = false;
+    });
+    Future.delayed(Duration(seconds: 14 + _getDelayAnimation(widget.appmon.grade.id)), () {
+      setState(() {
+        _showCloseButton = true;
+      });
     });
   }
 
@@ -127,13 +139,14 @@ class AppliarisePageState extends State<AppliarisePage> {
       widget.appmon.id,
       widget.tutorialFinished,
     );
-    if(widget.appmonLinked1 != null) {
-      _appliariseAnimation = false;
-      _startAppGataiAnimation();
-    }
     if(widget.startAnimation) {
-      _appGataiAnimation = false;
-      _startAppliariseAnimation();
+      if(widget.appmonLinked1 != null) {
+        _appliariseAnimation = false;
+        _startAppGataiAnimation();
+      } else {
+        _appGataiAnimation = false;
+        _startAppliariseAnimation();
+      }
     }
   }
 
@@ -190,11 +203,17 @@ class AppliarisePageState extends State<AppliarisePage> {
                     databaseHelper: _databaseHelper,
                     tutorialFinished: widget.tutorialFinished,
                     appliDriveVersion: widget.appliDriveVersion,
+                    startAnimation: widget.startAnimation,
+                    appGatai: widget.appmonLinked1 != null,
                   ),
                 ],
               ),
             ),
-            ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            AnimatedOpacity(
+              opacity: (!widget.startAnimation || _showCloseButton) ? 1.0 : 0.0,
+              duration: const Duration(seconds: 1),
+              child: ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            ),
           ]
         ]
       ),
