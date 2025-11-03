@@ -234,7 +234,7 @@
             "virusmon": "VIRUSMON",
             "warpmon": "WARPMON",
             "watchmon": "WATCHMON",
-            "weathedramon": "WEATHEDRAMON",
+            "weathedramon": "WEATHERDRAMON",
             "weathermon": "WEATHERMON",
             "yadomon": "YADOMON"
         },
@@ -504,9 +504,10 @@
                 "type": "TYPE"
             },
             "insertCode": {
-                "codeIsRequired": "Code is required",
-                "enterAppmonCode": "Enter the Appmon code",
-                "invalidCode": "Invalid code"
+                "selectionIsRequired": "Selection is required",
+                "selectAnAppmon": "Select an appmon",
+                "invalidAppmon": "Invalid appmon selected",
+                "select": "SELECT ➜"
             },
             "powerDescription": {
                 "ability": "ABILITY",

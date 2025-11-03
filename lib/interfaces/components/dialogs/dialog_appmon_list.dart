@@ -2,20 +2,20 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
-class DialogAppmonCodeList extends StatefulWidget {
+class DialogAppmonList extends StatefulWidget {
   final List<Map<String, dynamic>> appmonCodeList;
   final bool homePage;
-  const DialogAppmonCodeList({
+  const DialogAppmonList({
     super.key,
     required this.appmonCodeList,
     this.homePage = false,
   });
 
   @override
-  DialogAppmonCodeListState createState() => DialogAppmonCodeListState();
+  DialogAppmonListState createState() => DialogAppmonListState();
 }
 
-class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
+class DialogAppmonListState extends State<DialogAppmonList> {
   final AudioService _audioService = AudioService();
   
   int _getAppmonQuantityByGrade(String grade) {
@@ -42,7 +42,7 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
       ),
       child: SizedBox.expand(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               Center(
@@ -167,13 +167,24 @@ class DialogAppmonCodeListState extends State<DialogAppmonCodeList> {
                       ),
                       const SizedBox(width: 16),
                       Expanded(
-                        child: Text(
-                          widget.homePage
-                            ? AppLocalization.of(context).translate("appmons.names.${item['name']}")
-                            : item['code'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          onTap: () {
+                            if(widget.homePage) {
+                              return;
+                            }
+                            Navigator.of(context).pop({'code': item['code'], 'name': item['name']});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              AppLocalization.of(context).translate("appmons.names.${item['name']}"),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
                         ),
                       ),
