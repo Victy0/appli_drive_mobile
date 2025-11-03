@@ -55,7 +55,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.9),
+                          color: Colors.white.withValues(alpha: 0.95),
                           blurRadius: 8,
                           spreadRadius: 2,
                           offset: const Offset(1, 1),
@@ -103,7 +103,7 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.9),
+                          color: Colors.white.withValues(alpha: 0.95),
                           blurRadius: 8,
                           spreadRadius: 2,
                           offset: const Offset(1, 1),
