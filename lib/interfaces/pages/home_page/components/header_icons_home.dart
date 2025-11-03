@@ -1,4 +1,4 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
