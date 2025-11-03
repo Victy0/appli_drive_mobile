@@ -1,4 +1,4 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
@@ -8,12 +8,12 @@ import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class DialogInsertCode extends StatefulWidget {
+class DialogChooseAppmon extends StatefulWidget {
   final AppliDriveManagementService appliDriveManagementService;
   final int appliDriveVersion;
   final DatabaseHelper databaseHelper;
   final Appmon? currentAppmon;
-  const DialogInsertCode({
+  const DialogChooseAppmon({
     super.key,
     required this.appliDriveManagementService,
     required this.appliDriveVersion,
@@ -22,18 +22,19 @@ class DialogInsertCode extends StatefulWidget {
   });
 
   @override
-  DialogInsertCodeState createState() => DialogInsertCodeState();
+  DialogChooseAppmonState createState() => DialogChooseAppmonState();
 }
 
-class DialogInsertCodeState extends State<DialogInsertCode> {
+class DialogChooseAppmonState extends State<DialogChooseAppmon> {
   final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
-  final TextEditingController _controller = TextEditingController();
 
   late List<Map<String, dynamic>> _appmonCodeList;
   late String? _lastAppmonBuddyEvolutionCode;
 
   String _errorCode = "";
+  String _selectedCode = "";
+  String _selectedName = "";
 
   void _getAppmonCodeList() async {
     _appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
@@ -59,7 +60,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
       ),
       title: Center(
         child: Text(
-          AppLocalization.of(context).translate("components.dialogs.insertCode.enterAppmonCode"),
+          AppLocalization.of(context).translate("components.dialogs.insertCode.selectAnAppmon"),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
@@ -75,21 +76,21 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 2),
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                      color: Colors.white,
+                    ),
+                    child: Center(
+                      child: Text(
+                        _selectedCode == ""
+                          ? AppLocalization.of(context).translate("components.dialogs.insertCode.select")
+                          : _selectedName.toUpperCase(),
+                        style: const TextStyle(fontSize: 25),
                       ),
                     ),
-                    controller: _controller,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 25),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                      LengthLimitingTextInputFormatter(3),
-                      UpperCaseTextFormatter(),
-                    ],
-                    keyboardType: TextInputType.text,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -131,10 +132,10 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
             TextButton(
               onPressed: () async {
                 final navigator = Navigator.of(context);
-                String code = _controller.text;
-                if( code == "") {
+                String? code = _selectedCode;
+                if(code.isEmpty || code == "") {
                   _audioService.playEffect("error");
-                  setState(() { _errorCode = "components.dialogs.insertCode.codeIsRequired"; });
+                  setState(() { _errorCode = "components.dialogs.insertCode.selectionIsRequired"; });
                   return;
                 }
                 final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
@@ -145,7 +146,7 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
                 );
                 if(appmon == null) {
                   _audioService.playEffect("error");
-                  setState(() { _errorCode = "components.dialogs.insertCode.invalidCode"; });
+                  setState(() { _errorCode = "components.dialogs.insertCode.invalidAppmon"; });
                   return;
                 }
                 _audioService.stopAppLinkWait();
@@ -171,12 +172,21 @@ class DialogInsertCodeState extends State<DialogInsertCode> {
         border: Border.all(color: Colors.black, width: 2),
       ),
       child: IconButton(
-        onPressed: () => {
-          showDialog<String>(
+        onPressed: () async {
+          final selected = await showDialog<Map<String, dynamic>>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: _appmonCodeList),
-          ),
+            builder: (BuildContext context) =>
+              DialogAppmonList(appmonCodeList: _appmonCodeList),
+          );
+
+          if (selected != null && selected.isNotEmpty) {
+            setState(() {
+              _selectedCode = selected['code'];
+              _selectedName = selected['name'];
+              _errorCode = "";
+            });
+          }
         },
         icon: Image.asset(
           'assets/images/icons/list_box.png',

@@ -504,9 +504,10 @@
                 "type": "属性"
             },
             "insertCode": {
-                "codeIsRequired": "コードが必要です",
-                "enterAppmonCode": "アプモンコードを入力",
-                "invalidCode": "無効なコード"
+                "selectionIsRequired": "選択が必要です",
+                "selectAnAppmon": "アプリモニタを選択",
+                "invalidAppmon": "無効なアプモンが選択されました。",
+                "select": "選択 ➜"
             },
             "powerDescription": {
                 "ability": "能力",

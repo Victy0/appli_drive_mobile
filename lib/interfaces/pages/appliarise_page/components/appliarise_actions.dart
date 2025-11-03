@@ -1,6 +1,6 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_choose_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -123,7 +123,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
         Appmon? appmonLinked = await showDialog<Appmon>(
           context: context,
           barrierDismissible: false,
-          builder: (BuildContext context) => DialogInsertCode(
+          builder: (BuildContext context) => DialogChooseAppmon(
             appliDriveManagementService: widget.appliDriveManagementService,
             appliDriveVersion: widget.appliDriveVersion,
             currentAppmon: widget.appmon,

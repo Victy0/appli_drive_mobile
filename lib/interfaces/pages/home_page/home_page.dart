@@ -1,7 +1,7 @@
 import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_choose_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/detail_rectangle.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
@@ -269,7 +269,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Appmon? appmon = await showDialog<Appmon>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogInsertCode(
+            builder: (BuildContext context) => DialogChooseAppmon(
               appliDriveManagementService: _appliDriveManagementService,
               appliDriveVersion: _appliDriveVersion,
               databaseHelper: _databaseHelper,
