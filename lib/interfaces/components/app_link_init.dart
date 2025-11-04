@@ -30,6 +30,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
   List<String> words = [];
   List<double> fontSizes = [];
   bool showWords = false;
+  bool _showAppgatai = false;
 
   double _getAppmonLinkedRatio(){
     if(widget.appmon.grade.id > widget.appmonLinked.grade.id) {
@@ -120,6 +121,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
 
     _cornerController.forward().whenComplete(() {
       _contentController.forward();
+      _showAppgatai = true;
     });
 
     Future.delayed(const Duration(seconds: 1), () {
@@ -160,7 +162,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
                     left: pos.dx - imgSize / 2,
                     top: pos.dy - imgSize / 2,
                     child: Opacity(
-                      opacity: 1,
+                      opacity: _showAppgatai ? 0 : 1,
                       child: ColorFiltered(
                         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                         child: SizedBox(
@@ -187,7 +189,7 @@ class AppLinkInitState extends State<AppLinkInit> with TickerProviderStateMixin 
                     left: pos.dx - imgSize / 2,
                     top: pos.dy - imgSize / 2,
                     child: Opacity(
-                      opacity: 1,
+                      opacity: _showAppgatai ? 0 : 1,
                       child: ColorFiltered(
                         colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
                         child: SizedBox(

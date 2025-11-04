@@ -3,11 +3,11 @@ import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class DialogAppmonList extends StatefulWidget {
-  final List<Map<String, dynamic>> appmonCodeList;
+  final List<Map<String, dynamic>> appmonList;
   final bool homePage;
   const DialogAppmonList({
     super.key,
-    required this.appmonCodeList,
+    required this.appmonList,
     this.homePage = false,
   });
 
@@ -48,8 +48,8 @@ class DialogAppmonListState extends State<DialogAppmonList> {
               Center(
                 child: Text(
                   widget.homePage 
-                    ? AppLocalization.of(context).translate("components.dialogs.appmonCodeList.availableAppmons")
-                    : AppLocalization.of(context).translate("components.dialogs.appmonCodeList.codeList"),
+                    ? AppLocalization.of(context).translate("components.dialogs.appmonList.availableAppmons")
+                    : AppLocalization.of(context).translate("components.dialogs.appmonList.codeList"),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -62,7 +62,7 @@ class DialogAppmonListState extends State<DialogAppmonList> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: groupedList(widget.appmonCodeList),
+                    children: groupedList(widget.appmonList),
                   ),
                 ),
               ),
@@ -92,10 +92,10 @@ class DialogAppmonListState extends State<DialogAppmonList> {
     );
   }
 
-  List<Widget> groupedList(List<Map<String, dynamic>> appmonCodeList) {
+  List<Widget> groupedList(List<Map<String, dynamic>> appmonList) {
     Map<String, List<Map<String, dynamic>>> groupedItems = {};
 
-    for (var item in appmonCodeList) {
+    for (var item in appmonList) {
       String gradeName = item['gradeName'];
       groupedItems.putIfAbsent(gradeName, () => []).add(item);
     }
@@ -173,7 +173,11 @@ class DialogAppmonListState extends State<DialogAppmonList> {
                             if(widget.homePage) {
                               return;
                             }
-                            Navigator.of(context).pop({'code': item['code'], 'name': item['name']});
+                            Navigator.of(context).pop({
+                              'code': item['code'],
+                              'name': item['name'],
+                              'id': item['id'],
+                            });
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),

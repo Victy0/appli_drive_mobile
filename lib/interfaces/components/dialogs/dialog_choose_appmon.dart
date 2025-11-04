@@ -13,12 +13,14 @@ class DialogChooseAppmon extends StatefulWidget {
   final int appliDriveVersion;
   final DatabaseHelper databaseHelper;
   final Appmon? currentAppmon;
+  final bool isAppliarise;
   const DialogChooseAppmon({
     super.key,
     required this.appliDriveManagementService,
     required this.appliDriveVersion,
     required this.databaseHelper,
     this.currentAppmon,
+    this.isAppliarise = false,
   });
 
   @override
@@ -29,15 +31,17 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
   final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
 
-  late List<Map<String, dynamic>> _appmonCodeList;
+  late List<Map<String, dynamic>> _appmonList;
   late String? _lastAppmonBuddyEvolutionCode;
 
   String _errorCode = "";
   String _selectedCode = "";
   String _selectedName = "";
+  String _selectedId = "";
+  String _textAfterSelection = "APP LINK:";
 
-  void _getAppmonCodeList() async {
-    _appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
+  void _getAppmonList() async {
+    _appmonList = await widget.databaseHelper.getAppmonCodeList(widget.currentAppmon?.grade.id ?? 4);
   }
 
   void _getLastAppmonBuddyEvolutionCode() async {
@@ -47,7 +51,10 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
   @override
   void initState() {
     super.initState();
-    _getAppmonCodeList();
+    if(widget.isAppliarise) {
+      _textAfterSelection = "APPLIARISE:";
+    }
+    _getAppmonList();
     _getLastAppmonBuddyEvolutionCode();
   }
 
@@ -59,13 +66,37 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       title: Center(
-        child: Text(
-          AppLocalization.of(context).translate("components.dialogs.insertCode.selectAnAppmon"),
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (_selectedCode == "") ...[
+              Expanded(
+                child: Text(
+                  AppLocalization.of(context).translate("components.dialogs.chooseAppmon.selectAnAppmon"),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ] else ...[
+              Text(
+                _textAfterSelection,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Image.asset(
+                "assets/images/apps/$_selectedId.png",
+                width: 50,
+                fit: BoxFit.contain,
+              ),
+            ],
+          ],
         ),
       ),
       content: SizedBox(
@@ -86,7 +117,7 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
                     child: Center(
                       child: Text(
                         _selectedCode == ""
-                          ? AppLocalization.of(context).translate("components.dialogs.insertCode.select")
+                          ? AppLocalization.of(context).translate("components.dialogs.chooseAppmon.select")
                           : _selectedName.toUpperCase(),
                         style: const TextStyle(fontSize: 25),
                       ),
@@ -135,7 +166,7 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
                 String? code = _selectedCode;
                 if(code.isEmpty || code == "") {
                   _audioService.playEffect("error");
-                  setState(() { _errorCode = "components.dialogs.insertCode.selectionIsRequired"; });
+                  setState(() { _errorCode = "components.dialogs.chooseAppmon.selectionIsRequired"; });
                   return;
                 }
                 final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
@@ -146,7 +177,7 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
                 );
                 if(appmon == null) {
                   _audioService.playEffect("error");
-                  setState(() { _errorCode = "components.dialogs.insertCode.invalidAppmon"; });
+                  setState(() { _errorCode = "components.dialogs.chooseAppmon.invalidAppmon"; });
                   return;
                 }
                 _audioService.stopAppLinkWait();
@@ -177,13 +208,14 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) =>
-              DialogAppmonList(appmonCodeList: _appmonCodeList),
+              DialogAppmonList(appmonList: _appmonList),
           );
 
           if (selected != null && selected.isNotEmpty) {
             setState(() {
               _selectedCode = selected['code'];
               _selectedName = selected['name'];
+              _selectedId = selected['id'];
               _errorCode = "";
             });
           }

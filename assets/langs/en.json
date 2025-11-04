@@ -485,7 +485,7 @@
             "exit": "EXIT"
         },
         "dialogs": {
-            "appmonCodeList": {
+            "appmonList": {
                 "availableAppmons": "Available appmons",
                 "codeList": "Code list"
             },
@@ -496,14 +496,13 @@
                 "app": "APP",
                 "chip": "CHIP",
                 "grade": "GRADE",
-                "name": "NAME",
                 "power": "POWER",
                 "profile": "PROFILE",
                 "serie": "SERIE",
                 "technique": "TECHNIQUE",
                 "type": "TYPE"
             },
-            "insertCode": {
+            "chooseAppmon": {
                 "selectionIsRequired": "Selection is required",
                 "selectAnAppmon": "Select an appmon",
                 "invalidAppmon": "Invalid appmon selected",
@@ -515,7 +514,6 @@
                 "data": "DATA",
                 "defense": "DEFENSE",
                 "energy": "ENERGY",
-                "name": "NAME",
                 "resistance": "RESISTENCE",
                 "technique": "TECHNIQUE"
             }
