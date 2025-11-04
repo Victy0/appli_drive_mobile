@@ -273,6 +273,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               appliDriveManagementService: _appliDriveManagementService,
               appliDriveVersion: _appliDriveVersion,
               databaseHelper: _databaseHelper,
+              isAppliarise: true,
             ),
           );
           if (appmon != null) {

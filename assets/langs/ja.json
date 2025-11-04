@@ -485,7 +485,7 @@
             "exit": "出口"
         },
         "dialogs": {
-            "appmonCodeList": {
+            "appmonList": {
                 "availableAppmons": "利用可能なアプモン",
                 "codeList": "コード一覧"
             },
@@ -496,14 +496,13 @@
                 "app": "アプリ",
                 "chip": "チップ",
                 "grade": "グレード",
-                "name": "名称",
                 "power": "パワー値",
                 "profile": "プロフィール",
                 "serie": "シリーズ",
                 "technique": "テクニカル",
                 "type": "属性"
             },
-            "insertCode": {
+            "chooseAppmon": {
                 "selectionIsRequired": "選択が必要です",
                 "selectAnAppmon": "アプリモニタを選択",
                 "invalidAppmon": "無効なアプモンが選択されました。",
@@ -515,7 +514,6 @@
                 "data": "データ",
                 "defense": "防御",
                 "energy": "エネルギー",
-                "name": "名前",
                 "resistance": "耐性",
                 "technique": "テクニカル"
             }

@@ -182,7 +182,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonList(appmonCodeList: appmonCodeList, homePage: true),
+            builder: (BuildContext context) => DialogAppmonList(appmonList: appmonCodeList, homePage: true),
           ),
         },
         icon: Image.asset(
