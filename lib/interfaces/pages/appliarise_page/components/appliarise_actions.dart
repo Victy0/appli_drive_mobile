@@ -1,8 +1,10 @@
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_choose_appmon.dart';
+import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/app_link_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
+import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
 import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
@@ -38,19 +40,41 @@ class AppliariseActionsState extends State<AppliariseActions> {
   final AudioService _audioService = AudioService();
 
   bool _showIcons = false;
+  bool _isDescriptionPhase = true;
+  bool _showDescription = false;
+  String _textDescritpion = "";
 
-  int _getDelayAnimation(int grade) {
+  int _getDelayAnimationIcons(int grade) {
     if (grade == 2) {
       return 2;
     }
-    return 0;
+    return 1;
+  }
+
+  int _getDelayChangeText(int grade) {
+    if (grade == 2) {
+      return 1;
+    }
+    return 1;
   }
 
   @override
   void initState() {
     super.initState();
-      Future.delayed(Duration(seconds: 13 + _getDelayAnimation(widget.appmon.grade.id) - (widget.appGatai ? 2 : 0)), () {
+      _textDescritpion = "appmons.appliarise.grade.${widget.appmon.grade.name}";
+      Future.delayed(Duration(seconds: 5 - (widget.appGatai ? 2 : 0)), () {
+        setState(() {
+          _showDescription = true;
+        });
+      });
+      Future.delayed(Duration(seconds: 7 + _getDelayChangeText(widget.appmon.grade.id) - (widget.appGatai ? 2 : 0)), () {
+        setState(() {
+          _textDescritpion = "appmons.appliarise.appmons.${widget.appmon.code.toLowerCase()}";
+        });
+      });
+      Future.delayed(Duration(seconds: 13 + _getDelayAnimationIcons(widget.appmon.grade.id) - (widget.appGatai ? 2 : 0)), () {
       setState(() {
+        _isDescriptionPhase = false;
         _showIcons = true;
       });
     });
@@ -60,19 +84,37 @@ class AppliariseActionsState extends State<AppliariseActions> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: AnimatedOpacity(
-        opacity: (!widget.startAnimation || _showIcons) ? 1.0 : 0.0,
-        duration: const Duration(seconds: 1),
-        child: Row(
-          children: [
-            if(widget.tutorialFinished) ...[
-              infoButton(),
-              const Spacer(),
-              appLinkButton(),
-            ]
-          ],
+      child: SizedBox(
+        height: 80,
+        child: _isDescriptionPhase
+          ? AnimatedOpacity(
+            opacity: (!widget.startAnimation || _showDescription)
+                ? 1.0
+                : 0.0,
+            duration: const Duration(seconds: 1),
+            child: TextWithWhiteShadow(
+              text: AppLocalization.of(context).translate(
+                _textDescritpion,
+              ),
+              fontSize: 28,
+              applySoftWrap: true,
+              align: "center",
+            ),
+          )
+        : AnimatedOpacity(
+            opacity: (!widget.startAnimation || _showIcons) ? 1.0 : 0.0,
+            duration: const Duration(seconds: 2),
+            child: Row(
+              children: [
+                if (widget.tutorialFinished) ...[
+                  infoButton(),
+                  const Spacer(),
+                  appLinkButton(),
+                ]
+              ],
+            ),
+          ),
         ),
-      ),
     );
   }
 
