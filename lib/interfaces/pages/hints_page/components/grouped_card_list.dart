@@ -59,6 +59,12 @@ class GroupedCardListState extends State<GroupedCardList> {
                               color: Colors.black,
                             ),
                           ),
+                          const SizedBox(height: 16),
+                          Image.asset(
+                            'assets/images/hints/$hintCode.jpg',
+                            height: 200,
+                            fit: BoxFit.contain,
+                          ),
                         ],
                       ),
                     ),
