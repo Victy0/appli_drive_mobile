@@ -53,7 +53,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
 
   int _getDelayChangeText(int grade) {
     if (grade == 2) {
-      return 1;
+      return 2;
     }
     return 1;
   }
