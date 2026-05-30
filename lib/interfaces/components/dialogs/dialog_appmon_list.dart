@@ -75,7 +75,7 @@ class DialogAppmonListState extends State<DialogAppmonList> {
                     shape: const CircleBorder(),
                   ),
                   onPressed: () {
-                    _audioService.playEffect("back");
+                    if(widget.homePage) _audioService.playEffect("back");
                     Navigator.pop(context);
                   },
                   child: const Icon(
