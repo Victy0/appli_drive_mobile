@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/image_outlined.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -51,22 +52,10 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.95),
-                          blurRadius: 8,
-                          spreadRadius: 2,
-                          offset: const Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      "assets/images/apps/${widget.appmon.id}.png",
-                      width: 60,
-                      height: 60,
-                    ),
+                  child: ImageOutlined(
+                    asset: "assets/images/apps/${widget.appmon.id}.png",
+                    size: 60,
+                    outlineSize: 5,
                   ),
                 ),
                 Expanded(
@@ -99,22 +88,10 @@ class AppliariseSummaryInfoState extends State<AppliariseSummaryInfo> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withValues(alpha: 0.95),
-                          blurRadius: 8,
-                          spreadRadius: 2,
-                          offset: const Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                    child: Image.asset(
-                      "assets/images/types/${widget.appmon.type.name}.png",
-                      width: 60,
-                      height: 60,
-                    ),
+                  child:ImageOutlined(
+                    asset: "assets/images/types/${widget.appmon.type.name}.png",
+                    size: 60,
+                    outlineSize: 5,
                   ),
                 ),
               ],
