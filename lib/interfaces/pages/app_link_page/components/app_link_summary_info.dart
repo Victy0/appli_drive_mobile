@@ -80,11 +80,14 @@ class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: TextWithWhiteShadow(
-                    text: AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
-                    fontSize: 24,
-                    align: "right",
-                    applySoftWrap: true,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextWithWhiteShadow(
+                      text: AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
+                      fontSize: 24,
+                      align: "right",
+                      applySoftWrap: true,
+                    ),
                   ),
                 ),
                 Padding(

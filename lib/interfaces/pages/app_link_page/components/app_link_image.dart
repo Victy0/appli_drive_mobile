@@ -221,6 +221,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
                     fontSize: 40,
                     height: 1.0,
                     align: "left",
+                    outlineWidth: 15,
                   ),
                 ),
               ],
@@ -229,6 +230,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
               text: "PLUS",
               fontSize: 30,
               height: 1.0,
+              outlineWidth: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -241,6 +243,7 @@ class AppLinkImageState extends State<AppLinkImage> with SingleTickerProviderSta
                     fontSize: 40,
                     height: 1.0,
                     align: "right",
+                    outlineWidth: 15,
                   ),
                 ),
               ],

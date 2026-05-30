@@ -120,7 +120,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
   Color _getDialogColorBackground() {
     switch (widget.interface) {
       case "appliArise":
-        return Colors.grey.withValues(alpha: 0.2);
+        return Colors.blue.withValues(alpha: 0.2);
       case "7code":
         return Colors.purple.withValues(alpha: 0.4);
       case "dataCenter":
@@ -153,7 +153,7 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
         child: Stack(
           children: [
             Positioned(
-              right: 20,
+              left: 0,
               top: -5,
               child: Image.asset(
                 "assets/images/traces/${widget.appmon?.id}.png",
@@ -164,12 +164,18 @@ class DialogInfoAppmonState extends State<DialogInfoAppmon> {
             Row(
               children: [
                 Expanded(
-                  child: TextWithWhiteShadow(
-                    text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
-                    fontSize: 30,
-                    align: "left",
-                    height: 1.0,
-                    applySoftWrap: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 60.0, right: 1.0),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextWithWhiteShadow(
+                        text: AppLocalization.of(context).translate("appmons.names.${widget.appmon?.name}"),
+                        fontSize: 30,
+                        align: "right",
+                        height: 1.0,
+                        applySoftWrap: true,
+                      ),
+                    ),
                   ),
                 ),
               ],
