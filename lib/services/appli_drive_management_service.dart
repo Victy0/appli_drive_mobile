@@ -248,6 +248,7 @@ class AppliDriveManagementService {
       );
       preferencesService.setHintInHintRevealedList("appmon", "1");
       preferencesService.setHintInHintRevealedList("appmon", "2");
+      preferencesService.setHintInHintRevealedList("appmon", "3");
       preferencesService.setHintInHintRevealedList("appliDrive", "1");
       preferencesService.setHintInHintRevealedList("7code");
     }
@@ -255,5 +256,6 @@ class AppliDriveManagementService {
 
   void updateAppliDriveVersion(int version) {
     preferencesService.setInt(AppPreferenceKey.appliDriveVersion, version);
+    preferencesService.setHintInHintRevealedList("appmon", "4");
   }
 }
