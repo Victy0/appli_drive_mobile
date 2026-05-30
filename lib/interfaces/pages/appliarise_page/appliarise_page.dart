@@ -147,6 +147,13 @@ class AppliarisePageState extends State<AppliarisePage> {
         _appGataiAnimation = false;
         _startAppliariseAnimation();
       }
+    } else {
+      _appliariseAnimation = false;
+      _appGataiAnimation = false;
+      _audioService.playAudioSequence([
+        "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      ]);
+      _showCloseButton = true;
     }
   }
 

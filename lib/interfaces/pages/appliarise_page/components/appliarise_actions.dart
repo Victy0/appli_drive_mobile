@@ -61,6 +61,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
   @override
   void initState() {
     super.initState();
+    if(widget.startAnimation) {
       _textDescritpion = "appmons.appliarise.grade.${widget.appmon.grade.name}";
       Future.delayed(Duration(seconds: 5 - (widget.appGatai ? 2 : 0)), () {
         setState(() {
@@ -73,11 +74,16 @@ class AppliariseActionsState extends State<AppliariseActions> {
         });
       });
       Future.delayed(Duration(seconds: 13 + _getDelayAnimationIcons(widget.appmon.grade.id) - (widget.appGatai ? 2 : 0)), () {
-      setState(() {
-        _isDescriptionPhase = false;
-        _showIcons = true;
+        setState(() {
+          _isDescriptionPhase = false;
+          _showIcons = true;
+        });
       });
-    });
+    } else {
+      _showDescription = false;
+      _isDescriptionPhase = false;
+      _showIcons = true;
+    }
   }
 
   @override
@@ -88,7 +94,7 @@ class AppliariseActionsState extends State<AppliariseActions> {
         height: 80,
         child: _isDescriptionPhase
           ? AnimatedOpacity(
-            opacity: (!widget.startAnimation || _showDescription)
+            opacity: (_showDescription)
                 ? 1.0
                 : 0.0,
             duration: const Duration(seconds: 1),
@@ -102,7 +108,9 @@ class AppliariseActionsState extends State<AppliariseActions> {
             ),
           )
         : AnimatedOpacity(
-            opacity: (!widget.startAnimation || _showIcons) ? 1.0 : 0.0,
+            opacity: (_showIcons)
+                ? 1.0
+                : 0.0,
             duration: const Duration(seconds: 2),
             child: Row(
               children: [
