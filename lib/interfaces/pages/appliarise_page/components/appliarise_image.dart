@@ -138,6 +138,7 @@ class AppliariseImageState extends State<AppliariseImage> with SingleTickerProvi
                   text: AppLocalization.of(context)
                       .translate("appmons.names.${widget.appmon.name}"),
                   fontSize: 40,
+                  outlineWidth: 15,
                 ),
               ],
             ),

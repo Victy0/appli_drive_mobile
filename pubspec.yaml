@@ -41,6 +41,7 @@ flutter:
     - assets/images/background/
     - assets/images/chips/
     - assets/images/flags/
+    - assets/images/hints/
     - assets/images/icons/
     - assets/images/types/
     - assets/images/traces/
