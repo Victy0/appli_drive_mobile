@@ -12,6 +12,7 @@ class AppliDriveManagementService {
     required this.preferencesService,
   });
 
+  // Verifica se é possível realizar applink entre appmons do mesmo nível, considerando a versão do appli drive
   bool _isPossibleApplinkSameGrade(int appliDriveVersion, int grade) {
     if(appliDriveVersion == 2 && grade >= 2) {
       return false;
@@ -19,6 +20,7 @@ class AppliDriveManagementService {
     return true;
   }
 
+  // Realiza o appliarise ou applink com base no código do appmon fornecido
   Future<Appmon?> apliariseOrApplinkByCode(
     String code,
     Appmon? currentAppmonAppliare,
@@ -86,6 +88,7 @@ class AppliDriveManagementService {
     return await databaseHelper.getAppmonByCode(code);
   }
 
+  // Recupera informações do appmon parceiro no momento da configuração inicial
   Map<String, String> getAppmonBuddyInformation(String appmon) {
     String name = "";
     String primaryColor = "";
@@ -216,6 +219,7 @@ class AppliDriveManagementService {
     return info;
   }
 
+  // Realiza o pareamento do appmon parceiro
   void pairBuddyAppmon(
     String name,
     Map<String, String> appmonEvolutionInfo,
@@ -232,10 +236,12 @@ class AppliDriveManagementService {
     preferencesService.setString(AppPreferenceKey.secondaryColor, secondaryColor);
   }
 
+  // Deixa visível appmons a partir da lista de ids fornecida
   void revealAppmons(List<String> appmonIds) {
     databaseHelper.setRevealedAppmonsForIds(appmonIds);
   }
 
+  // Deixa visível o appmon pelo id fornecido e marcação de finalização de tutorial
   void setAppmonReveleadedId(String appmonId, bool tutorialFinished) {
     preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
@@ -254,6 +260,7 @@ class AppliDriveManagementService {
     }
   }
 
+  // Atualiza a versão do appli drive
   void updateAppliDriveVersion(int version) {
     preferencesService.setInt(AppPreferenceKey.appliDriveVersion, version);
     preferencesService.setHintInHintRevealedList("appmon", "4");

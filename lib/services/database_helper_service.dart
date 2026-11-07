@@ -18,6 +18,7 @@ class DatabaseHelper {
 
   DatabaseHelper._internal();
 
+  // Recupera base de dados para aplicação
   Future<Database> get database async {
     if (_database != null) return _database!;
     
@@ -25,6 +26,7 @@ class DatabaseHelper {
     return _database!;
   }
 
+  // Inicializa base de dados
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'appli_drive_database.db');
 
@@ -32,8 +34,10 @@ class DatabaseHelper {
     int newVersion = 2;
     List<String> idsToReveal = [];
 
+    // Verifica se tem nova versão da base de dados
     if (currentVersion < newVersion) {
       if (await File(path).exists()) {
+        // Mantêm mesmo estado de dados modificados oa longo do uso da aplicação para appmons já revelados
         List<Map<String, dynamic>> appmonsRevealed = await getAppmonCodeList(4);
         idsToReveal = appmonsRevealed.map((item) => item['id'].toString()).toList();
         await deleteDatabase(path);
@@ -57,6 +61,7 @@ class DatabaseHelper {
     );
   }
 
+  // Recupera dados do appmon pelo código fornecido
   Future<Appmon?> getAppmonByCode(String code, {bool ignoreRevealedField = false}) async {
     String revealedCondiction = '';
     if(!ignoreRevealedField) {
@@ -86,6 +91,7 @@ class DatabaseHelper {
     }
   }
 
+  // Recupera lista de dados de appmons pelo nível fornecido
   Future<List<Map<String, dynamic>>> getAppmonCodeList(int gradeLevelId) async {
     final db = await database;
     String sql = '''
@@ -100,6 +106,7 @@ class DatabaseHelper {
     return await db.rawQuery(sql, [gradeLevelId]);
   }
 
+  // Recupera lista de dados de appmons para página "Data center" por lista de ids fornecida
   Future<List<Map<String, dynamic>>> getAppmonCodeListToDataCenter({List<String>? ids, bool filterByIds = true}) async {
     final db = await database;
 
@@ -125,6 +132,7 @@ class DatabaseHelper {
     return await db.rawQuery(sql, whereArgs);
   }
 
+  // Recupera dados de 7 code appmon pelo código informado
   Future<Appmon> getSevenCodeInfo(String code) async {
     final db = await database;
     String sql = '''
@@ -143,6 +151,7 @@ class DatabaseHelper {
     return Appmon.fromMap(result.first);
   }
 
+  // Atualiza visibilidade de todos os appmons para não visíveis 
   Future<void> resetRevealedToZero() async {
     final db = await database;
     await db.update(
@@ -151,6 +160,7 @@ class DatabaseHelper {
     );
   }
 
+  // Atualiza visibilidade de appmons por lista de ids fornecida
   Future<void> setRevealedAppmonsForIds(List<String> ids) async {
     if (ids.isEmpty) return;
 
