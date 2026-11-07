@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/components/image_outlined.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
@@ -13,82 +14,81 @@ class AppLinkSummaryInfo extends StatefulWidget {
 }
 
 class AppLinkSummaryInfoState extends State<AppLinkSummaryInfo> {
+  bool _showIcons = false;
+
+  @override
+  void initState() {
+    super.initState();
+      Future.delayed(Duration(seconds: 4), () {
+      setState(() {
+        _showIcons = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // APP 1
-        Container(
-          margin: const EdgeInsets.only(left: 0, right: 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.8),
-                        blurRadius: 8,
-                        spreadRadius: 2,
-                        offset: const Offset(1, 1),
-                      ),
-                    ],
-                  ),
-                  child: Image.asset(
-                    "assets/images/apps/${widget.appmon.id}.png",
-                    width: 60,
-                    height: 60,
+        //APP 1
+        AnimatedOpacity(
+          opacity: _showIcons ? 1.0 : 0.0,
+          duration: const Duration(seconds: 1),
+          child: Container(
+            margin: const EdgeInsets.only(left: 0, right: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ImageOutlined(
+                    asset: "assets/images/apps/${widget.appmon.id}.png",
+                    size: 60,
+                    outlineSize: 5,
                   ),
                 ),
-              ),
-              Expanded(
-                child: TextWithWhiteShadow(
-                  text: AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
-                  fontSize: 24,
-                  applySoftWrap: true,
+                Expanded(
+                  child: TextWithWhiteShadow(
+                    text: AppLocalization.of(context).translate("appmons.apps.${widget.appmon.app}"),
+                    fontSize: 24,
+                    applySoftWrap: true,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        // APP 2
-        Container(
-          margin: const EdgeInsets.only(left: 10, right: 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: TextWithWhiteShadow(
-                  text: AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
-                  fontSize: 24,
-                  align: "right",
-                  applySoftWrap: true,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.8),
-                        blurRadius: 8,
-                        spreadRadius: 2,
-                        offset: const Offset(1, 1),
-                      ),
-                    ],
-                  ),
-                  child: Image.asset(
-                    "assets/images/apps/${widget.appmonLinked.id}.png",
-                    width: 60,
-                    height: 60,
+          // APP 2
+        AnimatedOpacity(
+          opacity: _showIcons ? 1.0 : 0.0,
+          duration: const Duration(seconds: 1),
+          child: Container(
+            margin: const EdgeInsets.only(left: 10, right: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextWithWhiteShadow(
+                      text: AppLocalization.of(context).translate("appmons.apps.${widget.appmonLinked.app}"),
+                      fontSize: 24,
+                      align: "right",
+                      applySoftWrap: true,
+                    ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ImageOutlined(
+                    asset: "assets/images/apps/${widget.appmonLinked.id}.png",
+                    size: 60,
+                    outlineSize: 5,
+                  )
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -11,9 +11,19 @@ class Appmon {
   final TypeAppmon type;
   final GradeAppmon grade;
   final FusionInfo? fusionInfo;
+  final int ability;
+  final int attack;
+  final int defense;
+  final int energy;
+  final int resistance;
+  final int data;
   bool? fusioned;
   final String? primaryColor;
   final String? secondaryColor;
+  final int imageSize;
+  Appmon? appmonLinked1;
+  Appmon? appmonLinked2;
+  final String serie;
 
   Appmon({
     required this.id,
@@ -24,9 +34,19 @@ class Appmon {
     required this.type,
     required this.grade,
     required this.fusionInfo,
+    required this.ability,
+    required this.attack,
+    required this.defense,
+    required this.energy,
+    required this.resistance,
+    required this.data,
     this.fusioned,
     this.primaryColor,
     this.secondaryColor,
+    required this.imageSize,
+    this.appmonLinked1,
+    this.appmonLinked2,
+    required this.serie,
   });
 
   factory Appmon.fromMap(Map<String, dynamic> map) {
@@ -39,9 +59,19 @@ class Appmon {
       type: TypeAppmon.fromMap(map),
       grade: GradeAppmon.fromMap(map),
       fusionInfo: map['fusion_id'] != null ? FusionInfo.fromMap(map) : null,
+      ability: map['ability'],
+      attack: map['attack'],
+      defense: map['defense'],
+      energy: map['energy'],
+      resistance: map['resistance'],
+      data: map['data'],
       fusioned: null,
       primaryColor: map['color_1'],
       secondaryColor: map['color_2'],
+      imageSize: map['image_size'],
+      appmonLinked1: null,
+      appmonLinked2: null,
+      serie: map['serie'],
     );
   }
 }

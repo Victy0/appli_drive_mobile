@@ -59,6 +59,12 @@ class GroupedCardListState extends State<GroupedCardList> {
                               color: Colors.black,
                             ),
                           ),
+                          const SizedBox(height: 16),
+                          Image.asset(
+                            'assets/images/hints/$hintCode.jpg',
+                            height: 200,
+                            fit: BoxFit.contain,
+                          ),
                         ],
                       ),
                     ),
@@ -101,7 +107,7 @@ class GroupedCardListState extends State<GroupedCardList> {
         final hasNumbers = numbers.isNotEmpty;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          padding: const EdgeInsets.symmetric(vertical: 6),
           child: Theme(
             data: Theme.of(context).copyWith(
               dividerColor: Colors.transparent,

@@ -1,7 +1,7 @@
 name: appli_drive_mobile
 description: "A version mobile of Appli Drive"
 
-version: 0.0.0+1
+version: 0.1.1+1
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -16,16 +16,14 @@ dependencies:
   path: ^1.9.0
   flutter_localizations:
     sdk: flutter
-  audioplayers: ^6.1.0
-  screen_state: ^3.0.0
-  sensors_plus: ^3.0.4
-
+  audioplayers: ^6.2.0
+  screen_state: ^4.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter_launcher_icons:
   image_path: "assets/images/icon_app.jpg"
@@ -40,8 +38,18 @@ flutter:
     - assets/images/7code/
     - assets/images/appmons/
     - assets/images/apps/
+    - assets/images/background/
+    - assets/images/chips/
     - assets/images/flags/
+    - assets/images/hints/
     - assets/images/icons/
     - assets/images/types/
+    - assets/images/traces/
     - assets/sounds/
+    - assets/sounds/appliarise/
+    - assets/sounds/appliarise/appmon_name/
+    - assets/sounds/appliarise/appmon_start/
+    - assets/sounds/applink/
+    - assets/sounds/applink/names/
+    - assets/sounds/background/
     - assets/langs/

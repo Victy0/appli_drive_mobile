@@ -2,22 +2,27 @@ import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/first_setup_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/initial_page/initial_page.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:screen_state/screen_state.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
+void hideSystemUI() {
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.light,
+    systemNavigationBarDividerColor: Colors.transparent,
+  ));
+}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  void hideSystemUI() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ));
-  }
 
   hideSystemUI();
   
@@ -27,7 +32,11 @@ void main() {
   ]).then((_) {
     runApp(const MyApp());
     WidgetsBinding.instance.addObserver(
-      LifecycleEventHandler(resumeCallBack: () async => hideSystemUI()),
+      LifecycleEventHandler(resumeCallBack: () async {
+        hideSystemUI();
+        await Future.delayed(const Duration(milliseconds: 250));
+        hideSystemUI();
+      }),
     );
   });
 }
@@ -39,9 +48,12 @@ class MyApp extends StatefulWidget  {
   MyAppState createState() => MyAppState();
 }
 
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
+  final Screen _screen = Screen();
 
+  Stream<ScreenStateEvent>? _screenStream;
   Locale _deviceLocale = WidgetsBinding.instance.platformDispatcher.locale;
   bool _appmonPairing = false;
   bool _isLoading = true;
@@ -69,11 +81,51 @@ class MyAppState extends State<MyApp> {
     });
   }
 
+  void _startMonitoring() {
+    _screenStream = _screen.screenStateStream;
+    _screenStream?.listen((event) {
+      if (event == ScreenStateEvent.SCREEN_OFF) {
+        _audioService.pauseBackground();
+        _audioService.stopEffect();
+      } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
+        _audioService.resumeBackground();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _getSetUp();
+    _audioService.preloadAudiosEffects({
+      "start": "sounds/start.mp3",
+      "continue_fs": "sounds/continue_first_step.mp3",
+      "click": "sounds/click.mp3",
+      "back": "sounds/back.mp3",
+      "appliarise": "sounds/appliarise_init.mp3",
+      "error": "sounds/error.mp3",
+      "applink": "sounds/applink/applink.mp3",
+      "": "sounds/back.mp3",
+    });
+    _startMonitoring();
+    WidgetsBinding.instance.addObserver(this);
     WakelockPlus.enable();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _audioService.pauseBackground();
+      _audioService.stopEffect();
+    } else if (state == AppLifecycleState.resumed) {
+      _audioService.resumeBackground();
+    }
   }
 
   @override

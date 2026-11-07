@@ -1,7 +1,7 @@
 import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_insert_code.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_choose_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/detail_rectangle.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
@@ -10,10 +10,10 @@ import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/menu_icons.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/components/pairing_menu.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +28,9 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+  final AudioService _audioService = AudioService();
+
+  late AppliDriveManagementService _appliDriveManagementService;
 
   String _appmonPairingName = "";
   String _appmonColorPrimary = "";
@@ -36,15 +38,26 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<Map<String, String>> _appmonPairingEvolutionInfo = [];
   bool _tutorialFinished = false;
   bool _show7codeIcon = false;
+  int _appliDriveVersion = 0;
   bool _isLoading = true;
+  bool _canInteract = false;
 
-  _getInitialValues() async {
+  late AnimationController _detailController;
+  late Animation<Offset> _leftOffsetAnim;
+  late Animation<Offset> _rightOffsetAnim;
+
+  late AnimationController _contentController;
+  late Animation<double> _contentOpacityAnim;
+  late Animation<Offset> _contentOffsetAnim;
+
+  void _getInitialValues() async {
     final String appmonName = await _preferencesService.getString(AppPreferenceKey.appmonPairingName) ?? "";
     final String appmonColorPrimary = await _preferencesService.getString(AppPreferenceKey.primaryColor) ?? "";
     final String appmonColorSecondary = await _preferencesService.getString(AppPreferenceKey.secondaryColor) ?? "";
     final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
     final bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
     final bool show7codeIcon = await _preferencesService.getBool(AppPreferenceKey.show7codeIcon);
+    final int appliDriveVersion = await _preferencesService.getInt(AppPreferenceKey.appliDriveVersion) ?? 0;
     
     setState(() {
       _appmonPairingName = appmonName;
@@ -53,7 +66,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _appmonPairingEvolutionInfo = appmonPairingEvolutionInfo;
       _tutorialFinished = tutorialFinished;
       _show7codeIcon = show7codeIcon;
+      _appliDriveVersion = appliDriveVersion;
       _isLoading = false;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _detailController.forward();
+      _contentController.forward();
     });
   }
 
@@ -61,9 +80,57 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     if(widget.initSound) {
-      _audioPlayerMomentary.play(AssetSource('sounds/start.mp3'));
+      _audioService.playEffect("start");
+      Future.delayed(const Duration(seconds: 2), () {
+        _audioService.playBackground("home_page");
+      });
     }
+    else {
+      _audioService.playBackground("home_page");
+    }
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
+
+    _detailController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+
+    _leftOffsetAnim = Tween<Offset>(
+      begin: const Offset(-1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _detailController, curve: Curves.easeOut));
+
+    _rightOffsetAnim = Tween<Offset>(
+      begin: const Offset(1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _detailController, curve: Curves.easeOut));
+
+    _contentController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    );
+
+    Future.delayed(Duration(milliseconds: 660), () {
+      if (!mounted) return;
+      setState(() => _canInteract = true);
+    });
+
+    _contentOpacityAnim = CurvedAnimation(parent: _contentController, curve: Curves.easeIn);
+    _contentOffsetAnim = Tween<Offset>(begin: const Offset(0.0, 0.05), end: Offset.zero)
+        .animate(CurvedAnimation(parent: _contentController, curve: Curves.easeOut));
+
     _getInitialValues();
+  }
+
+  String _translateAppliDriveVersionName(int versionValue) {
+    final versionName = [
+      "pages.homePage.appliDriveVersionNames.basic",
+      "pages.homePage.appliDriveVersionNames.standard",
+    ];
+    return versionName[versionValue - 1];
   }
 
   @override
@@ -72,79 +139,122 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          const BackgroundImage(color: "grey"),
-          // detail top
-          Positioned(
-            top: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                HeaderIconsHome(
-                  onLanguageChange: widget.onLanguageChange,
-                  databaseHelper: _databaseHelper,
-                  tutorialFinished: _tutorialFinished,
-                ),
-                DetailRectangle(
-                  position: 'left',
-                  primaryColor: _appmonColorPrimary,
-                  secondaryColor: _appmonColorSecondary,
-                ),
-              ]
+    return AbsorbPointer(
+      absorbing: !_canInteract,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            const BackgroundImage(
+              color: "grey",
+              scope: "common",
             ),
-          ),
-          // content
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                PairingMenu(
-                  onLanguageChange: widget.onLanguageChange,
-                  databaseHelper: _databaseHelper,
-                  appmonPairingName: _appmonPairingName,
-                  appmonEvolutionInfo: _appmonPairingEvolutionInfo,
-                  tutorialFinished: _tutorialFinished,
-                ),
-                ...(_tutorialFinished
-                  ? tutorialFinishedWidgets()
-                  : tutorialUnfinishedWidgets()
-                ),
-              ],
-            ),
-          ),
-          // detail bottom
-          Positioned(
-            bottom: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - STANDART",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+            // DETAIL TOP
+            Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  FadeTransition(
+                    opacity: _contentOpacityAnim,
+                    child: SlideTransition(
+                      position: _contentOffsetAnim,
+                      child: HeaderIconsHome(
+                        onLanguageChange: widget.onLanguageChange,
+                        databaseHelper: _databaseHelper,
+                        tutorialFinished: _tutorialFinished,
                       ),
                     ),
                   ),
-                ),
-                DetailRectangle(
-                  position: 'right',
-                  primaryColor: _appmonColorPrimary,
-                  secondaryColor: _appmonColorSecondary,
-                ),
-              ]
+                  widget.initSound
+                    ? SlideTransition(
+                        position: _leftOffsetAnim,
+                        child: DetailRectangle(
+                          position: 'left',
+                          primaryColor: _appmonColorPrimary,
+                          secondaryColor: _appmonColorSecondary,
+                        ),
+                      )
+                    : DetailRectangle(
+                        position: 'left',
+                        primaryColor: _appmonColorPrimary,
+                        secondaryColor: _appmonColorSecondary,
+                      ),
+                ]
+              ),
             ),
-          ),
-        ],
+            // CONTENT
+            Center(
+              child: FadeTransition(
+                opacity: _contentOpacityAnim,
+                child: SlideTransition(
+                  position: _contentOffsetAnim,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      PairingMenu(
+                        onLanguageChange: widget.onLanguageChange,
+                        appliDriveManagementService: _appliDriveManagementService,
+                        appmonPairingName: _appmonPairingName,
+                        appmonEvolutionInfo: _appmonPairingEvolutionInfo,
+                        tutorialFinished: _tutorialFinished,
+                        appliDriveVersion: _appliDriveVersion,
+                      ),
+                      ...(_tutorialFinished
+                        ? tutorialFinishedWidgets()
+                        : tutorialUnfinishedWidgets()
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // DETAIL BOTTOM
+            Positioned(
+              bottom: 30,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  FadeTransition(
+                    opacity: _contentOpacityAnim,
+                    child: SlideTransition(
+                      position: _contentOffsetAnim,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "${AppLocalization.of(context).translate("pages.homePage.appliDriveVersion")} - ${AppLocalization.of(context).translate(_translateAppliDriveVersionName(_appliDriveVersion))}",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  widget.initSound
+                    ? SlideTransition(
+                        position: _rightOffsetAnim,
+                        child: DetailRectangle(
+                          position: 'right',
+                          primaryColor: _appmonColorPrimary,
+                          secondaryColor: _appmonColorSecondary,
+                        ),
+                      )
+                    : DetailRectangle(
+                        position: 'right',
+                        primaryColor: _appmonColorPrimary,
+                        secondaryColor: _appmonColorSecondary,
+                      ),
+                ]
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -154,19 +264,25 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       const SizedBox(height: 70),
       GestureDetector(
         onTap: () async {
+          _audioService.playEffect("appliarise");
           final navigator = Navigator.of(context);
           Appmon? appmon = await showDialog<Appmon>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogInsertCode(
+            builder: (BuildContext context) => DialogChooseAppmon(
+              appliDriveManagementService: _appliDriveManagementService,
+              appliDriveVersion: _appliDriveVersion,
               databaseHelper: _databaseHelper,
+              isAppliarise: true,
             ),
           );
           if (appmon != null) {
+            _audioService.stopBackground();
             navigator.pushReplacement(MaterialPageRoute(
               builder: (context) => AppliarisePage(
                 onLanguageChange: widget.onLanguageChange,
                 appmon: appmon,
+                appliDriveVersion: _appliDriveVersion,
               ),
             ));
           }
@@ -244,7 +360,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       colors: List.generate(
         (size.height / 2).floor(),
         (i) => i.isEven
-          ? Colors.white.withOpacity(0.5)
+          ? Colors.white.withValues(alpha: 0.5)
           : Colors.transparent,
       ),
       stops: List.generate(
@@ -253,5 +369,12 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       tileMode: TileMode.repeated,
     ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+  }
+
+  @override
+  void dispose() {
+    _detailController.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 }

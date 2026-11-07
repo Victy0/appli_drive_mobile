@@ -4,6 +4,7 @@ import 'package:appli_drive_mobile/interfaces/components/custom_app_bar.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/components/grouped_card_list.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -17,11 +18,12 @@ class HintsPage extends StatefulWidget {
 
 class HintsPagePageState extends State<HintsPage> {
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
   
   List<Map<String, dynamic>> _hintList = [];
   bool _isLoading = true;
 
-  _getHintList() async {
+  void _getHintList() async {
     List<Map<String, dynamic>> result = await _preferencesService.getHintRevealedList();
 
     setState(() {
@@ -33,6 +35,7 @@ class HintsPagePageState extends State<HintsPage> {
   @override
   void initState() {
     super.initState();
+    _audioService.playBackground("common");
     _getHintList();
   }
   
@@ -44,7 +47,7 @@ class HintsPagePageState extends State<HintsPage> {
         pageBuilder: (context, animation, secondaryAnimation) =>
           HomePage(onLanguageChange: widget.onLanguageChange, initSound: false),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(-10.0, 0.0);
+          const begin = Offset(-1.0, 0.0);
           const end = Offset(0.0, 0.0);
           const curve = Curves.easeInOut;
 
@@ -78,7 +81,11 @@ class HintsPagePageState extends State<HintsPage> {
       ),
       body: Stack(
         children: [
-          const BackgroundImage(color: "yellow"),
+          const BackgroundImage(
+            color: "yellow",
+            scope: "common",
+            animateColor: true,
+          ),
           Column(
             children: [
               const SizedBox(height: 20),

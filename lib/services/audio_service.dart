@@ -1,0 +1,169 @@
+import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
+
+class AudioService {
+  static final AudioService _instance = AudioService._internal();
+  factory AudioService() => _instance;
+
+  final AudioPlayer _backgroundPlayer = AudioPlayer();
+  bool _backgroundStopped = true;
+
+  final AudioPlayer _effectPlayer = AudioPlayer();
+  final Map<String, Source> _sourcesEffect = {};
+  String _sourceKeyEffect = "start";
+
+  final AudioPlayer _appLinkWaitPlayer = AudioPlayer();
+
+  bool _isPreloaded = false;
+
+  AudioService._internal() {
+    configurePlayers();
+    _backgroundPlayer.setReleaseMode(ReleaseMode.loop);
+  }
+
+  Future<void> configurePlayers() async {
+    await _backgroundPlayer.setAudioContext(
+      AudioContext(
+        android: AudioContextAndroid(
+          contentType: AndroidContentType.music,
+          usageType: AndroidUsageType.media,
+          audioFocus: AndroidAudioFocus.none,
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.playback,
+          options: {AVAudioSessionOptions.mixWithOthers},
+        ),
+      ),
+    );
+
+    await _effectPlayer.setAudioContext(
+      AudioContext(
+        android: AudioContextAndroid(
+          contentType: AndroidContentType.sonification,
+          usageType: AndroidUsageType.assistanceSonification,
+          audioFocus: AndroidAudioFocus.none,
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.ambient,
+          options: {AVAudioSessionOptions.mixWithOthers},
+        ),
+      ),
+    );
+
+    await _appLinkWaitPlayer.setAudioContext(
+      AudioContext(
+        android: AudioContextAndroid(
+          contentType: AndroidContentType.music,
+          usageType: AndroidUsageType.media,
+          audioFocus: AndroidAudioFocus.none,
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.ambient,
+          options: {AVAudioSessionOptions.mixWithOthers},
+        ),
+      ),
+    );
+
+    _backgroundPlayer.setReleaseMode(ReleaseMode.loop);
+    await _backgroundPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    await _effectPlayer.setPlayerMode(PlayerMode.lowLatency); 
+    await _appLinkWaitPlayer.setPlayerMode(PlayerMode.lowLatency);
+  }
+
+  Future<void> preloadAudiosEffects(Map<String, String> audios) async {
+    if (_isPreloaded) return;
+
+    _sourcesEffect.clear();
+    for (var entry in audios.entries) {
+      _sourcesEffect[entry.key] = AssetSource(entry.value);
+      _sourceKeyEffect = entry.key;
+    }
+
+    _isPreloaded = true;
+  }
+
+  // BACKGROUND
+  Future<void> playBackground(String key) async {
+    _backgroundStopped = false;
+    await _backgroundPlayer.play(AssetSource("sounds/background/$key.mp3"));
+  }
+
+  Future<void> stopBackground() async {
+    _backgroundStopped = true;
+    await _backgroundPlayer.stop();
+  }
+
+  Future<void> resumeBackground() async {
+    if (_backgroundStopped) return;
+    await _backgroundPlayer.resume();
+  }
+
+  Future<void> pauseBackground() async {
+    await _backgroundPlayer.pause();
+  }
+
+  // EFFECT
+  Future<void> playEffect(String key) async {
+    if (_sourceKeyEffect != key) {
+      final source = _sourcesEffect[key];
+      if (source == null) return;
+      await _effectPlayer.play(source);
+    }
+    await _effectPlayer.resume();
+  }
+
+  Future<void> stopEffect() async {
+    await _effectPlayer.stop();
+  }
+
+  Future<void> playAudioSequence(List<String> audioList) async {
+    for (final audioPath in audioList) {
+      await _effectPlayer.play(AssetSource(audioPath));
+      await _waitForAudioEnd();
+    }
+  }
+
+  Future<void> _waitForAudioEnd() async {
+    final completer = Completer<void>();
+    void listener(PlayerState state) {
+      if (state == PlayerState.completed) {
+        _effectPlayer.onPlayerStateChanged.listen(null);
+        completer.complete();
+      }
+    }
+    _effectPlayer.onPlayerStateChanged.listen(listener);
+    return completer.future;
+  }
+
+  // APPLINK WAIT
+  Future<void> stopAppLinkWait() async {
+    await _appLinkWaitPlayer.stop();
+  }
+
+  Future<void> playAppLinkWaitSequence(List<String> audioList) async {
+    for (final audioPath in audioList) {
+      await _appLinkWaitPlayer.play(AssetSource(audioPath));
+      await _waitForAudioAppLinkEnd();
+    }
+  }
+
+  Future<void> _waitForAudioAppLinkEnd() async {
+    final completer = Completer<void>();
+    void listener(PlayerState state) {
+      if (state == PlayerState.completed) {
+        _appLinkWaitPlayer.onPlayerStateChanged.listen(null);
+        completer.complete();
+      }
+    }
+    _appLinkWaitPlayer.onPlayerStateChanged.listen(listener);
+    return completer.future;
+  }
+
+  // DISPOSE
+  Future<void> dispose() async {
+    await _backgroundPlayer.dispose();
+    await _effectPlayer.dispose();
+    await _appLinkWaitPlayer.dispose();
+  }
+}

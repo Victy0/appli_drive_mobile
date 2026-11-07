@@ -1,9 +1,8 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
+import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIconsHome extends StatefulWidget {
@@ -22,12 +21,12 @@ class HeaderIconsHome extends StatefulWidget {
 }
 
 class HeaderIconsHomeState extends State<HeaderIconsHome> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-  
+  final AudioService _audioService = AudioService();
+
   late List<Map<String, dynamic>> appmonCodeList;
   
-  _getAppmonCodeList() async {
-    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(1);
+  void _getAppmonCodeList() async {
+    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(4);
   }
 
   @override
@@ -54,7 +53,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconInformation(context) {
+  Widget iconInformation(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -63,7 +62,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _audioService.playEffect("click"),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -121,7 +120,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
                             shape: const CircleBorder(),
                           ),
                           onPressed: () {
-                            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3'));
+                            _audioService.playEffect("click");
                             Navigator.pop(context);
                           },
                           child: const Icon(
@@ -146,7 +145,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconLanguage(context, onLanguageChange) {
+  Widget iconLanguage(BuildContext context, onLanguageChange) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -155,7 +154,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
@@ -170,7 +169,7 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
     );
   }
 
-  Widget iconAppmonListCode(context) {
+  Widget iconAppmonListCode(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -179,11 +178,11 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+          _audioService.playEffect("click"),
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
+            builder: (BuildContext context) => DialogAppmonList(appmonList: appmonCodeList, homePage: true),
           ),
         },
         icon: Image.asset(

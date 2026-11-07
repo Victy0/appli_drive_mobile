@@ -1,6 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_info_appmon.dart';
 import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,8 @@ class GroupedList extends StatefulWidget {
 }
 
 class GroupedListState extends State<GroupedList> {
+  final AudioService _audioService = AudioService();
+  
   List<Widget> _buildGroupedList(BuildContext context) {
     Map<String, List<Map<String, dynamic>>> groupedItems = {};
 
@@ -36,7 +39,7 @@ class GroupedListState extends State<GroupedList> {
     groupedItems.forEach((gradeName, items) {
       codeWidgets.add(
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: TextWithWhiteShadow(
             text: AppLocalization.of(context).translate("appmons.grades.$gradeName"),
             fontSize: 22,
@@ -88,6 +91,9 @@ class GroupedListState extends State<GroupedList> {
     if (!mounted) return;
 
     if (result != null) {
+      _audioService.playAudioSequence([
+        "sounds/appliarise/appmon_name/${result.id}.mp3",
+      ]);
       showDialog<String>(
         context: context,
         barrierDismissible: false,

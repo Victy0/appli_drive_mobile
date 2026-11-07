@@ -1,11 +1,14 @@
-import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
+import 'package:appli_drive_mobile/interfaces/components/app_link_init.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_actions.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_image.dart';
+import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_init.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/components/appliarise_header.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +16,20 @@ import 'package:flutter/material.dart';
 class AppliarisePage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
+  final int appliDriveVersion;
   final bool tutorialFinished;
+  final bool startAnimation;
+  final Appmon? appmonLinked1;
+  final Appmon? appmonLinked2;
   const AppliarisePage({
     super.key,
     required this.onLanguageChange,
     required this.appmon,
+    required this.appliDriveVersion,
     this.tutorialFinished = true,
+    this.startAnimation = true,
+    this.appmonLinked1,
+    this.appmonLinked2,
   });
 
   @override
@@ -28,8 +39,15 @@ class AppliarisePage extends StatefulWidget {
 class AppliarisePageState extends State<AppliarisePage> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
+
+  late AppliDriveManagementService _appliDriveManagementService;
+
+  bool _appliariseAnimation = true;
+  bool _appGataiAnimation = true;
+  bool _showCloseButton = false;
   
-  _getColorByAppmonType(String? appmonType) {
+  String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
         return "red";
@@ -48,30 +66,95 @@ class AppliarisePageState extends State<AppliarisePage> {
       case "tool":
         return "purple";
     }
+    return "";
   }
 
-  _setAppmonReveleadedId() async {
-    
-    _preferencesService.setStringInStringList(
-      AppPreferenceKey.appmonRevealedIds,
-      widget.appmon.id,
-    );
-    if(!widget.tutorialFinished) {
-      _preferencesService.setBool(
-      AppPreferenceKey.tutorialFinished,
-      true
-    );
-      _preferencesService.setHintInHintRevealedList("appmon", "1");
-      _preferencesService.setHintInHintRevealedList("appmon", "2");
-      _preferencesService.setHintInHintRevealedList("appliDrive", "1");
-      _preferencesService.setHintInHintRevealedList("7code");
+  int _getDelayAnimation(int grade) {
+    if (grade == 2) {
+      return 4;
     }
+    return 0;
+  }
+
+  void _startAppGataiAnimation() async {
+    _audioService.playAudioSequence([
+      "sounds/applink/names/${widget.appmonLinked1?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked1?.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked2?.id}_3.mp3",
+      "sounds/applink/appgatai_final.mp3",
+    ]);
+    await Future.delayed(Duration(seconds: 18));
+    setState(() {
+      _appGataiAnimation = false;
+    });
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/applink/end.mp3",
+      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
+      "sounds/appliarise/appliarise_end.mp3",
+    ]);
+    Future.delayed(Duration(seconds: 16), () {
+      setState(() {
+        _showCloseButton = true;
+      });
+    });
+  }
+
+  void _startAppliariseAnimation() async {
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appliarise_${widget.appmon.grade.name}.mp3",
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/appliarise/appliarise_end.mp3",
+      "sounds/appliarise/appmon_start/${widget.appmon.id}.mp3",
+      "sounds/appliarise/appliarise_end.mp3",
+    ]);
+    await Future.delayed(Duration(seconds: 12 + _getDelayAnimation(widget.appmon.grade.id)));
+    setState(() {
+      _appliariseAnimation = false;
+    });
+    Future.delayed(Duration(seconds: 14 + _getDelayAnimation(widget.appmon.grade.id)), () {
+      setState(() {
+        _showCloseButton = true;
+      });
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    _setAppmonReveleadedId();
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
+    _appliDriveManagementService.setAppmonReveleadedId(
+      widget.appmon.id,
+      widget.tutorialFinished,
+    );
+    if(widget.startAnimation) {
+      if(widget.appmonLinked1 != null) {
+        _appliariseAnimation = false;
+        _startAppGataiAnimation();
+      } else {
+        _appGataiAnimation = false;
+        _startAppliariseAnimation();
+      }
+    } else {
+      _appliariseAnimation = false;
+      _appGataiAnimation = false;
+      _audioService.playAudioSequence([
+        "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      ]);
+      _showCloseButton = true;
+    }
   }
 
   @override
@@ -80,43 +163,67 @@ class AppliarisePageState extends State<AppliarisePage> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
-          Positioned(
-            top: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                AppliariseHeader(
-                  databaseHelper: _databaseHelper,
-                  grade: widget.appmon.grade,
-                  tutorialFinished: widget.tutorialFinished,
-                ),
-              ]
+          if(_appGataiAnimation && widget.appmonLinked1 != null) ...[
+            AppLinkInit(
+              appmon: widget.appmonLinked1 ?? widget.appmon,
+              appmonLinked: widget.appmonLinked2 ?? widget.appmon,
+              appmonFusioned: widget.appmon,
+            )
+          ] else if (_appliariseAnimation && widget.startAnimation) ...[
+            AppliariseInit(appmon: widget.appmon)
+          ] else ...[
+            BackgroundImage(
+              color: _getColorByAppmonType(widget.appmon.type.name),
+              scope: "appliarise${_getColorByAppmonType(widget.appmon.type.name)}",
             ),
-          ),
-
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppliariseSummaryInfo(appmon: widget.appmon),
-                const SizedBox(height: 20),
-                AppliariseImage(appmon: widget.appmon),
-                const SizedBox(height: 40),
-                AppliariseActions(
-                  databaseHelper: _databaseHelper,
-                  appmon: widget.appmon,
-                  onLanguageChange: widget.onLanguageChange,
-                  tutorialFinished: widget.tutorialFinished,
-                ),
-              ],
+            Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  AppliariseHeader(
+                    appmon: widget.appmon,
+                    tutorialFinished: widget.tutorialFinished,
+                  ),
+                ]
+              ),
             ),
-          ),
-          
-          ClosePageButton(onLanguageChange: widget.onLanguageChange),
-        ],
-      )
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppliariseSummaryInfo(
+                    appmon: widget.appmon,
+                    startAnimation: widget.startAnimation,
+                  ),
+                  const SizedBox(height: 20),
+                  AppliariseImage(
+                    appmon: widget.appmon,
+                    startAnimation: widget.startAnimation,
+                  ),
+                  const SizedBox(height: 40),
+                  AppliariseActions(
+                    appliDriveManagementService: _appliDriveManagementService,
+                    appmon: widget.appmon,
+                    onLanguageChange: widget.onLanguageChange,
+                    databaseHelper: _databaseHelper,
+                    tutorialFinished: widget.tutorialFinished,
+                    appliDriveVersion: widget.appliDriveVersion,
+                    startAnimation: widget.startAnimation,
+                    appGatai: widget.appmonLinked1 != null,
+                  ),
+                ],
+              ),
+            ),
+            AnimatedOpacity(
+              opacity: (!widget.startAnimation || _showCloseButton) ? 1.0 : 0.0,
+              duration: const Duration(seconds: 1),
+              child: ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            ),
+          ]
+        ]
+      ),
     );
   }
 }

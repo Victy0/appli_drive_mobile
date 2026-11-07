@@ -1,22 +1,25 @@
 import 'package:appli_drive_mobile/interfaces/pages/appliarise_page/appliarise_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class PairingMenu extends StatefulWidget {
   final Function(Locale) onLanguageChange;
-  final DatabaseHelper databaseHelper;
+  final AppliDriveManagementService appliDriveManagementService;
   final String appmonPairingName;
   final List<Map<String, String>> appmonEvolutionInfo;
   final bool tutorialFinished;
+  final int appliDriveVersion;
   const PairingMenu({
     super.key,
     required this.onLanguageChange,
-    required this.databaseHelper,
+    required this.appliDriveManagementService,
     required this.appmonPairingName,
     required this.appmonEvolutionInfo,
     required this.tutorialFinished,
+    required this.appliDriveVersion,
   });
 
   @override
@@ -24,6 +27,8 @@ class PairingMenu extends StatefulWidget {
 }
 
 class PairingMenuState extends State<PairingMenu> with SingleTickerProviderStateMixin {
+  final AudioService _audioService = AudioService();
+  
   late AnimationController _controllerRotation;
   late Animation<double> _rotationAnimation;
 
@@ -92,6 +97,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             children: [
               TextButton(
                 onPressed: () {
+                  _audioService.playEffect("back");
                   Navigator.of(context).pop();
                 },
                 child: const Icon(
@@ -102,10 +108,12 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
               ),
               TextButton(
                 onPressed: () async {
+                  _audioService.stopBackground();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,
                       appmon: appmon,
+                      appliDriveVersion: widget.appliDriveVersion,
                       tutorialFinished: widget.tutorialFinished,
                     ),
                   ));
@@ -171,7 +179,13 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
             ),
             InkWell(
               onTap: () async {
-                final appmon = await widget.databaseHelper.getAppmonByCode(widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "");
+                _audioService.playEffect("appliarise");
+                final appmon = await widget.appliDriveManagementService.apliariseOrApplinkByCode(
+                  widget.appmonEvolutionInfo[_currentIndex]['code'] ?? "",
+                  null,
+                  widget.appliDriveVersion,
+                  null,
+                );
                 if (appmon != null) {
                   _showConfirmationDialog(appmon);
                 }

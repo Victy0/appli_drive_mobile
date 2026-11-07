@@ -3,6 +3,7 @@ enum AppPreferenceKey {
   dbVersion,               // número de versionamento do banco de dados
   selectCountry,           // país selecionado 
   selectLanguage,          // idioma selecionado
+  appliDriveVersion,       // versão do appli drive
   tutorialFinished,        // informação booleana se tutorial foi finalizado
   show7codeIcon,           // informação booleana se deve mostrar o icone de 7code
 // APPMON PAIRING
@@ -30,6 +31,8 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
         return 'selected_country';
       case AppPreferenceKey.selectLanguage:
         return 'selected_language';
+      case AppPreferenceKey.appliDriveVersion:
+        return 'appli_drive_version';
       case AppPreferenceKey.tutorialFinished:
         return 'tutorial_finished';
       case AppPreferenceKey.show7codeIcon:

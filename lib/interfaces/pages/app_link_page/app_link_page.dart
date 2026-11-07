@@ -1,23 +1,37 @@
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_image.dart';
+import 'package:appli_drive_mobile/interfaces/components/app_link_init.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_summary_info.dart';
-import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_header.dart';
+import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_actions.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppLinkPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
   final Appmon appmon;
   final Appmon appmonLinked;
-  const AppLinkPage({super.key, required this.onLanguageChange, required this.appmon, required this.appmonLinked});
+  final int appliDriveVersion;
+  const AppLinkPage({
+    super.key,
+    required this.onLanguageChange,
+    required this.appmon,
+    required this.appmonLinked,
+    required this.appliDriveVersion,
+  });
 
   @override
   AppLinkPageState createState() => AppLinkPageState();
 }
 
 class AppLinkPageState extends State<AppLinkPage> {
-  _getColorByAppmonType(String? appmonType) {
+  final AudioService _audioService = AudioService();
+
+  bool _appLinkAnimation = true;
+  bool _showCloseButton = false;
+
+  String _getColorByAppmonType(String? appmonType) {
     switch (appmonType) {
       case "entertainment":
         return "red";
@@ -36,44 +50,102 @@ class AppLinkPageState extends State<AppLinkPage> {
       case "tool":
         return "purple";
     }
+    return "grey";
+  }
+
+  void _startApplinkAnimation() async {
+    _audioService.playAudioSequence([
+      "sounds/applink/names/${widget.appmon.id}.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}.mp3",
+      "sounds/applink/names/${widget.appmon.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_2.mp3",
+      "sounds/applink/names/${widget.appmon.id}_2.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_2.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_3.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_3.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/names/${widget.appmon.id}_4.mp3",
+      "sounds/applink/names/${widget.appmonLinked.id}_4.mp3",
+      "sounds/applink/applink_final.mp3",
+    ]);
+    await Future.delayed(Duration(seconds: 16));
+    setState(() {
+      _appLinkAnimation = false;
+    });
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmon.id}.mp3",
+      "sounds/applink/plus.mp3",
+      "sounds/appliarise/appmon_name/${widget.appmonLinked.id}.mp3",
+      "sounds/applink/end.mp3",
+    ]);
   }
 
   @override
-  Widget build(BuildContext context) {    
+  void initState() {
+    super.initState();
+    _startApplinkAnimation();
+    Future.delayed(Duration(seconds: 21), () {
+      setState(() {
+        _showCloseButton = true;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          BackgroundImage(color: _getColorByAppmonType(widget.appmon.type.name)),
-          Positioned(
-            top: 30,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                AppLinkHeader(appmon: widget.appmon, onLanguageChange: widget.onLanguageChange),
-              ]
+          if (_appLinkAnimation)
+            AppLinkInit(
+              appmon: widget.appmon,
+              appmonLinked: widget.appmonLinked,
+              appmonFusioned: null,
+            )
+          else ...[
+            BackgroundImage(
+              color: _getColorByAppmonType(""),
+              scope: "applink",
             ),
-          ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppLinkSummaryInfo(
-                  appmon: widget.appmon,
-                  appmonLinked: widget.appmonLinked
-                ),
-                const SizedBox(height: 100),
-                AppLinkImage(
-                  appmon: widget.appmon,
-                  appmonLinked: widget.appmonLinked,
-                  linkColor: _getColorByAppmonType(widget.appmonLinked.type.name),
-                ),
-              ],
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppLinkSummaryInfo(
+                    appmon: widget.appmon,
+                    appmonLinked: widget.appmonLinked
+                  ),
+                  const SizedBox(height: 100),
+                  AppLinkImage(
+                    appmon: widget.appmon,
+                    appmonLinked: widget.appmonLinked,
+                    linkColor: _getColorByAppmonType(widget.appmonLinked.type.name),
+                  ),
+                  const SizedBox(height: 5),
+                  AppLinkActions(
+                    appmon: widget.appmon,
+                    appmonLinked: widget.appmonLinked,
+                    onLanguageChange: widget.onLanguageChange,
+                    appliDriveVersion: widget.appliDriveVersion,
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
-          ),
-          
-          ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            AnimatedOpacity(
+              opacity: _showCloseButton ? 1.0 : 0.0,
+              duration: const Duration(seconds: 1),
+              child: ClosePageButton(onLanguageChange: widget.onLanguageChange),
+            ),
+          ],
         ],
       )
     );

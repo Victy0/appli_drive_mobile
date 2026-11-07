@@ -6,6 +6,9 @@ import 'package:appli_drive_mobile/interfaces/pages/first_setup_page/components/
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +21,11 @@ class FirstSetupPage extends StatefulWidget {
 }
 
 class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderStateMixin {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   final PreferencesService _preferencesService = PreferencesService();
+  final AudioService _audioService = AudioService();
+
+  late AppliDriveManagementService _appliDriveManagementService;
 
   int _stepSetup = 1;
   int? _selectedOption;
@@ -68,6 +75,11 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
   @override
   void initState() {
     super.initState();
+    _databaseHelper.resetRevealedToZero();
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
     _checkIfLanguageHasBeenChosen();
   }
 
@@ -115,7 +127,9 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: QuestionAppliDrive(
                   selectedOption: _selectedOption ?? 0,
+                  appliDriveManagementService: _appliDriveManagementService,
                   onQuestionAnswered: (value) {
+                    _audioService.playEffect("continue_fs");
                     setState(() {
                       _appmonName = value["name"];
                       _appmonId = value["id"];
@@ -155,6 +169,7 @@ class FirstSetupPageState extends State<FirstSetupPage> with TickerProviderState
                     if (_stepSetup == 4) {
                       _navigateToHomePage(context);
                     } else {
+                      _audioService.playEffect("continue_fs");
                       setState(() {
                         _stepSetup++;
                       });

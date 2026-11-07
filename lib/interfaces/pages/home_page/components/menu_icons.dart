@@ -1,8 +1,7 @@
 import 'package:appli_drive_mobile/interfaces/pages/data_center_page/data_center_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/hints_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/seven_code_page.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class MenuIcons extends StatefulWidget {
@@ -18,8 +17,8 @@ class MenuIcons extends StatefulWidget {
   MenuIconsState createState() => MenuIconsState();
 }
 
-class MenuIconsState extends State<MenuIcons> {  
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
+class MenuIconsState extends State<MenuIcons> {
+  final AudioService _audioService = AudioService();
 
   void _navigateToDataCenterPage(BuildContext context) async {
     Navigator.pushReplacement(
@@ -110,7 +109,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconDataCenter(context) {
+  Widget iconDataCenter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -121,7 +120,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _audioService.playEffect("click"),
             _navigateToDataCenterPage(context),
           },
           icon: Image.asset(
@@ -133,7 +132,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconSevenCode(context) {
+  Widget iconSevenCode(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -144,7 +143,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _audioService.playEffect("click"),
             _navigateToSevenCodePage(context),
           },
           icon: Image.asset(
@@ -156,7 +155,7 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
-  Widget iconHints(context) {
+  Widget iconHints(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -167,7 +166,7 @@ class MenuIconsState extends State<MenuIcons> {
         ),
         child: IconButton(
           onPressed: () => {
-            _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+            _audioService.playEffect("click"),
             _navigateToHintsPage(context),
           },
           icon: Image.asset(

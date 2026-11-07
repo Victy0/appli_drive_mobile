@@ -1,4 +1,5 @@
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppmonPresentation extends StatefulWidget {
@@ -18,11 +19,21 @@ class AppmonPresentation extends StatefulWidget {
 }
 
 class AppmonPresentationState extends State<AppmonPresentation> {
+  final AudioService _audioService = AudioService();
+  
   String _getAppmonIntroduction() {
     String appmonIntro = AppLocalization.of(context).translate("pages.firstSetupPage.forEveryApplicationTherIsAnAppmon");
     String appmonPartner = AppLocalization.of(context).translate("pages.firstSetupPage.iAmYourPartnerAppmon");
     String appmonmNane = AppLocalization.of(context).translate("appmons.names.${widget.appmonName ?? ""}");
     return "$appmonIntro $appmonPartner$appmonmNane.";
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _audioService.playAudioSequence([
+      "sounds/appliarise/appmon_name/${widget.appmonId}.mp3",
+    ]);
   }
 
   @override
@@ -115,7 +126,7 @@ class AppmonPresentationState extends State<AppmonPresentation> {
       colors: List.generate(
         (size.height / 2).floor(),
         (i) => i.isEven
-          ? Colors.white.withOpacity(0.5)
+          ? Colors.white.withValues(alpha: 0.5)
           : Colors.transparent,
       ),
       stops: List.generate(
@@ -141,6 +152,6 @@ class AppmonPresentationState extends State<AppmonPresentation> {
       case "white":
         return Colors.grey[300];
     }
-    return Colors.white.withOpacity(0.1);
+    return Colors.white.withValues(alpha: 0.1);
   }
 }

@@ -1,18 +1,13 @@
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_code_list.dart';
-import 'package:appli_drive_mobile/models/grade_appmon.dart';
-import 'package:appli_drive_mobile/services/audio_service_momentary.dart';
-import 'package:appli_drive_mobile/services/database_helper_service.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class AppliariseHeader extends StatefulWidget {
-  final DatabaseHelper databaseHelper;
-  final GradeAppmon grade;
+  final Appmon appmon;
   final bool tutorialFinished;
   const AppliariseHeader({
     super.key,
-    required this.databaseHelper,
-    required this.grade,
+    required this.appmon,
     required this.tutorialFinished
   });
 
@@ -21,38 +16,24 @@ class AppliariseHeader extends StatefulWidget {
 }
 
 class AppliariseHeaderState extends State<AppliariseHeader> {
-  final AudioPlayer _audioPlayerMomentary = AudioServiceMomentary.instance.player;
-  
-  late List<Map<String, dynamic>> appmonCodeList;
-  
-  _getAppmonCodeList() async {
-    appmonCodeList = await widget.databaseHelper.getAppmonCodeList(widget.grade.id);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getAppmonCodeList();
-  }
+  final AudioService _audioService = AudioService();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 16, bottom: 16, left: 16),
+      padding: const EdgeInsets.only(top: 20, right: 25, bottom: 16, left: 25),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //if(widget.grade.name == "standard")
+          //if(widget.appmon.grade.name == "standard")
           //  iconPairing(context),
           const Spacer(),
-          if(widget.tutorialFinished)
-            iconAppmonListCode(context)
         ],
       ),
     );
   }
 
-  Widget iconPairing(context) {
+  Widget iconPairing(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -61,7 +42,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
       ),
       child: IconButton(
         onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
           showDialog<String>(
             barrierDismissible: false,
             context: context,
@@ -101,7 +81,7 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => {
-                    _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
+                    _audioService.playEffect("click"),
                     Navigator.pop(context),
                   },
                   child: const Icon(
@@ -119,30 +99,6 @@ class AppliariseHeaderState extends State<AppliariseHeader> {
           height: 40,
         ),
       )
-    );
-  }
-
-  Widget iconAppmonListCode(context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black, width: 2),
-      ),
-      child: IconButton(
-        onPressed: () => {
-          _audioPlayerMomentary.play(AssetSource('sounds/click.mp3')),
-          showDialog<String>(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonCodeList(appmonCodeList: appmonCodeList),
-          ),
-        },
-        icon: Image.asset(
-          'assets/images/icons/list_box.png',
-          height: 40,
-        ),
-      ),
     );
   }
 }

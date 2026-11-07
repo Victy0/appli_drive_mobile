@@ -1,15 +1,9 @@
 import 'dart:math';
-
-import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
-import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/interfaces/components/version_app.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
-import 'package:appli_drive_mobile/services/audio_service_continuous.dart';
-import 'package:appli_drive_mobile/services/preferences_service.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
-import 'package:screen_state/screen_state.dart';
 
 class InitialPage extends StatefulWidget {
   final Function(Locale) onLanguageChange;
@@ -20,53 +14,16 @@ class InitialPage extends StatefulWidget {
 }
 
 class InitialPageState extends State<InitialPage> with TickerProviderStateMixin {
-  final PreferencesService _preferencesService = PreferencesService();
-  final AudioPlayer _audioPlayerContinuous = AudioServiceContinuous.instance.player;
-
-  final Screen _screen = Screen();
-  Stream<ScreenStateEvent>? _screenStream;
+  final AudioService _audioService = AudioService();
 
   late List<AnimationController> _controllers;
   late List<Animation<double>> _animations;
-
   late AnimationController _controllerText;
   late Animation<double> _opacityAnimationText;
-
-  void _startMonitoring() {
-    _screenStream = _screen.screenStateStream;
-    _screenStream?.listen((event) {
-      if (event == ScreenStateEvent.SCREEN_OFF) {
-        _audioPlayerContinuous.pause();
-      } else if (event == ScreenStateEvent.SCREEN_UNLOCKED) {
-        _audioPlayerContinuous.resume();
-      }
-    });
-  }
-
-  Future<void> _checkIfLanguageHasBeenChosen() async {
-    String? languageCode = await _preferencesService.getString(
-      AppPreferenceKey.selectLanguage,
-    );
-
-    if (languageCode == null) {
-      _showLanguageDialog();
-    }
-  }
-
-  Future<void> _showLanguageDialog() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => DialogChangeLanguage(onLanguageChange: widget.onLanguageChange),
-    );
-  }
 
   @override
   void initState() {
     super.initState();
-    _audioPlayerContinuous.play(AssetSource('sounds/initial_page.mp3'));
-    _startMonitoring();
-
     _controllers = List.generate(12, (index) {
       return AnimationController(
         vsync: this,
@@ -82,13 +39,12 @@ class InitialPageState extends State<InitialPage> with TickerProviderStateMixin 
       duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
     _opacityAnimationText = Tween<double>(begin: 0.0, end: 1.0).animate(_controllerText);
-
-    _checkIfLanguageHasBeenChosen();
+    _audioService.playBackground("initial_page");
   }
 
   void _navigateToHomePage(BuildContext context) async {
     final navigator = Navigator.of(context);
-    await _audioPlayerContinuous.stop();
+    _audioService.stopBackground();
     navigator.pushReplacement(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 800),
@@ -201,8 +157,11 @@ class NeonLinesPainter extends CustomPainter {
       double angle = (2 * pi / progressValues.length) * i;
       double animatedProgress = progressValues[i] * maxLength;
 
+      double opacityFactor = (1.0 - progressValues[i] * 0.8).clamp(0.0, 1.0);
+      double newAlpha = 225 * opacityFactor;
+
       Paint paint = Paint()
-        ..color = const Color.fromARGB(225, 31, 241, 237).withOpacity((1.0 - progressValues[i] * 0.8).clamp(0.0, 1.0))
+        ..color = const Color.fromARGB(225, 31, 241, 237).withValues(alpha: newAlpha)
         ..strokeWidth = 4
         ..style = PaintingStyle.stroke
         ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 4);
