@@ -165,7 +165,6 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
                 final navigator = Navigator.of(context);
                 String? code = _selectedCode;
                 if(code.isEmpty || code == "") {
-                  _audioService.playEffect("error");
                   setState(() { _errorCode = "components.dialogs.chooseAppmon.selectionIsRequired"; });
                   return;
                 }

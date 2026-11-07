@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   String _translateAppliDriveVersionName(int versionValue) {
     final versionName = [
       "pages.homePage.appliDriveVersionNames.basic",
-      "pages.homePage.appliDriveVersionNames.standart",
+      "pages.homePage.appliDriveVersionNames.standard",
     ];
     return versionName[versionValue - 1];
   }
