@@ -141,15 +141,37 @@ class PreferencesService {
 
     final decoded = jsonDecode(jsonString);
 
-    final list = List<Map<String, dynamic>>.from(
+    List<Map<String, dynamic>> list = List<Map<String, dynamic>>.from(
       decoded.map((item) => Map<String, dynamic>.from(item)),
     );
 
-    list.sort((a, b) => a['type']
-      .toString()
-      .toLowerCase()
-      .compareTo(b['type'].toString().toLowerCase()));
-    
+    const typeOrder = {
+      'appliDrive': 0,
+      'appmon': 1,
+      '7code': 2,
+    };
+
+    for (final item in list) {
+      final numbers = List<String>.from(item['number'] ?? []);
+
+      numbers.sort((a, b) {
+        final numberA = int.tryParse(a);
+        final numberB = int.tryParse(b);
+
+        if (numberA != null && numberB != null) {
+          return numberA.compareTo(numberB);
+        }
+
+        return a.compareTo(b);
+      });
+
+      item['number'] = numbers;
+    }
+
+    list.sort((a, b) =>
+      (typeOrder[a['type']] ?? 999).compareTo(
+        typeOrder[b['type']] ?? 999,
+      ));
     return list;
   }
 
