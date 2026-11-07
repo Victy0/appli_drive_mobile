@@ -141,9 +141,16 @@ class PreferencesService {
 
     final decoded = jsonDecode(jsonString);
 
-    return List<Map<String, dynamic>>.from(
+    final list = List<Map<String, dynamic>>.from(
       decoded.map((item) => Map<String, dynamic>.from(item)),
     );
+
+    list.sort((a, b) => a['type']
+      .toString()
+      .toLowerCase()
+      .compareTo(b['type'].toString().toLowerCase()));
+    
+    return list;
   }
 
   Future<void> remove(AppPreferenceKey key) async {
