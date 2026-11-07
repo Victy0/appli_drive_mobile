@@ -19,7 +19,7 @@ class PairingMenu extends StatefulWidget {
     required this.appmonPairingName,
     required this.appmonEvolutionInfo,
     required this.tutorialFinished,
-    required this.appliDriveVersion,
+    required this.appliDriveVersion
   });
 
   @override
@@ -109,6 +109,7 @@ class PairingMenuState extends State<PairingMenu> with SingleTickerProviderState
               TextButton(
                 onPressed: () async {
                   _audioService.stopBackground();
+                  widget.appliDriveManagementService.setHint("appmon", "6");
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => AppliarisePage(
                       onLanguageChange: widget.onLanguageChange,
