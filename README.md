@@ -5,7 +5,7 @@
 </div>
 
 Repositório referente a construção de um app simples utilizando flutter. 
-Versão Atual: 0.0.0
+Versão Atual: 0.1.1
 
 **Em resumo:** O Appli Drive Mobile é um aplicativo inspirado na série animada Digimon Universe Appli Monsters, que tem o intuito de retratar e expandir as funcionalidades do Appli Drive utilizados pelos humanos durante a série.
 
@@ -14,7 +14,9 @@ Implementado por:
 
 # Requisitos
 
- - Flutter 3.22.2 ou superior
+ - JAVA 17
+ - ANDROID SDK 35
+ - Flutter 3.32.5 ou superior
 
 # Instalação do app
 
