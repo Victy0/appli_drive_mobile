@@ -21,10 +21,10 @@ class GroupedCardListState extends State<GroupedCardList> {
         total = 6;
         break;
       case "appliDrive":
-        total = 1;
+        total = 2;
         break;
       case "7code":
-        total = 0;
+        total = 3;
     }
     return "$revealedSize/$total";
   }

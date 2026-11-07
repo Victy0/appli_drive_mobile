@@ -256,8 +256,13 @@ class AppliDriveManagementService {
       preferencesService.setHintInHintRevealedList("appmon", "2");
       preferencesService.setHintInHintRevealedList("appmon", "3");
       preferencesService.setHintInHintRevealedList("appliDrive", "1");
-      preferencesService.setHintInHintRevealedList("7code");
+      preferencesService.setHintInHintRevealedList("7code", "1");
     }
+  }
+
+  // Deixa visível a dica pelo tipo e código fornecidos
+  void setHint(String type, String number) {
+    preferencesService.setHintInHintRevealedList(type, number);
   }
 
   // Atualiza a versão do appli drive
@@ -266,6 +271,9 @@ class AppliDriveManagementService {
     if(version == 2) {
       preferencesService.setHintInHintRevealedList("appmon", "4");
       preferencesService.setHintInHintRevealedList("appliDrive", "2");
+      preferencesService.setBool(AppPreferenceKey.show7codeIcon, true);
+      preferencesService.setHintInHintRevealedList("7code", "2");
+      preferencesService.setHintInHintRevealedList("7code", "3");
     }
   }
 }

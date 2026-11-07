@@ -694,7 +694,10 @@
                 "appmon3": "Um App link é um processo no qual dois Appmon (um na forma de um Appmon Chip) são vinculados em uma entidade conglomerada por um usuário do Appli Drive.\n\nÀs vezes, o Appmon subordinado forma armas, armaduras ou novas habilidades para o Appmon principal. Outras vezes, o Appmon subordinado aparece em uma forma fantasmagórica flutuando atrás do Appmon líder.",
                 "appmon4": "App Gattai é considerado uma variação do Applink na qual dois Appmon compatíveis específicos se combinam para se tornar um Appmon de nível superior, seja por um usuário do Appli Drive ou pela vontade do Appmon ativo.",
                 "appmon5": "Os Appmon são encontrados na “Rede comum”, que são os “aplicativos” que a humanidade usa todos os dias. Eles existem nesse meio-termo entre o mundo físico dos humanos e a “rede mais profunda” dos Digimon, comumente conhecida como a Rede. Há tantas espécies diferentes de Appmon quanto o número de aplicativos existentes.",
-                "appmon6": "Um Appmon companheiro é um Appmon que se associou a uma pessoa.\n\nAo formar uma parceria, o Appli Drive da pessoa assume as características do Appmon companheiro. Se o Appli Drive for destruído, o Appmon companheiro desaparecerá e perderá todas as memórias de seu vínculo."
+                "appmon6": "Um Appmon companheiro é um Appmon que se associou a uma pessoa.\n\nAo formar uma parceria, o Appli Drive da pessoa assume as características do Appmon companheiro. Se o Appli Drive for destruído, o Appmon companheiro desaparecerá e perderá todas as memórias de seu vínculo.",
+                "7code1": "Os 7 Code Appmon são sete Appmon especialmente designados cujos dados estão conectados a IA Minerva. Cada um representa um dos sete atributos regulares e carrega um orbe com seu emblema de atributo.",
+                "7code2": "Cada Appmon dos sete códigos está associado a um código numérico, uma letra e um valor de poder distinto. Organizadas em ordem numérica, suas letras formam a palavra MINERVA, enquanto seus valores de poder aumentam sucessivamente de 111 a 777.",
+                "7code3": "Seus chips Appmon especiais podem ser inseridos no PAD dos sete códigos.\n\n Uma vez que os sete tenham sido coletados, o PAD completo pode ser usado para realizar o Appliarise de Dantemon."
             },
             "titles": {
                 "appliDrive1": "01 - BÁSICO",
@@ -704,7 +707,10 @@
                 "appmon3": "03 - APP LINK",
                 "appmon4": "04 - APP GATTAI",
                 "appmon5": "05 - NET",
-                "appmon6": "06 - COMPANHEIRO"
+                "appmon6": "06 - COMPANHEIRO",
+                "7code1": "01 - APPMONS",
+                "7code2": "02 - MINERVA",
+                "7code3": "03 - 7 CODE PAD"
             },
             "types": {
                 "appliDrive": "APPLI DRIVE",
