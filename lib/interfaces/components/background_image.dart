@@ -62,7 +62,7 @@ class BackgroundImageState extends State<BackgroundImage> with SingleTickerProvi
         children: [
           Positioned.fill(
             child: Opacity(
-              opacity: 0.7,
+              opacity: 0.9,
               child: Image.asset(
                 'assets/images/background/${widget.scope}.jpg',
                 fit: BoxFit.cover,
