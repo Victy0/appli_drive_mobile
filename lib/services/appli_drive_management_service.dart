@@ -263,6 +263,9 @@ class AppliDriveManagementService {
   // Atualiza a versão do appli drive
   void updateAppliDriveVersion(int version) {
     preferencesService.setInt(AppPreferenceKey.appliDriveVersion, version);
-    preferencesService.setHintInHintRevealedList("appmon", "4");
+    if(version == 2) {
+      preferencesService.setHintInHintRevealedList("appmon", "4");
+      preferencesService.setHintInHintRevealedList("appliDrive", "2");
+    }
   }
 }
