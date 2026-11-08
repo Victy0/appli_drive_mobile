@@ -39,6 +39,14 @@ class TextWithWhiteShadow extends StatelessWidget {
   Widget build(BuildContext context) {
     final font = fontFamily ? Icons.arrow_upward.fontFamily : null;
 
+    final outlinePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = outlineWidth
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round
+      ..strokeMiterLimit = 1
+      ..color = Colors.white;
+
     return Stack(
       children: [
         // Contorno branco
@@ -54,10 +62,7 @@ class TextWithWhiteShadow extends StatelessWidget {
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
             height: height,
-            foreground: Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = outlineWidth
-              ..color = Colors.white,
+            foreground: outlinePaint,
           ),
         ),
 

@@ -5,7 +5,10 @@ import 'package:appli_drive_mobile/interfaces/components/app_link_init.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_summary_info.dart';
 import 'package:appli_drive_mobile/interfaces/pages/app_link_page/components/app_link_actions.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/appli_drive_management_service.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
+import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
 class AppLinkPage extends StatefulWidget {
@@ -26,7 +29,11 @@ class AppLinkPage extends StatefulWidget {
 }
 
 class AppLinkPageState extends State<AppLinkPage> {
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
+
+  late AppliDriveManagementService _appliDriveManagementService;
 
   bool _appLinkAnimation = true;
   bool _showCloseButton = false;
@@ -90,6 +97,13 @@ class AppLinkPageState extends State<AppLinkPage> {
   @override
   void initState() {
     super.initState();
+    _appliDriveManagementService = AppliDriveManagementService(
+      databaseHelper: _databaseHelper,
+      preferencesService: _preferencesService,
+    );
+    _appliDriveManagementService.setAppmonsInDataCenter(
+      [widget.appmon.id, widget.appmonLinked.id]
+    );
     _startApplinkAnimation();
     Future.delayed(Duration(seconds: 21), () {
       setState(() {

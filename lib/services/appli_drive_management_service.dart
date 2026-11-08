@@ -23,45 +23,38 @@ class AppliDriveManagementService {
   // Realiza o appliarise ou applink com base no código do appmon fornecido
   Future<Appmon?> apliariseOrApplinkByCode(
     String code,
-    Appmon? currentAppmonAppliare,
+    Appmon? currentAppmonAppliarise,
     int appliDriveVersion,
     String? codeLastEvolution,
   ) async {
     // APPLINK
-    if (currentAppmonAppliare != null) {
-      final fusion = currentAppmonAppliare.fusionInfo;
-      final bool canApplinkSameGrade = _isPossibleApplinkSameGrade(appliDriveVersion, currentAppmonAppliare.grade.id);
+    if (currentAppmonAppliarise != null) {
+      final fusion = currentAppmonAppliarise.fusionInfo;
+      final bool canApplinkSameGrade = _isPossibleApplinkSameGrade(appliDriveVersion, currentAppmonAppliarise.grade.id);
 
       // Caso o código seja o mesmo do Appmon atual
-      if (currentAppmonAppliare.code == code) {
+      if (currentAppmonAppliarise.code == code) {
         // Verificar se applink pode ser realizado entre mesmo nível
         if(!canApplinkSameGrade) {
           return null;
         }
-        return currentAppmonAppliare..fusioned = null;
+        currentAppmonAppliarise.fusioned = null;
+        return currentAppmonAppliarise;
       }
 
       // Caso seja um código de fusão
       if (fusion != null && (fusion.appmonBase1 == code || fusion.appmonBase2 == code)) {
         final fusionAppmon = await databaseHelper.getAppmonByCode(fusion.id, ignoreRevealedField: true);
         if (fusionAppmon != null) {
-          List<String> idsToSetRevealed = [fusionAppmon.id];
-          if(appliDriveVersion == 1) {
-            updateAppliDriveVersion(2);
-            idsToSetRevealed = idsToSetRevealed + [
-              "D7I3",
-              "D9M6",
-              "D1S2",
-              "D4V4",
-            ];
-          }
-          revealAppmons(idsToSetRevealed);
+          // revela appmon da fusão e appmons base
+          revealAppmonsInFusion(fusionAppmon, appliDriveVersion);
+
           if(codeLastEvolution != null && (fusion.appmonBase1 == codeLastEvolution || fusion.appmonBase2 == codeLastEvolution)) {
             Map<String, String> appmonEvolutionInfo = {"id": fusionAppmon.id, "code": fusionAppmon.code};
             preferencesService.setAppmonPairingEvolutionInfo(appmonEvolutionInfo);
           }
           fusionAppmon.fusioned = true;
-          fusionAppmon.appmonLinked1 = currentAppmonAppliare;
+          fusionAppmon.appmonLinked1 = currentAppmonAppliarise;
           fusionAppmon.appmonLinked2 = await databaseHelper.getAppmonByCode(code);
           return fusionAppmon;
         }
@@ -71,12 +64,12 @@ class AppliDriveManagementService {
 
       if(resultAppmon != null) {
         // Caso applink seja com appmon mais evoluido que atual
-        if(currentAppmonAppliare.grade.id < resultAppmon.grade.id) {
+        if(currentAppmonAppliarise.grade.id < resultAppmon.grade.id) {
           return null;
         }
 
         // Verificar se applink pode ser realizado entre mesmo nível
-        if(currentAppmonAppliare.grade.id == resultAppmon.grade.id) {
+        if(currentAppmonAppliarise.grade.id == resultAppmon.grade.id) {
           if(!canApplinkSameGrade){
             return null;
           }
@@ -207,7 +200,7 @@ class AppliDriveManagementService {
         ];
         break;
     }
-    revealAppmons(appmonsToReveal);
+    databaseHelper.setRevealedAppmonsForIds(appmonsToReveal);
     pairBuddyAppmon(
       name,
       info,
@@ -236,13 +229,34 @@ class AppliDriveManagementService {
     preferencesService.setString(AppPreferenceKey.secondaryColor, secondaryColor);
   }
 
-  // Deixa visível appmons a partir da lista de ids fornecida
-  void revealAppmons(List<String> appmonIds) {
-    databaseHelper.setRevealedAppmonsForIds(appmonIds);
+  void revealAppmonsInFusion(Appmon fusionAppmon, int appliDriveVersion) {
+    List<String> idsToSetRevealed = [fusionAppmon.id];
+
+    if(appliDriveVersion == 1) {
+      updateAppliDriveVersion(2);
+      idsToSetRevealed = idsToSetRevealed + [
+        "D7I3",
+        "D9M6",
+        "D1S2",
+        "D4V4",
+      ];
+    }
+
+    databaseHelper.setRevealedAppmonsForIds(idsToSetRevealed);
   }
 
-  // Deixa visível o appmon pelo id fornecido e marcação de finalização de tutorial
-  void setAppmonReveleadedId(String appmonId, bool tutorialFinished) {
+  // Informa que appmons forem vistos a partir da lista de ids fornecida
+  void setAppmonsInDataCenter(List<String> appmonIds) {
+    for (final appmonId in appmonIds) {
+      preferencesService.setStringInStringList(
+        AppPreferenceKey.appmonRevealedIds,
+        appmonId,
+      );
+    }
+  }
+
+  // Informa que appmon foi visto pelo id fornecido e marcação de finalização de tutorial
+  void setAppmonApliariseInDataCenter(String appmonId, bool tutorialFinished) {
     preferencesService.setStringInStringList(
       AppPreferenceKey.appmonRevealedIds,
       appmonId,
@@ -256,8 +270,13 @@ class AppliDriveManagementService {
       preferencesService.setHintInHintRevealedList("appmon", "2");
       preferencesService.setHintInHintRevealedList("appmon", "3");
       preferencesService.setHintInHintRevealedList("appliDrive", "1");
-      preferencesService.setHintInHintRevealedList("7code");
+      preferencesService.setHintInHintRevealedList("7code", "1");
     }
+  }
+
+  // Deixa visível a dica pelo tipo e código fornecidos
+  void setHint(String type, String number) {
+    preferencesService.setHintInHintRevealedList(type, number);
   }
 
   // Atualiza a versão do appli drive
@@ -266,6 +285,9 @@ class AppliDriveManagementService {
     if(version == 2) {
       preferencesService.setHintInHintRevealedList("appmon", "4");
       preferencesService.setHintInHintRevealedList("appliDrive", "2");
+      preferencesService.setBool(AppPreferenceKey.show7codeIcon, true);
+      preferencesService.setHintInHintRevealedList("7code", "2");
+      preferencesService.setHintInHintRevealedList("7code", "3");
     }
   }
 }

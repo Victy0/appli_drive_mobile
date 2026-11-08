@@ -694,7 +694,10 @@
                 "appmon3": "An App link is a process in which two Appmon (one in the form of an Appmon Chip) are linked together into a conglomerate entity by an Appli Drive user.\n\nSometimes, the subordinate Appmon forms weapons, armor or new abilities for the lead Appmon. Other times, the subordinate Appmon appears in a ghostly form floating behind the lead Appmon.",
                 "appmon4": "App attai is stated to be a variation of Applink in which two specific compatible Appmon combine together to become an Appmon of a higher Grade, either by an Appli Drive user, or by the volition of the active Appmon.",
                 "appmon5": "Appmon are found in the “Common network”, they are the “Apps” that humankind use everyday. They exist in this middle ground between the humans' physical world and the “Deeper network” of Digimon, commonly known as the Net. There are as many different species of Appmon as many apps exist.",
-                "appmon6": "A Buddy Appmon is an Appmon who has paired themselves with an person.\n\nUpon forming a partnership, the Appli Drive of the person,  takes characteristics of the Buddy Appmon. If said Appli Drive is destroyed, the Buddy Appmon will disappear and lose all memories of their bond."
+                "appmon6": "A buddy Appmon is an Appmon who has paired themselves with an person.\n\nUpon forming a partnership, the Appli Drive of the person,  takes characteristics of the Buddy Appmon. If said Appli Drive is destroyed, the Buddy Appmon will disappear and lose all memories of their bond.",
+                "7code1": "The 7 Code Appmon are seven specially designated appmon whose data is connected to AI Minerva. Each represents one of the seven regular attributes and carries an orb bearing its attribute emblem.",
+                "7code2": "Every 7 Code Appmon is associated with a numbered code, a letter and a distinct power value.\n\nArranged in numerical order, their letters spell MINERVA, while their Power values increase successively from 111 to 777.",
+                "7code3": "Their special Appmon chips can be inserted into the Seven Code PAD.\n\nOnce all seven have been collected, the completed PAD can be used to Appliarise Dantemon."
             },
             "titles": {
                 "appliDrive1": "01 - BASIC",
@@ -704,7 +707,10 @@
                 "appmon3": "03 - APP LINK",
                 "appmon4": "04 - APP GATTAI",
                 "appmon5": "05 - NET",
-                "appmon6": "06 - BUDDY"
+                "appmon6": "06 - BUDDY",
+                "7code1": "01 - APPMONS",
+                "7code2": "02 - MINERVA",
+                "7code3": "03 - 7 CODE PAD"
             },
             "types": {
                 "appliDrive": "APPLI DRIVE",
