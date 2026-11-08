@@ -12,7 +12,7 @@ enum AppPreferenceKey {
   primaryColor,            // cor primária detalhe appli drive
   secondaryColor,          // cor secundária detalhe appli drive
 // APPMON LIST
-  appmonRevealedIds,       // lista de appmons revelados
+  appmonRevealedIds,       // lista de appmons revelados (realizado appliarise)
   seeAllAppmons,           // informação booleana se deve mostrar todos appmos
 // 7CODE
   dantemonAppliarise,      // informação booleana se foi realizado appliarise de Dantemon

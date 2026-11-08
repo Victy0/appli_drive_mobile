@@ -135,12 +135,15 @@ class AppliarisePageState extends State<AppliarisePage> {
       databaseHelper: _databaseHelper,
       preferencesService: _preferencesService,
     );
-    _appliDriveManagementService.setAppmonReveleadedId(
+    _appliDriveManagementService.setAppmonApliariseInDataCenter(
       widget.appmon.id,
       widget.tutorialFinished,
     );
     if(widget.startAnimation) {
       if(widget.appmonLinked1 != null) {
+        _appliDriveManagementService.setAppmonsInDataCenter(
+          [widget.appmonLinked1?.id ?? "", widget.appmonLinked2?.id ?? ""]
+        );
         _appliariseAnimation = false;
         _startAppGataiAnimation();
       } else {
