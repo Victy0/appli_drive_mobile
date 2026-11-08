@@ -57,6 +57,8 @@ class TextWithWhiteShadow extends StatelessWidget {
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = outlineWidth
+              ..strokeJoin = StrokeJoin.round
+              ..strokeCap = StrokeCap.round
               ..color = Colors.white,
           ),
         ),

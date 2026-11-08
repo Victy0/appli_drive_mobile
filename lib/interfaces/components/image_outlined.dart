@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class ImageOutlined extends StatelessWidget {
   final String asset;
@@ -14,16 +15,14 @@ class ImageOutlined extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final offsets = [
-      Offset(-outlineSize, -outlineSize),
-      Offset(0, -outlineSize),
-      Offset(outlineSize, -outlineSize),
-      Offset(-outlineSize, 0),
-      Offset(outlineSize, 0),
-      Offset(-outlineSize, outlineSize),
-      Offset(0, outlineSize),
-      Offset(outlineSize, outlineSize),
-    ];
+    final offsets = List.generate(16, (i) {
+      final angle = (2 * pi * i) / 16;
+
+      return Offset(
+        outlineSize * cos(angle),
+        outlineSize * sin(angle),
+      );
+    });
 
     return SizedBox(
       width: size + outlineSize * 2,
@@ -46,7 +45,6 @@ class ImageOutlined extends StatelessWidget {
                 ),
               ),
             ),
-
           Image.asset(
             asset,
             width: size,
