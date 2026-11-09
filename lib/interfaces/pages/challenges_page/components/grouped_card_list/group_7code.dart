@@ -1,4 +1,6 @@
+import 'package:appli_drive_mobile/interfaces/pages/challenges_page/components/riddle/riddle_7code.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:flutter/material.dart';
 
 class Group7code extends StatefulWidget {
@@ -16,6 +18,8 @@ class Group7code extends StatefulWidget {
 }
 
 class Group7codeState extends State<Group7code> {
+  final AudioService _audioService = AudioService();
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -66,7 +70,7 @@ class Group7codeState extends State<Group7code> {
                     if (widget.actualChallenge != number) {
                       return;
                     }
-                    // definir ação ao clicar
+                    _openRiddle7code(number);
                   },
                   child: Opacity(
                     opacity: number > widget.actualChallenge ? 0.3 : 1.0,
@@ -107,6 +111,16 @@ class Group7codeState extends State<Group7code> {
           )
         ),
       ),
+    );
+  }
+
+  void _openRiddle7code(int numberChallenge) async {
+    if (!mounted) return;
+    _audioService.playEffect("click");
+    showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Riddle7code(numberChallenge: numberChallenge),
     );
   }
 }

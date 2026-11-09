@@ -106,8 +106,8 @@ class DatabaseHelper {
     return await db.rawQuery(sql, [gradeLevelId]);
   }
 
-  // Recupera lista de dados de appmons para página "Data center" por lista de ids fornecida
-  Future<List<Map<String, dynamic>>> getAppmonCodeListToDataCenter({List<String>? ids, bool filterByIds = true}) async {
+  // Recupera lista de dados de appmons por lista opcional de ids fornecida
+  Future<List<Map<String, dynamic>>> getAppmonCodeListByOptionalListId({List<String>? ids, bool filterByIds = true}) async {
     final db = await database;
 
     String whereClause = '';
@@ -126,6 +126,27 @@ class DatabaseHelper {
       FROM appmon
       INNER JOIN grade ON appmon.grade_id = grade.id
         WHERE appmon.revealed = 1 $whereClause
+      ORDER BY grade.id, appmon.name;
+    ''';
+
+    return await db.rawQuery(sql, whereArgs);
+  }
+
+  // Recupera lista de dados de appmons ignorando visibilidade por lista de ids fornecedidas
+  Future<List<Map<String, dynamic>>> getAppmonCodeListByListId(List<String> ids) async {
+    final db = await database;
+
+    final placeholders = List.filled(ids.length, '?').join(', ');
+    String whereClause = 'appmon.inner_id IN ($placeholders)';
+    List<dynamic> whereArgs = ids;
+
+    String sql = '''
+      SELECT 
+        appmon.inner_id AS id, appmon.name AS name, appmon.code_text AS code,
+        grade.name AS gradeName 
+      FROM appmon
+      INNER JOIN grade ON appmon.grade_id = grade.id
+        WHERE $whereClause
       ORDER BY grade.id, appmon.name;
     ''';
 

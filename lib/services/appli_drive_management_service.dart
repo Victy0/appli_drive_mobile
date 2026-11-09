@@ -288,6 +288,8 @@ class AppliDriveManagementService {
       preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, 1);
       preferencesService.setHintInHintRevealedList("7code", "2");
       preferencesService.setHintInHintRevealedList("7code", "3");
+      List<String> appmonsToReveal = ["D2L8", "D8R5"];
+      databaseHelper.setRevealedAppmonsForIds(appmonsToReveal);
     }
   }
 }
