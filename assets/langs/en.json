@@ -94,7 +94,7 @@
                 "dba": "The appmon with effect features!",
                 "dca": "The appmon with super fortune telling skills!",
                 "dda": "The appmon with coordinate features!",
-                "dea": "The appmon with media player features!!",
+                "dea": "The appmon with media player features!",
                 "dfa": "The appmon with roulette features!",
                 "dga": "The appmon with dream skills!",
                 "dha": "The appmon with medical skills!",
@@ -660,6 +660,17 @@
                         "6": "Code 6: V",
                         "7": "Code 7: A"
                     }
+                }
+            },
+            "riddle7code": {
+                "description": {
+                    "1": "",
+                    "2": "",
+                    "3": "",
+                    "4": "",
+                    "5": "",
+                    "6": "",
+                    "7": ""
                 }
             }
         },

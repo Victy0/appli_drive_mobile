@@ -26,7 +26,8 @@ class ChallengeListState extends State<ChallengeList> {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             // 7 CODE
-            Group7code(topic: "7code", actualChallenge: widget.actual7codeChallenge)
+            if (widget.actual7codeChallenge > 0)
+              Group7code(topic: "7code", actualChallenge: widget.actual7codeChallenge)
           ],
         ),
       ],

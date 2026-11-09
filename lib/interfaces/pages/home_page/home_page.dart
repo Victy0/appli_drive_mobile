@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final String appmonColorSecondary = await _preferencesService.getString(AppPreferenceKey.secondaryColor) ?? "";
     final List<Map<String, String>> appmonPairingEvolutionInfo = await _preferencesService.getAppmonPairingEvolutionInfo();
     final bool tutorialFinished = await _preferencesService.getBool(AppPreferenceKey.tutorialFinished);
-    final bool show7codeIcon = await _preferencesService.getBool(AppPreferenceKey.show7codeIcon);
+    final int actual7codeChallenge = await _preferencesService.getInt(AppPreferenceKey.actual7codeChallenge) ?? 0;
     final int appliDriveVersion = await _preferencesService.getInt(AppPreferenceKey.appliDriveVersion) ?? 0;
     
     setState(() {
@@ -65,7 +65,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       _appmonColorSecondary = appmonColorSecondary;
       _appmonPairingEvolutionInfo = appmonPairingEvolutionInfo;
       _tutorialFinished = tutorialFinished;
-      _show7codeIcon = show7codeIcon;
+      _show7codeIcon = actual7codeChallenge > 0;
       _appliDriveVersion = appliDriveVersion;
       _isLoading = false;
     });

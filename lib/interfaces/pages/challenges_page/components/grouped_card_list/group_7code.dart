@@ -18,8 +18,6 @@ class Group7code extends StatefulWidget {
 class Group7codeState extends State<Group7code> {
   @override
   Widget build(BuildContext context) {
-    int challengeCompleted = widget.actualChallenge - 1;
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Theme(
@@ -53,7 +51,7 @@ class Group7codeState extends State<Group7code> {
                   ),
                 ),
                 Text(
-                  "$challengeCompleted/7",
+                  "${widget.actualChallenge - 1}/7",
                   style: const TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 20,
@@ -64,11 +62,14 @@ class Group7codeState extends State<Group7code> {
             children: [
               for (int number = 1; number <= 7; number++) ...[
                 GestureDetector(
-                  /*onTap: () {
+                  onTap: () {
+                    if (widget.actualChallenge != number) {
+                      return;
+                    }
                     // definir ação ao clicar
-                  },*/
+                  },
                   child: Opacity(
-                    opacity: number > challengeCompleted ? 0.3 : 1.0,
+                    opacity: number > widget.actualChallenge ? 0.3 : 1.0,
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       padding: const EdgeInsets.all(12.0),
@@ -90,9 +91,9 @@ class Group7codeState extends State<Group7code> {
                             ),
                           ),
                           const Spacer(),
-                          if (number < challengeCompleted) ...[
+                          if (number < widget.actualChallenge) ...[
                             const Icon(Icons.check_circle, size: 15)
-                          ] else if (number == challengeCompleted) ... [
+                          ] else if (number == widget.actualChallenge) ... [
                             const Icon(Icons.arrow_forward_ios, size: 15)
                           ]
                           ,

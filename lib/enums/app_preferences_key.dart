@@ -5,7 +5,6 @@ enum AppPreferenceKey {
   selectLanguage,          // idioma selecionado
   appliDriveVersion,       // versão do appli drive
   tutorialFinished,        // informação booleana se tutorial foi finalizado
-  show7codeIcon,           // informação booleana se deve mostrar o icone de 7code
 // APPMON PAIRING
   appmonPairingName,       // nome do appmon pareado
   appmonPairingEvolution,  // informação linha evolutiva appmon pareado
@@ -37,8 +36,6 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
         return 'appli_drive_version';
       case AppPreferenceKey.tutorialFinished:
         return 'tutorial_finished';
-      case AppPreferenceKey.show7codeIcon:
-        return 'show_7code_icon';
     // APPMON PAIRING
       case AppPreferenceKey.appmonPairingName:
         return 'appmon_pairing_name';

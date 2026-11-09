@@ -266,7 +266,6 @@ class AppliDriveManagementService {
         AppPreferenceKey.tutorialFinished,
         true
       );
-      preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, 1);
       preferencesService.setHintInHintRevealedList("appmon", "1");
       preferencesService.setHintInHintRevealedList("appmon", "2");
       preferencesService.setHintInHintRevealedList("appmon", "3");
@@ -286,7 +285,7 @@ class AppliDriveManagementService {
     if(version == 2) {
       preferencesService.setHintInHintRevealedList("appmon", "4");
       preferencesService.setHintInHintRevealedList("appliDrive", "2");
-      preferencesService.setBool(AppPreferenceKey.show7codeIcon, true);
+      preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, 1);
       preferencesService.setHintInHintRevealedList("7code", "2");
       preferencesService.setHintInHintRevealedList("7code", "3");
     }

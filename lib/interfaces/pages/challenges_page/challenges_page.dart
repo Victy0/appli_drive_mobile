@@ -27,7 +27,7 @@ class ChallengesPageState extends State<ChallengesPage> {
   int _actual7codeChallenge = 0;
 
   void _getChallegensList() async {
-    int challenge7code = await _preferencesService.getInt(AppPreferenceKey.actual7codeChallenge) ?? 1;
+    int challenge7code = await _preferencesService.getInt(AppPreferenceKey.actual7codeChallenge) ?? 0;
     setState(() {
       _actual7codeChallenge = challenge7code;
       _isLoading = false;
