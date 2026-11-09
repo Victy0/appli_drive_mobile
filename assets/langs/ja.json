@@ -646,6 +646,9 @@
                 "context": "APP LINK 取り消す"
             }
         },
+        "challengesPage": {
+            "challenges": "課題"
+        },
         "dataCenterPage": {
             "dataCenter": "データセンター"
         },

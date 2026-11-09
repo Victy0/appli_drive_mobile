@@ -646,6 +646,9 @@
                 "context": "Desfazer APP LINK"
             }
         },
+        "challengesPage": {
+            "challenges": "DESAFIOS"
+        },
         "dataCenterPage": {
             "dataCenter": "CENTRO DE DADOS"
         },

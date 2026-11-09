@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/interfaces/pages/challenges_page/challenges_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/data_center_page/data_center_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/hints_page/hints_page.dart';
 import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/seven_code_page.dart';
@@ -92,10 +93,34 @@ class MenuIconsState extends State<MenuIcons> {
     );
   }
 
+  void _navigateToChallengesPage(BuildContext context) async {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 800),
+        pageBuilder: (context, animation, secondaryAnimation) => 
+          ChallengesPage(onLanguageChange: widget.onLanguageChange),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, -1.0);
+          const end = Offset(0.0, 0.0);
+          const curve = Curves.easeInOut;
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, right: 16, bottom: 16, left: 16),
+      padding: const EdgeInsets.only(top: 5, right: 10, bottom: 16, left: 10),
       child: Row(
         children: [
           const Spacer(),
@@ -103,6 +128,7 @@ class MenuIconsState extends State<MenuIcons> {
           if(widget.show7codeIcon)
             iconSevenCode(context),
           iconHints(context),
+          iconChallenges(context),
           const Spacer(),
         ],
       ),
@@ -111,7 +137,7 @@ class MenuIconsState extends State<MenuIcons> {
 
   Widget iconDataCenter(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -134,7 +160,7 @@ class MenuIconsState extends State<MenuIcons> {
 
   Widget iconSevenCode(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -157,7 +183,7 @@ class MenuIconsState extends State<MenuIcons> {
 
   Widget iconHints(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -171,6 +197,29 @@ class MenuIconsState extends State<MenuIcons> {
           },
           icon: Image.asset(
             'assets/images/icons/light_bulb_box.png',
+            height: 55,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget iconChallenges(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black, width: 2),
+        ),
+        child: IconButton(
+          onPressed: () => {
+            _audioService.playEffect("click"),
+            _navigateToChallengesPage(context),
+          },
+          icon: Image.asset(
+            'assets/images/icons/task.png',
             height: 55,
           ),
         ),

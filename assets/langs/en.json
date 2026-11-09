@@ -646,6 +646,9 @@
                 "context": "Undo APP LINK"
             }
         },
+        "challengesPage": {
+            "challenges": "CHALLENGES"
+        },
         "dataCenterPage": {
             "dataCenter": "DATA CENTER"
         },
