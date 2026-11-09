@@ -266,6 +266,7 @@ class AppliDriveManagementService {
         AppPreferenceKey.tutorialFinished,
         true
       );
+      preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, 1);
       preferencesService.setHintInHintRevealedList("appmon", "1");
       preferencesService.setHintInHintRevealedList("appmon", "2");
       preferencesService.setHintInHintRevealedList("appmon", "3");

@@ -1,9 +1,12 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/background_image.dart';
 import 'package:appli_drive_mobile/interfaces/components/close_page_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/custom_app_bar.dart';
+import 'package:appli_drive_mobile/interfaces/pages/challenges_page/components/grouped_card_list/challenge_list.dart';
 import 'package:appli_drive_mobile/interfaces/pages/home_page/home_page.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 //import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
@@ -16,15 +19,17 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class ChallengesPageState extends State<ChallengesPage> {
-  //final PreferencesService _preferencesService = PreferencesService();
+  final PreferencesService _preferencesService = PreferencesService();
   final AudioService _audioService = AudioService();
 
   //List<Map<String, dynamic>> _challengesList = [];
   bool _isLoading = true;
+  int _actual7codeChallenge = 0;
 
   void _getChallegensList() async {
+    int challenge7code = await _preferencesService.getInt(AppPreferenceKey.actual7codeChallenge) ?? 1;
     setState(() {
-      //_challengesList = result;
+      _actual7codeChallenge = challenge7code;
       _isLoading = false;
     });
   }
@@ -90,7 +95,9 @@ class ChallengesPageState extends State<ChallengesPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      
+                      ChallengeList(
+                        actual7codeChallenge: _actual7codeChallenge
+                      ),
                     ],
                   ),
                 ),

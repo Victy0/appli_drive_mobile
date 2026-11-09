@@ -19,6 +19,8 @@ enum AppPreferenceKey {
   sevencodeRevealedIds,    // lista de 7code revelados
 // HINTS
   hintRevealedList,        // lista de dicas reveladas
+// CHALLENGES
+  actual7codeChallenge     // desafio 7 code em andamento
 }
 
 extension AppPreferenceKeyExt on AppPreferenceKey {
@@ -59,6 +61,9 @@ extension AppPreferenceKeyExt on AppPreferenceKey {
     // HINTS
       case AppPreferenceKey.hintRevealedList:
         return 'hint_revealed_list';
+    // CHALLENGE
+      case AppPreferenceKey.actual7codeChallenge:
+        return 'actual_7code_challenge';
     }
   }
 }

@@ -647,7 +647,21 @@
             }
         },
         "challengesPage": {
-            "challenges": "CHALLENGES"
+            "challenges": "CHALLENGES",
+            "topic": {
+                "7code": {
+                    "description": "7 CODE",
+                    "challenge": {
+                        "1": "Code 1: M",
+                        "2": "Code 2: I",
+                        "3": "Code 3: N",
+                        "4": "Code 4: E",
+                        "5": "Code 5: R",
+                        "6": "Code 6: V",
+                        "7": "Code 7: A"
+                    }
+                }
+            }
         },
         "dataCenterPage": {
             "dataCenter": "DATA CENTER"
@@ -698,7 +712,7 @@
                 "appmon4": "App attai is stated to be a variation of Applink in which two specific compatible Appmon combine together to become an Appmon of a higher Grade, either by an Appli Drive user, or by the volition of the active Appmon.",
                 "appmon5": "Appmon are found in the “Common network”, they are the “Apps” that humankind use everyday. They exist in this middle ground between the humans' physical world and the “Deeper network” of Digimon, commonly known as the Net. There are as many different species of Appmon as many apps exist.",
                 "appmon6": "A buddy Appmon is an Appmon who has paired themselves with an person.\n\nUpon forming a partnership, the Appli Drive of the person,  takes characteristics of the Buddy Appmon. If said Appli Drive is destroyed, the Buddy Appmon will disappear and lose all memories of their bond.",
-                "7code1": "The 7 Code Appmon are seven specially designated appmon whose data is connected to AI Minerva. Each represents one of the seven regular attributes and carries an orb bearing its attribute emblem.",
+                "7code1": "The 7 Code Appmon are seven specially designated appmon whose data is connected to AI Minerva.\n\nEach represents one of the seven regular attributes and carries an orb bearing its attribute emblem.",
                 "7code2": "Every 7 Code Appmon is associated with a numbered code, a letter and a distinct power value.\n\nArranged in numerical order, their letters spell MINERVA, while their Power values increase successively from 111 to 777.",
                 "7code3": "Their special Appmon chips can be inserted into the Seven Code PAD.\n\nOnce all seven have been collected, the completed PAD can be used to Appliarise Dantemon."
             },
