@@ -1,8 +1,10 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_change_language.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
 class HeaderIconsHome extends StatefulWidget {
@@ -22,11 +24,16 @@ class HeaderIconsHome extends StatefulWidget {
 
 class HeaderIconsHomeState extends State<HeaderIconsHome> {
   final AudioService _audioService = AudioService();
+  final PreferencesService _preferencesService = PreferencesService();
 
   late List<Map<String, dynamic>> appmonCodeList;
+  bool _seeAllAppmon = false;
   
   void _getAppmonCodeList() async {
     appmonCodeList = await widget.databaseHelper.getAppmonCodeList(4);
+    _seeAllAppmon = await _preferencesService.getBool(
+      AppPreferenceKey.seeAllAppmons,
+    );
   }
 
   @override
@@ -182,7 +189,11 @@ class HeaderIconsHomeState extends State<HeaderIconsHome> {
           showDialog<String>(
             context: context,
             barrierDismissible: false,
-            builder: (BuildContext context) => DialogAppmonList(appmonList: appmonCodeList, homePage: true),
+            builder: (BuildContext context) => DialogAppmonList(
+              appmonList: appmonCodeList,
+              homePage: true,
+              seeAllAppmon: _seeAllAppmon,
+            ),
           ),
         },
         icon: Image.asset(

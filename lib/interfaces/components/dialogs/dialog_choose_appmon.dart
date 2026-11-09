@@ -207,7 +207,7 @@ class DialogChooseAppmonState extends State<DialogChooseAppmon> {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) =>
-              DialogAppmonList(appmonList: _appmonList),
+              DialogAppmonList(appmonList: _appmonList, showAppmonQuantity: false),
           );
 
           if (selected != null && selected.isNotEmpty) {

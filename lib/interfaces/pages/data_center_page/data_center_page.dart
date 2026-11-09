@@ -41,7 +41,7 @@ class DataCenterPageState extends State<DataCenterPage>{
     
     List<Map<String, dynamic>> result = [];
     if(appmonRevealedIdsUser.isNotEmpty) {
-      result = await _databaseHelper.getAppmonCodeListToDataCenter(ids: appmonRevealedIdsUser, filterByIds: !seeAllAppmon);
+      result = await _databaseHelper.getAppmonCodeListByOptionalListId(ids: appmonRevealedIdsUser, filterByIds: !seeAllAppmon);
     } 
     setState(() {
       _seeAll = seeAllAppmon;

@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 class DialogAppmonList extends StatefulWidget {
   final List<Map<String, dynamic>> appmonList;
   final bool homePage;
+  final bool showAppmonQuantity;
+  final bool seeAllAppmon;
   const DialogAppmonList({
     super.key,
     required this.appmonList,
     this.homePage = false,
+    this.showAppmonQuantity = true,
+    this.seeAllAppmon = false,
   });
 
   @override
@@ -18,18 +22,21 @@ class DialogAppmonList extends StatefulWidget {
 class DialogAppmonListState extends State<DialogAppmonList> {
   final AudioService _audioService = AudioService();
   
-  int _getAppmonQuantityByGrade(String grade) {
+  String _getAppmonQuantityByGrade(String grade) {
+    if(!widget.seeAllAppmon) {
+      return "?";
+    }
     switch(grade) {
       case "standard":
-        return 74;
+        return "74";
       case "super":
-        return 37;
+        return "37";
       case "ultimate":
-        return 14;
+        return "14";
       case "god":
-        return 6;
+        return "6";
     }
-    return 0;
+    return "0";
   }
   
   @override
@@ -136,13 +143,15 @@ class DialogAppmonListState extends State<DialogAppmonList> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(
-                    "${items.length}/$appmonQuantity",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 20,
+                  if (widget.showAppmonQuantity) ...[
+                    Text(
+                      "${items.length}/$appmonQuantity",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
+                  ]
                 ],
               ),
               children: items.map((item) {
