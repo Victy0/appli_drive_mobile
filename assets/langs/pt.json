@@ -671,7 +671,11 @@
                     "5": "",
                     "6": "",
                     "7": ""
-                }
+                },
+                "failed": "RESPOSTA ERRADA!",
+                "min": "MIN",
+                "solved": "ENIGMA RESOLVIDO!",
+                "tryAgain": "TENTE NOVAMENTE DEPOIS DE:"
             }
         },
         "dataCenterPage": {

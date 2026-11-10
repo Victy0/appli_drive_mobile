@@ -1,3 +1,4 @@
+import 'package:appli_drive_mobile/enums/app_preferences_key.dart';
 import 'package:appli_drive_mobile/interfaces/components/animated_white_button.dart';
 import 'package:appli_drive_mobile/interfaces/components/dialogs/dialog_appmon_list.dart';
 import 'package:appli_drive_mobile/interfaces/components/image_outlined.dart';
@@ -5,6 +6,7 @@ import 'package:appli_drive_mobile/interfaces/components/text_with_white_shadow.
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
+import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
 
 class Riddle7code extends StatefulWidget {
@@ -22,12 +24,14 @@ class Riddle7code extends StatefulWidget {
 class Riddle7codeState extends State<Riddle7code> {
   final AudioService _audioService = AudioService();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final PreferencesService _preferencesService = PreferencesService();
 
   bool _isLoading = true;
-  String _selectedCode = "";
   String _selectedId = "";
   String _selectedName = "";
   List<Map<String, dynamic>> _optionList = [];
+  bool _showResult = false;
+  bool _result = false;
 
   void _getOptionList() async {
     List<String> possibleOptions = [];
@@ -160,94 +164,162 @@ class Riddle7codeState extends State<Riddle7code> {
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
-                                            Container(
-                                              width: 350,
-                                              height: 200,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey[350],
-                                                border: Border.all(color: Colors.black, width: 2),
-                                                borderRadius: BorderRadius.circular(5),
-                                              ),
-                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                              child: Text(
-                                                AppLocalization.of(context).translate("challengesPage.riddle7code.description.${widget.numberChallenge}"),
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.bold,
+                                            if (_showResult) ...[
+                                              if (_result) ...[
+                                                TextWithWhiteShadow(
+                                                  text: AppLocalization.of(context).translate(
+                                                    "pages.challengesPage.riddle7code.solved"
+                                                  ),
+                                                  fontSize: 25,
+                                                  height: 1.0,
+                                                  textColor: Colors.green,
+                                                  align: "center",
+                                                  applySoftWrap: true,
                                                 ),
-                                                textAlign: TextAlign.center,
-                                                softWrap: true,
-                                                overflow: TextOverflow.visible,
+                                                divider(),
+                                                TextWithWhiteShadow(
+                                                  text: AppLocalization.of(context).translate(
+                                                    "appmons.names.code${widget.numberChallenge}"
+                                                  ),
+                                                  fontSize: 25,
+                                                  height: 1.0,
+                                                  align: "center",
+                                                  applySoftWrap: true,
+                                                ),
+                                                divider(),
+                                                ImageOutlined(
+                                                  asset: "assets/images/7code/COD${widget.numberChallenge}.png",
+                                                  size: 250,
+                                                  outlineSize: 5,
+                                                ),
+                                              ] else ...[
+                                                TextWithWhiteShadow(
+                                                  text: AppLocalization.of(context).translate(
+                                                    "pages.challengesPage.riddle7code.failed"
+                                                  ),
+                                                  fontSize: 25,
+                                                  height: 1.0,
+                                                  textColor: Colors.red,
+                                                  align: "center",
+                                                  applySoftWrap: true,
+                                                ),
+                                                divider(),
+                                                divider(),
+                                                divider(),
+                                                TextWithWhiteShadow(
+                                                  text: AppLocalization.of(context).translate(
+                                                    "pages.challengesPage.riddle7code.tryAgain"
+                                                  ),
+                                                  fontSize: 25,
+                                                  height: 1.0,
+                                                  align: "center",
+                                                  applySoftWrap: true,
+                                                ),
+                                                divider(),
+                                                TextWithWhiteShadow(
+                                                  text: "10 ${AppLocalization.of(context).translate("pages.challengesPage.riddle7code.min")}",
+                                                  fontSize: 25,
+                                                  height: 1.0,
+                                                  align: "center",
+                                                  applySoftWrap: true,
+                                                ),
+                                                divider(),
+                                                ImageOutlined(
+                                                  asset: "assets/images/7code/COD${widget.numberChallenge}_shadow.png",
+                                                  size: 250,
+                                                  outlineSize: 5,
+                                                ),
+                                              ]
+                                            ] else ...[
+                                              Container(
+                                                width: 350,
+                                                height: 200,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[350],
+                                                  border: Border.all(color: Colors.black, width: 2),
+                                                  borderRadius: BorderRadius.circular(5),
+                                                ),
+                                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                                child: Text(
+                                                  AppLocalization.of(context).translate("challengesPage.riddle7code.description.${widget.numberChallenge}"),
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                  softWrap: true,
+                                                  overflow: TextOverflow.visible,
+                                                ),
                                               ),
-                                            ),
-                                            divider(),
-                                            SizedBox(
-                                              width: 300,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Expanded(
-                                                        child: Container(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(color: Colors.black, width: 2),
-                                                            borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                                                            color: Colors.white,
-                                                          ),
-                                                          child: Center(
-                                                            child: Text(
-                                                              _selectedCode == ""
-                                                                ? AppLocalization.of(context).translate("components.dialogs.chooseAppmon.select")
-                                                                : _selectedName.toUpperCase(),
-                                                              style: const TextStyle(fontSize: 25),
+                                              divider(),
+                                              SizedBox(
+                                                width: 300,
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(color: Colors.black, width: 2),
+                                                              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                                              color: Colors.white,
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                _selectedId == ""
+                                                                  ? AppLocalization.of(context).translate("components.dialogs.chooseAppmon.select")
+                                                                  : _selectedName.toUpperCase(),
+                                                                style: const TextStyle(fontSize: 25),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      const SizedBox(width: 8),
-                                                      iconAppmonListCode(context),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            divider(),
-                                            if (_selectedCode != "") ...[
-                                              SizedBox(
-                                                width: 500,
-                                                height: 220,
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        ImageOutlined(
-                                                          asset: "assets/images/apps/$_selectedId.png",
-                                                          size: 100,
-                                                          outlineSize: 5,
-                                                        ),
-                                                        ImageOutlined(
-                                                          asset: "assets/images/appmons/$_selectedId.png",
-                                                          size: 190,
-                                                          outlineSize: 5,
-                                                        ),
+                                                        const SizedBox(width: 8),
+                                                        iconAppmonListCode(context),
                                                       ],
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ] else ...[
-                                              const SizedBox(height: 220)
-                                            ],
-                                            divider(),
-                                            resolveButton(_selectedCode == ""),
+                                              divider(),
+                                              if (_selectedId != "") ...[
+                                                SizedBox(
+                                                  width: 500,
+                                                  height: 220,
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          ImageOutlined(
+                                                            asset: "assets/images/apps/$_selectedId.png",
+                                                            size: 100,
+                                                            outlineSize: 5,
+                                                          ),
+                                                          ImageOutlined(
+                                                            asset: "assets/images/appmons/$_selectedId.png",
+                                                            size: 190,
+                                                            outlineSize: 5,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ] else ...[
+                                                const SizedBox(height: 220)
+                                              ],
+                                              divider(),
+                                              resolveButton(_selectedId, context),
+                                            ]
                                           ],
                                         ),
                                       ),
@@ -318,7 +390,6 @@ class Riddle7codeState extends State<Riddle7code> {
 
           if (selected != null && selected.isNotEmpty) {
             setState(() {
-              _selectedCode = selected['code'];
               _selectedName = selected['name'];
               _selectedId = selected['id'];
             });
@@ -332,13 +403,22 @@ class Riddle7codeState extends State<Riddle7code> {
     );
   }
 
-  Widget resolveButton(bool optionSelected) {
+  Widget resolveButton(String selectedId, BuildContext context) {
+    bool appmonNotSelected = selectedId == "";
     return GestureDetector(
       onTap: () async {
-        return;
+        if (appmonNotSelected) return;
+        bool result = selectedId == _getAnswer();
+        if (result) {
+          _preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, widget.numberChallenge + 1);
+        }
+        setState(() {
+          _showResult = true;
+          _result = result;
+        });
       },
       child: Opacity(
-        opacity: optionSelected ? 0.3 : 1,
+        opacity: appmonNotSelected ? 0.3 : 1,
         child: AnimatedWhiteButton(
           text: 'RESOLVER',
         ),
