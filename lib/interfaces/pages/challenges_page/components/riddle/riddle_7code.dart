@@ -410,7 +410,12 @@ class Riddle7codeState extends State<Riddle7code> {
         if (appmonNotSelected) return;
         bool result = selectedId == _getAnswer();
         if (result) {
+          // audio 7 code appmon
           _preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, widget.numberChallenge + 1);
+          _preferencesService.setStringInStringList(AppPreferenceKey.sevencodeRevealedIds, widget.numberChallenge.toString());
+        } else {
+          // audio erro enigma
+          // inclusão funcionalidade de trava
         }
         setState(() {
           _showResult = true;

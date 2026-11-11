@@ -10,6 +10,7 @@ import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/components/p
 import 'package:appli_drive_mobile/interfaces/pages/seven_code_page/components/square_7code.dart';
 import 'package:appli_drive_mobile/localizations/app_localization.dart';
 import 'package:appli_drive_mobile/models/appmon.dart';
+import 'package:appli_drive_mobile/services/audio_service.dart';
 import 'package:appli_drive_mobile/services/database_helper_service.dart';
 import 'package:appli_drive_mobile/services/preferences_service.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class SevenCodePage extends StatefulWidget {
 class SevenCodePageState extends State<SevenCodePage>{
   final PreferencesService _preferencesService = PreferencesService();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
+  final AudioService _audioService = AudioService();
   
   bool _hasAppliarise = false;
   bool _showAppliariseButton = false;
@@ -57,6 +59,7 @@ class SevenCodePageState extends State<SevenCodePage>{
   @override
   void initState() {
     super.initState();
+    _audioService.playBackground("common");
     _get7codeRevealed();
   }
 

@@ -96,7 +96,7 @@ class Group7codeState extends State<Group7code> {
                           ),
                           const Spacer(),
                           if (number < widget.actualChallenge) ...[
-                            const Icon(Icons.check_circle, size: 15)
+                            const Icon(Icons.check_circle, color: Colors.green, size: 20)
                           ] else if (number == widget.actualChallenge) ... [
                             const Icon(Icons.arrow_forward_ios, size: 15)
                           ]
