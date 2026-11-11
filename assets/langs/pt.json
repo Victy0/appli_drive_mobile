@@ -664,18 +664,17 @@
             },
             "riddle7code": {
                 "description": {
-                    "1": "",
-                    "2": "",
-                    "3": "",
-                    "4": "",
-                    "5": "",
-                    "6": "",
-                    "7": ""
+                    "1": "Não tenho asas, mas cruzo o mundo sem sair do lugar. Não tenho voz, mas carrego palavras, imagens e segredos. Sou confiável quando bem endereçado e não conheço fronteiras nem caminhos de volta. Em um piscar de olhos, minha mensagem chega a quem me espera.",
+                    "2": "Empunho uma lâmina sagrada e carrego no peito o espírito de um grande herói. Minha presença inspira confiança e meu carisma abre qualquer porta. Curiosamente, ninguém questiona minhas visitas inesperadas, mesmo quando saio levando os tesouros de quem mal conheço.",
+                    "3": "Sou pequeno, mas não gosto de acumular. Tudo aquilo que considero inútil desaparece sob minhas mãos. Liberto espaço ao eliminar o que já não tem serventia, mas cuidado ao confiar demais em meu julgamento: até mesmo aquilo que você deseja guardar pode acabar no esquecimento.",
+                    "4": "Entre códigos e mistérios, enxergo aquilo que ainda está por vir. Não preciso de estrelas nem de cartas para revelar o destino, pois meu maior segredo repousa em uma esfera peculiar, feita de informações. Ao observá-la atentamente, consigo antecipar os próximos passos daqueles que cruzam meu caminho.",
+                    "5": "Sou capaz de transformar um em dois sem alterar a essência do original. Posso reproduzir palavras, imagens e até mesmo seres como eu. Não preciso de pincéis, máquinas ou longos trabalhos: basta um instante para criar uma cópia tão perfeita que será difícil distinguir o verdadeiro de sua réplica.",
+                    "6": "Carrego em mim os segredos da medicina e transformo meu próprio corpo em um arsenal de cura. Conheço remédios capazes de despertar habilidades adormecidas e preparo fórmulas poderosas para proteger aqueles que caminham ao meu lado. Onde a enfermidade ameaça, minha presença traz esperança e restaura a força dos meus aliados.",
+                    "7": "Meu reino se estende por todo o horizonte, e meu humor pode transformar um dia tranquilo em uma tempestade aterradora. Posso despertar ventos furiosos, convocar trovões e esconder o sol sob densas nuvens. Minha vontade dita o ritmo da natureza, e poucos conseguem escapar quando decido demonstrar meu verdadeiro poder."
                 },
                 "failed": "RESPOSTA ERRADA!",
-                "min": "MIN",
                 "solved": "ENIGMA RESOLVIDO!",
-                "tryAgain": "TENTE NOVAMENTE DEPOIS DE:"
+                "tryAgain": "POR FAVOR, TENTE NOVAMENTE MAIS TARDE"
             }
         },
         "dataCenterPage": {

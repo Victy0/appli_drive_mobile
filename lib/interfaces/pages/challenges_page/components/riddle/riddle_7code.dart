@@ -39,17 +39,17 @@ class Riddle7codeState extends State<Riddle7code> {
       case 1:
         possibleOptions = ["D2L8", "D5H7", "D8R5"];
       case 2:
-        possibleOptions = ["D7I3"];
+        possibleOptions = ["D7I3", "D3J0", "D9C3", "D0D4"];
       case 3:
-        possibleOptions = ["D7A1"];
+        possibleOptions = ["D7A1", "D5U5", "D1J6", "D4I1", "S4X1"];
       case 4:
-        possibleOptions = ["D5P2"];
+        possibleOptions = ["D5P2", "D2Q8", "S5A3", "S0E8", "D6Q5"];
       case 5:
-        possibleOptions = ["D6M0"];
+        possibleOptions = ["D6M0", "D9D8", "S9S4", "D9Z2", "S2F2"];
       case 6:
-        possibleOptions = ["S6R2"];
+        possibleOptions = ["S6R2", "D4C3", "D6Q9", "D7O3", "S5G9"];
       default:
-        possibleOptions = ["S6G7"];
+        possibleOptions = ["S6G7", "D4V4", "D3D6", "S7C3"];
     }
     List<Map<String, dynamic>> result = await _databaseHelper.getAppmonCodeListByListId(possibleOptions);
     setState(() {
@@ -216,14 +216,6 @@ class Riddle7codeState extends State<Riddle7code> {
                                                   applySoftWrap: true,
                                                 ),
                                                 divider(),
-                                                TextWithWhiteShadow(
-                                                  text: "10 ${AppLocalization.of(context).translate("pages.challengesPage.riddle7code.min")}",
-                                                  fontSize: 25,
-                                                  height: 1.0,
-                                                  align: "center",
-                                                  applySoftWrap: true,
-                                                ),
-                                                divider(),
                                                 ImageOutlined(
                                                   asset: "assets/images/7code/COD${widget.numberChallenge}_shadow.png",
                                                   size: 250,
@@ -232,8 +224,8 @@ class Riddle7codeState extends State<Riddle7code> {
                                               ]
                                             ] else ...[
                                               Container(
-                                                width: 350,
-                                                height: 200,
+                                                width: 400,
+                                                height: 230,
                                                 alignment: Alignment.center,
                                                 decoration: BoxDecoration(
                                                   color: Colors.grey[350],
@@ -241,16 +233,19 @@ class Riddle7codeState extends State<Riddle7code> {
                                                   borderRadius: BorderRadius.circular(5),
                                                 ),
                                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                                child: Text(
-                                                  AppLocalization.of(context).translate("challengesPage.riddle7code.description.${widget.numberChallenge}"),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 24,
-                                                    fontWeight: FontWeight.bold,
+                                                child: SingleChildScrollView(
+                                                  child: Text(
+                                                    AppLocalization.of(context).translate(
+                                                      "pages.challengesPage.riddle7code.description.${widget.numberChallenge}",
+                                                    ),
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 24,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                    softWrap: true,
                                                   ),
-                                                  textAlign: TextAlign.center,
-                                                  softWrap: true,
-                                                  overflow: TextOverflow.visible,
                                                 ),
                                               ),
                                               divider(),
@@ -414,8 +409,7 @@ class Riddle7codeState extends State<Riddle7code> {
           _preferencesService.setInt(AppPreferenceKey.actual7codeChallenge, widget.numberChallenge + 1);
           _preferencesService.setStringInStringList(AppPreferenceKey.sevencodeRevealedIds, widget.numberChallenge.toString());
         } else {
-          // audio erro enigma
-          // inclusão funcionalidade de trava
+          _audioService.playEffect("error");
         }
         setState(() {
           _showResult = true;

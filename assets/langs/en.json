@@ -664,18 +664,17 @@
             },
             "riddle7code": {
                 "description": {
-                    "1": "",
-                    "2": "",
-                    "3": "",
-                    "4": "",
-                    "5": "",
-                    "6": "",
-                    "7": ""
+                    "1": "I have no wings, but I travel the world without leaving my spot. I have no voice, but I carry words, images, and secrets. I am reliable when properly addressed, and I know no borders or ways back. In the blink of an eye, my message reaches those who are waiting for me.",
+                    "2": "I wield a sacred blade and carry the spirit of a great hero in my heart. My presence inspires confidence, and my charisma opens any door. Curiously, no one questions my unexpected visits, even when I leave carrying the treasures of people I barely know.",
+                    "3": "I'm small, but I don't like to hoard things. Everything I consider useless disappears at my hands. I free up space by getting rid of what's no longer needed, but be careful not to trust my judgment too much: even the things you want to keep might end up forgotten.",
+                    "4": "Amid codes and mysteries, I glimpse what is yet to come. I need neither stars nor cards to reveal destiny, for my greatest secret lies within a peculiar sphere made of information. By observing it closely, I can anticipate the next steps of those who cross my path.",
+                    "5": "I can turn one into two without altering the essence of the original. I can reproduce words, images, and even beings like myself. I don't need brushes, machines, or lengthy work: it takes just an instant to create a copy so perfect that it will be difficult to distinguish the original from its replica.",
+                    "6": "I carry the secrets of medicine within me and transform my own body into an arsenal of healing. I know of remedies capable of awakening dormant abilities, and I prepare powerful potions to protect those who walk by my side. Where illness looms, my presence brings hope and restores the strength of my allies.",
+                    "7": "My kingdom stretches as far as the eye can see, and my mood can turn a peaceful day into a terrifying storm. I can stir up raging winds, summon thunder, and hide the sun behind thick clouds. My will dictates the rhythm of nature, and few can escape when I decide to show my true power."
                 },
                 "failed": "WRONG ANSWER!",
-                "min": "MIN",
                 "solved": "THE RIDDLE IS SOLVED!",
-                "tryAgain": "TRY AGAIN AFTER:"
+                "tryAgain": "PLEASE TRY AGAIN LATER"
             }
         },
         "dataCenterPage": {
